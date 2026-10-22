@@ -1,0 +1,111 @@
+appId: app.tayyar.desktop
+productName: Tayyar
+# Shown in the macOS About window and Finder's Get Info, and in the Windows file properties.
+copyright: Copyright © 2026 Tayyar contributors. Based on Plexo © 2026 Anmol Kapil (MIT).
+afterPack: scripts/check-torrent-package.mjs
+directories:
+  buildResources: build
+files:
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!docs/*'
+  - '!e2e/*'
+  - '!.github/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!{.eslintcache,eslint.config.mjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md,NOTICE.md}'
+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+  - '!scripts/make-icons.py'
+  # koffi ships prebuilds for every OS; it's loaded on Linux (network/deviceBinding.ts) and on
+  # Windows (download/sparseFile.ts).
+  - '!node_modules/koffi/{src,vendor,doc}/**'
+  - '!node_modules/koffi/build/koffi/!(linux_x64|linux_arm64|win32_x64|win32_arm64)/**'
+  # Plexo uses TCP peers only. simple-peer is patched to use browser globals instead of loading
+  # the native WebRTC polyfill; don't ship unused host-platform binaries in cross-platform builds.
+  - '!node_modules/node-datachannel/**'
+  - '!node_modules/webrtc-polyfill/**'
+  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+asarUnpack:
+  - resources/**
+extraResources:
+  - from: NOTICE.md
+    to: NOTICE.md
+  - from: LICENSE
+    to: LICENSE
+win:
+  # No protocols or fileAssociations: the NSIS installer would register Tayyar as *the* handler for
+  # magnet links and .torrent files, taking them from a torrent client the user already has.
+  # A .torrent can still be opened with Tayyar through "Open with".
+  executableName: tayyar
+  target:
+    - target: nsis
+      arch: [x64]
+nsis:
+  # No ${arch} on purpose: one installer holds both x64 and ARM64, and docs/downloads.js reads an
+  # installer with no architecture in its name as exactly that. Add one here and update it there.
+  artifactName: ${name}-${version}-setup.${ext}
+  # Assisted installer instead of one-click, so users can choose the install folder (and drive).
+  # One-click always installs to %LOCALAPPDATA%\Programs with no way to change it.
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  createDesktopShortcut: always
+mac:
+  # Only the zips go by this name: the dmg has its own (dmg.artifactName).
+  artifactName: ${name}-${version}-${arch}-mac.${ext}
+  target:
+    - target: dmg
+      arch: [x64, arm64]
+    # Not for people: the app's updater installs from these (see src/main/updater.ts).
+    - target: zip
+      arch: [x64, arm64]
+  entitlementsInherit: build/entitlements.mac.plist
+  extendInfo:
+    - NSDownloadsFolderUsageDescription: Plexo saves downloaded files to your Downloads folder.
+    # Magnet links and .torrent files can be opened with Plexo, as one choice among others: it's
+    # never made the default over a torrent client the user already has (LSHandlerRank).
+    # plexo:// is Plexo's own scheme, so registering it takes nothing from another app.
+    - CFBundleURLTypes:
+        - CFBundleURLName: Magnet link
+          CFBundleURLSchemes: [magnet]
+        - CFBundleURLName: Plexo
+          CFBundleURLSchemes: [plexo]
+      CFBundleDocumentTypes:
+        - CFBundleTypeName: Torrent
+          CFBundleTypeRole: Viewer
+          LSHandlerRank: Alternate
+          CFBundleTypeExtensions: [torrent]
+          LSItemContentTypes: [org.bittorrent.torrent]
+  # Signed when CSC_LINK/CSC_KEY_PASSWORD are set, and then notarized when APPLE_API_KEY,
+  # APPLE_API_KEY_ID and APPLE_API_ISSUER are (see .github/workflows/release.yml). An unsigned
+  # build still works, but can't update itself: macOS only installs signed updates.
+dmg:
+  artifactName: ${name}-${version}-${arch}.${ext}
+linux:
+  target:
+    - target: AppImage
+      arch: [x64, arm64]
+    - target: deb
+      arch: [x64, arm64]
+    - target: rpm
+      arch: [x64, arm64]
+    # Plain archive for distros without FUSE or a native package (AUR packagers, NixOS, etc.):
+    # extract and run ./plexo. Doesn't update itself, like the .deb and .rpm.
+    - target: tar.gz
+      arch: [x64, arm64]
+  # Names the .tar.gz, which has no options of its own. Without it the x64 archive would carry no
+  # architecture, and docs/downloads.js would read it as one file for every machine. The deb and
+  # rpm sections below keep their usual names, since they'd otherwise inherit this one.
+  artifactName: ${name}-${version}-${arch}.${ext}
+  maintainer: electronjs.org
+  category: Utility
+  # Offered for magnet links and .torrent files ("Open with"), not made their default.
+  mimeTypes: [x-scheme-handler/magnet, application/x-bittorrent, x-scheme-handler/plexo]
+appImage:
+  artifactName: ${name}-${version}-${arch}.${ext}
+deb:
+  artifactName: ${name}_${version}_${arch}.${ext}
+rpm:
+  artifactName: ${name}-${version}.${arch}.${ext}
+npmRebuild: false
+# This build ships as an installer only: no release feed, so the app never checks for updates.

@@ -1,0 +1,96 @@
+import { app } from 'electron'
+import { isIP } from 'node:net'
+import type { NetworkInterfaceInfo } from '../shared/types'
+
+// Overrides for the end-to-end suite (e2e/), read from the environment. A packaged build ignores
+// all of them, so a shipped app can't be steered through its environment variables.
+const env: NodeJS.ProcessEnv = app.isPackaged ? {} : process.env
+
+function positiveNumber(name: string, fallback: number): number {
+  const value = Number(env[name])
+  return value > 0 ? value : fallback
+}
+
+const stallTimeoutMs = positiveNumber('PLEXO_E2E_STALL_MS', 20_000)
+
+export const testKnobs = {
+  userDataDir: env['PLEXO_USER_DATA'],
+  /** Keeps the window off-screen so a test run doesn't pop windows up over the desktop. */
+  hideWindow: env['PLEXO_E2E_HIDE_WINDOW'] === '1',
+  blockBytes: positiveNumber('PLEXO_E2E_BLOCK_BYTES', 8 * 1024 * 1024),
+  retryBaseDelayMs: positiveNumber('PLEXO_E2E_RETRY_BASE_MS', 1000),
+  /** How long a download may go without receiving a body byte. Once data has flowed, a much
+   * shorter silence means the connection is dead. */
+  stallTimeoutMs,
+  /** How long a request may wait for its first body byte (and for the response headers before
+   * it). Signed CDN links can sit for 40 s or more before an uncached range starts; a shorter
+   * deadline would abort every attempt before the file ever began. */
+  firstByteTimeoutMs: positiveNumber(
+    'PLEXO_E2E_FIRST_BYTE_MS',
+    // Keep the e2e suite's short stall timeout in charge unless a test asks for a longer first
+    // byte explicitly. Packaged builds have no env, so they always get the production default.
+    env['PLEXO_E2E_STALL_MS'] ? stallTimeoutMs : 60_000
+  ),
+  /** How long opening a socket may take: DNS, TCP and TLS. Some CDNs queue the TCP accept for
+   * 20 s or more under load; 10 s aborted before the request was even sent. */
+  connectTimeoutMs: positiveNumber(
+    'PLEXO_E2E_CONNECT_MS',
+    env['PLEXO_E2E_STALL_MS'] ? stallTimeoutMs : 30_000
+  ),
+  /** How long a server that keeps answering busy (429, 503, …) is waited out; see
+   * downloadManager.ts. */
+  serverBusyForMs: positiveNumber('PLEXO_E2E_SERVER_BUSY_MS', 5 * 60_000),
+  slowWarmupMs: positiveNumber('PLEXO_E2E_SLOW_WARMUP_MS', 5_000),
+  slowForMs: positiveNumber('PLEXO_E2E_SLOW_FOR_MS', 10_000),
+  silentAfterMs: positiveNumber('PLEXO_E2E_SILENT_MS', 5_000),
+  hedgeAfterMs: positiveNumber('PLEXO_E2E_HEDGE_MS', 2_000),
+  /** How long a magnet link may take to find peers that send its metadata. */
+  magnetTimeoutMs: positiveNumber('PLEXO_E2E_MAGNET_MS', 3 * 60_000),
+  /** How long a magnet link only the DHT can help keeps looking once its first search finds no
+   * one (Deluge's magnet prefetch also waits 30 s). */
+  magnetGraceMs: positiveNumber('PLEXO_E2E_MAGNET_GRACE_MS', 30_000),
+  /** Tests turn the DHT off, so a run never reaches out to the internet's DHT nodes. */
+  torrentDht: env['PLEXO_E2E_DHT'] !== '0',
+  /** `PLEXO_E2E_DHT_BOOTSTRAP=127.0.0.1:9` starts the DHT from these nodes instead of the
+   * internet's, so a test can have a DHT that reaches no one. */
+  torrentDhtBootstrap: env['PLEXO_E2E_DHT_BOOTSTRAP']?.split(',').filter(Boolean)
+}
+
+/** `PLEXO_E2E_STREAMS=2` fixes how many streams each network runs and turns the automatic
+ * sizing off, so a test can count requests. Read on every call rather than once, so a test can
+ * change it between downloads. */
+export function testStreamsPerNetwork(): number | null {
+  if (app.isPackaged) return null
+  const value = Number(process.env['PLEXO_E2E_STREAMS'])
+  return value > 0 ? value : null
+}
+
+/** `PLEXO_E2E_INTERFACES=a=127.0.0.1,b=192.168.1.5` replaces the real interface list. Read on
+ * every call rather than once, so a test can make a network "disappear" mid-download by
+ * rewriting process.env in the main process. */
+export function testInterfaces(): NetworkInterfaceInfo[] | null {
+  if (app.isPackaged) return null
+  const raw = process.env['PLEXO_E2E_INTERFACES']
+  if (raw === undefined) return null
+  return raw
+    .split(',')
+    .filter(Boolean)
+    .map((entry) => {
+      const [id, address, subnet, kind] = entry.split('=')
+      const inferredKind =
+        kind === 'usb'
+          ? ('usb' as const)
+          : kind === 'wifi' ||
+              id.toLowerCase().includes('wi-fi') ||
+              id.toLowerCase().includes('wifi')
+            ? ('wifi' as const)
+            : ('ethernet' as const)
+      return {
+        id,
+        device: id,
+        displayName: id,
+        addresses: [{ address, family: isIP(address) === 6 ? 6 : 4, subnet: subnet || undefined }],
+        kind: inferredKind
+      }
+    })
+}
