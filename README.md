@@ -207,7 +207,7 @@ The desktop app is Electron + React + TypeScript. The browser extension is Manif
 
 ## Contributing
 
-Issues and pull requests are welcome. Open an issue before a large change, keep PRs focused, and describe the network setup you tested — which interfaces, URL and file size.
+Issues and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) for setup and test commands, open an issue before a large change, and describe the network setup you tested — which interfaces, URL and file size.
 
 ---
 
