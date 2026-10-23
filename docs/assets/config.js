@@ -10,7 +10,10 @@ window.TAYYAR_CONFIG = {
   releaseUrl: 'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/latest',
   releaseTagUrl:
     'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.0',
-  extensionUrl: 'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/latest',
+  installerUrl:
+    'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe',
+  extensionUrl:
+    'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-Browser-Extension.zip',
   githubUrl: 'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-',
   issuesUrl: 'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/issues',
   licenseUrl: 'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/blob/main/LICENSE',

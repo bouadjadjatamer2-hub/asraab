@@ -11,8 +11,10 @@
     releaseUrl: 'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/latest',
     releaseTagUrl:
       'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.0',
+    installerUrl:
+      'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe',
     extensionUrl:
-      'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/latest',
+      'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-Browser-Extension.zip',
     githubUrl: 'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-',
     issuesUrl: 'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/issues',
     licenseUrl:
@@ -132,6 +134,7 @@
     const links = {
       release: config.releaseUrl,
       releaseTag: config.releaseTagUrl,
+      download: config.installerUrl,
       extension: config.extensionUrl,
       github: config.githubUrl,
       issues: config.issuesUrl,
@@ -150,7 +153,7 @@
       try {
         const data = JSON.parse(schema.textContent)
         data.softwareVersion = config.version
-        data.downloadUrl = config.releaseUrl
+        data.downloadUrl = config.installerUrl
         data.license = config.licenseUrl
         if (data.author && typeof data.author === 'object') data.author.url = config.githubUrl
         data.sameAs = [config.githubUrl]

@@ -146,7 +146,7 @@ window.TAYYAR_I18N = {
       'ملف التثبيت غير موقّع رقمياً، لذا قد يعرض ويندوز تحذير SmartScreen. اختر More info ثم Run anyway، أو ابنِ التطبيق من المصدر. لا يملك المشروع شهادة توقيع كود بعد.',
     'download.source': 'الكود المصدري (MIT)',
     'download.extensionNote':
-      'إضافة المتصفح ملف منفصل. ستجدها في نفس صفحة الإصدار، وطريقة تثبيتها بالأسفل.',
+      'إضافة المتصفح ملف منفصل، وليست داخل المثبّت. حمّلها من زر الإضافة بالأسفل.',
     'download.whatsNew': 'الجديد في {version}',
     'download.whatsNew1': 'تعافٍ أفضل من استجابات الخادم البطيئة',
     'download.whatsNew2': 'فكّ ضغط الأرشيفات أثناء التنزيل',
@@ -162,7 +162,7 @@ window.TAYYAR_I18N = {
     'extension.browsers': 'Chrome · Edge · Brave · Opera',
     'extension.supported': 'المتصفحات المدعومة',
     'extension.step1Title': 'حمّل وفكّ الضغط',
-    'extension.step1Body': 'احصل على ملف zip من صفحة الإصدار واستخرجه في مجلد تعرفه.',
+    'extension.step1Body': 'حمّل ملف zip من الزر أعلاه واستخرجه في مجلد تعرفه.',
     'extension.step2Title': 'افتح صفحة الإضافات',
     'extension.step2Body':
       'في Chrome أو Edge أو Brave أو Opera، افتح ‎chrome://extensions‎ وفعّل Developer mode.',
@@ -195,7 +195,7 @@ window.TAYYAR_I18N = {
       'المثبّت غير موقّع رقمياً، لذا لا يستطيع SmartScreen التحقق من الناشر. اختر More info ثم Run anyway، أو ابنِ التطبيق من المصدر. يتطلب التوقيع شهادة مدفوعة، ولا يملكها المشروع بعد.',
     'faq.q5': 'أين إضافة المتصفح؟',
     'faq.a5':
-      'هي ملف zip منفصل في صفحة الإصدارات، وليست داخل المثبّت وليست على Chrome Web Store. ثبّتها يدوياً عبر Developer mode؛ الخطوات بالأعلى.',
+      'هي ملف zip منفصل، وليست داخل المثبّت وليست على Chrome Web Store. حمّلها من زر الإضافة بالأعلى وثبّتها يدويًا عبر Developer mode؛ الخطوات بالأعلى.',
     'faq.q6': 'أي أرشيفات تُفكّ أثناء التنزيل؟',
     'faq.a6':
       'ZIP وRAR وTAR، بما فيها ‎.tar.gz‎ و‎.tar.bz2‎ و‎.tar.xz‎. أما ‎.7z‎ والأرشيفات متعددة الأجزاء فلا تُفكّ أثناء التنزيل؛ نزّلها كاملة ثم استخرجها بأداتك المعتادة.',
