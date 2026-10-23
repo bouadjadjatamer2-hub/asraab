@@ -2,74 +2,404 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="theme-color" content="#0A0A0B" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0A0B10" />
     <meta name="robots" content="noindex" />
-    <title>Page not found — Plexo</title>
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>Page not found — Tayyar</title>
+    <link rel="icon" href="/tayyar-download-manager-/favicon.ico" sizes="any" />
     <style>
       @font-face {
-        font-family: 'Archivo';
-        src: url('/assets/fonts/Archivo-Variable.woff2') format('woff2');
-        font-weight: 100 900;
-        font-stretch: 62% 125%;
+        font-family: 'Space Grotesk';
+        font-style: normal;
+        font-weight: 300 700;
         font-display: swap;
+        src: url('/tayyar-download-manager-/assets/fonts/SpaceGrotesk-Variable.woff2')
+          format('woff2');
       }
       @font-face {
-        font-family: 'Geist';
-        src: url('/assets/fonts/Geist-Variable.woff2') format('woff2');
-        font-weight: 100 900;
+        font-family: 'Manrope';
+        font-style: normal;
+        font-weight: 200 800;
         font-display: swap;
+        src: url('/tayyar-download-manager-/assets/fonts/Manrope-Variable.woff2')
+          format('woff2');
       }
-      html {
+      @font-face {
+        font-family: 'Roboto Mono';
+        font-style: normal;
+        font-weight: 100 700;
+        font-display: swap;
+        src: url('/tayyar-download-manager-/assets/fonts/RobotoMono-Variable.woff2')
+          format('woff2');
+      }
+
+      :root {
         color-scheme: dark;
+        --bg: #0a0b10;
+        --text: #f1f3fa;
+        --muted: #a3a9bc;
+        --faint: #8d93a6;
+        --dim: #7d8396;
+        --line: #232838;
+        --gradient: linear-gradient(135deg, #8b6cff 0%, #6d8bff 52%, #22d3ee 135%);
+        --gradient-button: linear-gradient(135deg, #7555e8 0%, #4a60d2 52%, #0a7b90 135%);
       }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        overflow-x: hidden;
+        -webkit-text-size-adjust: 100%;
+      }
+
       body {
+        position: relative;
         display: grid;
-        place-items: center;
+        grid-template-rows: auto 1fr auto;
         min-height: 100dvh;
         margin: 0;
-        padding: 24px;
-        background: #0a0a0b;
-        color: #ededef;
-        font-family: 'Geist', system-ui, sans-serif;
-        text-align: center;
+        overflow-x: hidden;
+        background: var(--bg);
+        color: var(--muted);
+        font-family: 'Manrope', 'Segoe UI', system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
       }
-      h1 {
-        margin: 0 0 12px;
-        font-family: 'Archivo', 'Helvetica Neue', sans-serif;
-        font-stretch: 118%;
-        font-weight: 600;
-        font-size: clamp(32px, 6vw, 56px);
-        letter-spacing: -0.02em;
-        text-transform: uppercase;
+
+      body::before {
+        content: '';
+        position: absolute;
+        inset: -28% 0 auto;
+        height: 900px;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse at 72% 28%, rgba(139, 108, 255, 0.19), transparent 62%),
+          radial-gradient(ellipse at 18% 12%, rgba(34, 211, 238, 0.06), transparent 58%);
       }
-      h1 span {
-        color: #f36712;
+
+      body::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.28;
+        background-image:
+          linear-gradient(to right, rgba(141, 147, 166, 0.07) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(141, 147, 166, 0.07) 1px, transparent 1px);
+        background-size: 58px 58px;
+        -webkit-mask-image: radial-gradient(ellipse 70% 65% at 55% 38%, #000, transparent 80%);
+        mask-image: radial-gradient(ellipse 70% 65% at 55% 38%, #000, transparent 80%);
       }
-      p {
-        margin: 0 0 32px;
-        color: #a1a1a8;
+
+      .shell {
+        position: relative;
+        z-index: 1;
+        width: min(calc(100% - 48px), 1080px);
+        margin-inline: auto;
       }
-      a {
-        display: inline-block;
-        padding: 12px 22px;
-        border-radius: 999px;
-        background: #f36712;
-        color: #0a0a0b;
-        font-weight: 600;
+
+      header .shell {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        min-height: 86px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 11px;
+        color: var(--text);
         text-decoration: none;
       }
-      a:hover {
-        background: #ff8a3d;
+
+      .brand-mark {
+        width: 31px;
+        height: 31px;
+        filter: drop-shadow(0 5px 16px rgba(139, 108, 255, 0.3));
+      }
+
+      .brand-word {
+        font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 0.28em;
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--dim);
+        font-family: 'Roboto Mono', monospace;
+        font-size: 8.5px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .status i {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #22d3ee;
+        box-shadow: 0 0 10px rgba(34, 211, 238, 0.6);
+      }
+
+      main {
+        display: grid;
+        place-items: center;
+        padding: 36px 0 70px;
+      }
+
+      .content {
+        max-width: 700px;
+        text-align: center;
+      }
+
+      .code {
+        margin: 0;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+        font-size: clamp(7rem, 22vw, 12rem);
+        font-weight: 600;
+        letter-spacing: -0.09em;
+        line-height: 0.78;
+        opacity: 0.92;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 34px 0 0;
+        color: var(--faint);
+        font-family: 'Roboto Mono', monospace;
+        font-size: 9px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        content: '';
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--gradient);
+        box-shadow: 0 0 10px rgba(34, 211, 238, 0.4);
+      }
+
+      h1 {
+        margin: 13px 0 12px;
+        color: var(--text);
+        font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+        font-size: clamp(2rem, 4.5vw, 3.15rem);
+        font-weight: 600;
+        letter-spacing: -0.045em;
+        line-height: 1.05;
+        text-wrap: balance;
+      }
+
+      p {
+        max-width: 490px;
+        margin: 0 auto;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.7;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 27px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #11131a;
+        padding: 0 19px;
+        color: var(--text);
+        font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+        transition:
+          border-color 160ms ease,
+          background-color 160ms ease,
+          filter 160ms ease,
+          transform 160ms ease;
+      }
+
+      .button:hover {
+        border-color: #3b4257;
+        background: #171a23;
+        transform: translateY(-1px);
+      }
+
+      .button.primary {
+        border-color: transparent;
+        background: var(--gradient-button);
+        color: #fff;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.22),
+          0 12px 28px -14px rgba(109, 74, 255, 0.7);
+      }
+
+      .button.primary:hover {
+        filter: brightness(1.03);
+      }
+
+      :focus-visible {
+        outline: 2px solid #9be9f5;
+        outline-offset: 3px;
+      }
+
+      footer {
+        padding: 0 0 28px;
+        color: var(--dim);
+        font-family: 'Roboto Mono', monospace;
+        font-size: 8.5px;
+        line-height: 1.7;
+      }
+
+      footer .shell {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 8px 20px;
+        border-top: 1px solid var(--line);
+        padding-top: 20px;
+      }
+
+      footer a {
+        color: var(--faint);
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 560px) {
+        .shell {
+          width: min(calc(100% - 32px), 1080px);
+        }
+
+        header .shell {
+          min-height: 70px;
+        }
+
+        .status {
+          display: none;
+        }
+
+        main {
+          padding: 20px 0 56px;
+        }
+
+        .code {
+          font-size: clamp(6.2rem, 34vw, 9rem);
+        }
+
+        .eyebrow {
+          margin-top: 27px;
+        }
+
+        .actions {
+          flex-direction: column;
+        }
+
+        .button {
+          width: 100%;
+        }
+
+        footer .shell {
+          display: block;
+        }
+
+        footer .shell span {
+          display: block;
+        }
+
+        footer .shell span + span {
+          margin-top: 6px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+        }
       }
     </style>
   </head>
+
   <body>
+    <header>
+      <div class="shell">
+        <a class="brand" href="/tayyar-download-manager-/" aria-label="Tayyar home">
+          <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true">
+            <defs>
+              <linearGradient id="brand-gradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#8b6cff"></stop>
+                <stop offset="0.55" stop-color="#6d8bff"></stop>
+                <stop offset="1" stop-color="#22d3ee"></stop>
+              </linearGradient>
+            </defs>
+            <g fill="url(#brand-gradient)">
+              <rect x="9.9" y="2.4" width="1.8" height="10.1" rx="0.9"></rect>
+              <rect x="12.3" y="2.4" width="1.8" height="10.1" rx="0.9"></rect>
+              <path d="M5.7 11.6h12.6L12 19.6z"></path>
+              <rect x="7.4" y="21" width="9.2" height="1.3" rx="0.65"></rect>
+            </g>
+          </svg>
+          <span class="brand-word">TAYYAR</span>
+        </a>
+        <span class="status"><i></i> 404 · page not found</span>
+      </div>
+    </header>
+
     <main>
-      <h1><span>404</span> Not found</h1>
-      <p>This page doesn’t exist.</p>
-      <a href="https://getplexo.app/">Back to Plexo</a>
+      <div class="shell content">
+        <p class="code" aria-hidden="true">404</p>
+        <p class="eyebrow">Lost in the current</p>
+        <h1>This page took a wrong turn.</h1>
+        <p>
+          The link may be old, or the file moved. Head back to Tayyar, or grab the latest Windows
+          build from GitHub.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="/tayyar-download-manager-/">Back to Tayyar</a>
+          <a
+            class="button"
+            href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/latest"
+            >Download the latest release</a
+          >
+        </div>
+      </div>
     </main>
+
+    <footer>
+      <div class="shell">
+        <span>© 2026 Tayyar contributors. Free and open source under MIT.</span>
+        <span><a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-">GitHub</a></span>
+      </div>
+    </footer>
   </body>
 </html>

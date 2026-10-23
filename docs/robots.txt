@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://getplexo.app/sitemap.xml
+Sitemap: https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/sitemap.xml
