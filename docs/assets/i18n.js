@@ -167,7 +167,8 @@ window.TAYYAR_I18N = {
     'extension.step2Body':
       'في Chrome أو Edge أو Brave أو Opera، افتح ‎chrome://extensions‎ وفعّل Developer mode.',
     'extension.step3Title': 'اختر Load unpacked',
-    'extension.step3Body': 'اختر Load unpacked ثم حدّد مجلد chrome داخل الملف المستخرج.',
+    'extension.step3Body':
+      'اختر Load unpacked ثم حدّد المجلد الذي استخرجته. ملف manifest.json موجود في جذوره.',
     'extension.step4Title': 'أرسل تحميلاً',
     'extension.step4Body': 'استخدم زر الإضافة أو قائمة النقر الأيمن. يجب أن يكون تيار قيد التشغيل.',
     'extension.manualTitle': 'تثبيت يدوي',

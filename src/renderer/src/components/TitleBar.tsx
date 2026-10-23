@@ -29,7 +29,7 @@ export function TitleBar(): React.JSX.Element {
       )}
       <div className="flex-1" />
       <span className="font-mono text-[9.5px] leading-none tracking-[0.08em] text-muted-foreground/70">
-        v1.0
+        v1.2.0
       </span>
     </div>
   )

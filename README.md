@@ -1,68 +1,238 @@
-# Tayyar
+<p align="center">
+  <img src="docs/assets/img/tayyar-icon.png" width="80" alt="Tayyar app icon" />
+</p>
 
-**A download manager that uses every connection you have.**
+<h1 align="center">Tayyar</h1>
 
-Tayyar splits a file into blocks and pulls them over Wi-Fi, Ethernet, USB tethering and mobile
-data at the same time — then adds the things people expect from a serious download manager:
-dynamic segmentation, resume after a crash, a scheduler, categories, browser capture, torrents
-and optional virus scanning.
+<p align="center">
+  <strong>Every connection. One download.</strong><br />
+  A free, open-source Windows download manager that puts Wi-Fi, Ethernet, USB tethering and mobile data to work on the same file.
+</p>
 
-A fork of [Plexo](https://github.com/anmolkapil/plexo) (MIT), rebuilt as a Windows desktop app and
-extended for maximum throughput. See [NOTICE.md](NOTICE.md) for what changed.
+<p align="center">
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe"><img src="https://img.shields.io/badge/Download_for_Windows-v1.2.0-7C5CFF?style=for-the-badge&amp;logo=windows&amp;logoColor=white" alt="Download Tayyar 1.2.0 for Windows" /></a>
+  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/"><img src="https://img.shields.io/badge/Website-live-22C7B8?style=for-the-badge" alt="Open the live Tayyar website" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-4CC38A?style=for-the-badge" alt="MIT License" /></a>
+</p>
 
-## Features
+<p align="center">
+  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/">Website</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe">Download</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-Browser-Extension.zip">Browser extension</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.0">Release notes</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/issues">Issues</a>
+</p>
 
-**Speed**
+<a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/"><img src="docs/og.png" alt="Tayyar — one download over every connection" width="100%" /></a>
 
-- Dynamic segmentation: 8 streams per network at start, growing to 32 (64 in Turbo mode) as the
-  server and the disk keep up. Blocks are pulled from a shared queue, so a faster network simply
-  takes more of them.
-- Multi-network aggregation: each stream is bound to one interface (Wi-Fi, Ethernet, USB tethering,
-  mobile), so the file arrives over all of them at once.
-- Slow-block racing near the end, connection reuse, keep-alive, and per-server backoff.
-- Turbo mode: 16–64 streams per network and 4 MB blocks, for servers that can take it.
+Tayyar splits files into blocks and binds each stream to a network interface, so a download can use Wi-Fi, Ethernet and USB tethering at the same time. It also resumes interrupted transfers, schedules downloads, extracts archives while they arrive, captures links from the browser, handles torrents, and can scan finished files with Windows Defender.
 
-**Reliability**
+Tayyar is a fork of [Plexo](https://github.com/anmolkapil/plexo) (MIT), rebuilt as a Windows desktop app and extended for maximum throughput. See [NOTICE.md](NOTICE.md) for what changed.
 
-- Resume across restarts, sleep/wake reconnection, expired-link replacement without losing bytes.
-- ETag / Last-Modified validation so a file republished mid-download is never stitched together
-  from two versions.
-- Sparse pre-allocation, per-block checkpoints, and a publish step that never leaves a half file
-  under the final name.
+> [!NOTE]
+> “Every connection” means every network interface Windows exposes. Tayyar cannot create bandwidth that is not there: two connections behind the same router often share one uplink, and servers without byte-range support fall back to a single stream.
 
-**Control**
+---
 
-- Queues, concurrent-download limits, per-network speed caps and data budgets (daily/weekly/monthly).
-- Download schedule by time and day.
-- Categories: finished files are sorted into Video, Audio, Programs, Documents, Archives, Images.
-- Optional Windows Defender scan of each finished file.
-- Optional clipboard capture: copy a file link, and it opens in New download.
-- Optional shutdown when the queue finishes.
+## Screenshots
 
-**Browser**
+### The website
 
-- Extension (Chromium and Firefox) hands downloads to the app with the browser's cookies, so
-  signed-in downloads work.
+The [Tayyar website](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/) is bilingual, theme-aware, and sends the installer and extension ZIP straight to your downloads — no release-page detour.
 
-## Build
+[![Tayyar website — dark desktop view](docs/screenshots/website-desktop.png)](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/)
 
-Requires Node.js 22+ on Windows.
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/"><img src="docs/screenshots/website-arabic.png" alt="Tayyar website in Arabic with the light theme" /></a>
+    </td>
+    <td width="50%" valign="top">
+      <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/#download"><img src="docs/screenshots/website-download.png" alt="Tayyar download page with the installer, release details and SHA-256 checksum" /></a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><sub>Arabic · light theme</sub></td>
+    <td align="center"><sub>Direct download</sub></td>
+  </tr>
+</table>
+
+<p align="center">
+  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/"><img src="docs/screenshots/website-mobile.png" width="300" alt="Tayyar website on a phone" /></a><br />
+  <sub>Mobile</sub>
+</p>
+
+### The app
+
+[![Tayyar downloading one file over Wi-Fi, USB tethering and Ethernet](docs/screenshots/app-detail.png)](docs/screenshots/app-detail.png)
+
+<sub>Captured from the real app; the three network interfaces are simulated for the screenshot. One file, three connections, one progress bar.</sub>
+
+---
+
+## What it does
+
+### Use every connection
+
+- **Interface-bound streams.** Each worker is bound to one network interface, so Wi-Fi, Ethernet, USB tethering and mobile data can feed the same download at once.
+- **Dynamic segmentation.** Starts at 8 streams per network and grows to 32 while the server and disk keep up. Turbo mode goes further, with up to 64 streams per network and 4 MB blocks.
+- **A shared work queue.** Faster networks take more blocks automatically instead of waiting for a slower one.
+- **Range-aware fallback.** If a server does not support byte ranges, Tayyar uses a single connection instead of pretending to split the file.
+
+### Built to finish
+
+- **Resume across restarts** and sleep/wake, with per-block checkpoints and an expired-link replacement flow that does not throw away downloaded bytes.
+- **Version checks.** ETag and Last-Modified validation stop a file republished mid-download from being stitched together from two versions.
+- **Safe publish.** Data is written to a staging file and only moved to the final name after validation, so a half-finished download never looks complete.
+- **Extract while downloading.** ZIP, RAR and TAR archives — including `.tar.gz`, `.tar.bz2` and `.tar.xz` — unpack as they arrive, avoiding a second full-size copy on disk.
+- **Optional Windows Defender scan** of each finished file.
+
+### Stay in control
+
+- Queues, concurrent-download limits, per-network speed caps and daily/weekly/monthly data budgets.
+- Download schedules by time and day, plus automatic categories for Video, Audio, Programs, Documents, Archives and Images.
+- Clipboard capture, tray support, start with Windows, and optional shutdown when the queue finishes.
+- Browser handoff with cookies included, so signed-in downloads work.
+- Torrents from magnet links or `.torrent` files, with the same queue and history.
+
+---
+
+## How it works
+
+1. **Probe the link.** Tayyar reads the response headers, filename, size, range support and validators.
+2. **Plan the blocks.** The file becomes a queue of byte ranges sized for the connection and disk.
+3. **Bind and pull.** Each request is bound to a chosen interface. Streams grow when the server and disk keep up, and slow blocks are raced near the end.
+4. **Assemble and publish.** Blocks land in a sparse staging file, get verified, and are renamed only after the download is whole.
+
+When an archive is being extracted, completed blocks are fed to the extractor as soon as their data is available. The download and extraction share the same progress state, so pause, resume and cancel still behave normally.
+
+---
+
+## Download
+
+**Windows 10 / 11 · 64-bit · v1.2.0 · 125.2 MB**
+
+[**Download Tayyar-1.2.0-Setup.exe**](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe) · [Release notes](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.0) · [All releases](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases)
+
+|                      |                                     |
+| -------------------- | ----------------------------------- |
+| **Version**          | 1.2.0                               |
+| **Platform**         | Windows 10 / 11, 64-bit             |
+| **Installer**        | `Tayyar-1.2.0-Setup.exe` · 125.2 MB |
+| **License**          | MIT                                 |
+| **Account required** | No                                  |
+
+### What's new in 1.2.0
+
+- Extract ZIP, RAR and TAR archives while downloading.
+- Start with Windows and stay in the tray.
+- Better recovery from slow first-byte responses.
+
+> [!WARNING]
+> The installer is not code-signed, so Windows SmartScreen may show a warning. Choose **More info → Run anyway**, or build from source. The project does not have a code-signing certificate yet.
+
+<details>
+<summary>Verify the SHA-256 checksum</summary>
 
 ```powershell
-npm install
+Get-FileHash .\Tayyar-1.2.0-Setup.exe -Algorithm SHA256
+```
+
+Expected:
+
+```text
+643DD40A89A86019B75A8BFE84FCDE6DF4C506371031313019EC49E4AABE2C6B
+```
+
+</details>
+
+---
+
+## Browser extension (optional)
+
+[**Download Tayyar-Browser-Extension.zip**](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-Browser-Extension.zip) · [Privacy policy](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/extension/privacy/)
+
+The Chromium extension hands downloads to Tayyar with the browser's cookies, so signed-in files work. It supports Chrome, Edge, Brave and Opera.
+
+1. Download the ZIP and extract it somewhere you will remember.
+2. Open your browser's extensions page — `chrome://extensions` in Chrome, `edge://extensions` in Edge.
+3. Turn on **Developer mode**, choose **Load unpacked**, and select the extracted folder. `manifest.json` sits at its root.
+4. Keep Tayyar running, then use the toolbar button or the right-click menu.
+
+> [!NOTE]
+> This is a manual install and is not on the Chrome Web Store yet, so the browser will not update it automatically. Re-download the ZIP when a new release lands. The extension only talks to Tayyar on `127.0.0.1`; there are no developer servers.
+
+---
+
+## Privacy
+
+There is no account, no advertising and no analytics. Tayyar talks only to the URLs you give it, and the extension talks only to the app on your computer. Download history and settings stay on your PC. The [extension privacy policy](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/extension/privacy/) has the details.
+
+---
+
+## Build from source
+
+**Requirements:** Node.js 22+ and npm 9+. Build the Windows installer on Windows.
+
+```powershell
+git clone https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-.git
+cd tayyar-download-manager-
+npm ci
+npm run dev
+```
+
+Create the Windows installer:
+
+```powershell
 npm run build:win
 ```
 
-The installer lands in `dist/` as `tayyar-<version>-setup.exe`.
-
-Icons are generated from `scripts/make-icons.py` (Python 3 + Pillow):
+The installer is written to `dist/` and is unsigned unless you provide signing credentials. Build the browser extension with:
 
 ```powershell
-python scripts/make-icons.py
+npm run build:extension
 ```
+
+That writes `extension/dist/chrome` and `extension/dist/firefox`. Before opening a pull request, run:
+
+```powershell
+npm run lint
+npm run typecheck
+npm run format:check
+```
+
+The desktop app is Electron + React + TypeScript. The browser extension is Manifest V3, the site is static HTML/CSS/JS in `docs/`, and Playwright end-to-end tests live in `e2e/`.
+
+---
+
+## Contributing
+
+Issues and pull requests are welcome. Open an issue before a large change, keep PRs focused, and describe the network setup you tested — which interfaces, URL and file size.
+
+---
+
+## Credits
+
+Tayyar is a fork of [Plexo](https://github.com/anmolkapil/plexo) by Anmol Kapil, used under the MIT License. Plexo's copyright and permission notice are retained in [LICENSE](LICENSE); the changes made for Tayyar are listed in [NOTICE.md](NOTICE.md).
+
+Bundled tools and their licenses — including UnRAR and `unzipper` — are also listed in [NOTICE.md](NOTICE.md). Not affiliated with, endorsed by, or derived from Internet Download Manager (Tonec Inc.).
 
 ## License
 
-MIT. Tayyar keeps Plexo's copyright notice — see [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md).
+[MIT](LICENSE) © 2026 Tayyar contributors.
 
-Not affiliated with Internet Download Manager or Tonec Inc.
+---
+
+<h2 dir="rtl" align="right">بالعربية</h2>
+
+<p dir="rtl" align="right">
+  <strong>تيار</strong> مدير تحميل مجاني ومفتوح المصدر لنظام ويندوز 10/11. يوزّع الملف الواحد على Wi-Fi والإيثرنت وUSB في الوقت نفسه، مع استئناف التحميل بعد إغلاق التطبيق، والجدولة، واستخراج الأرشيف أثناء التنزيل، والتقاط الروابط من المتصفح.
+</p>
+
+<p dir="rtl" align="right">
+  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/">الموقع الرسمي</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe">تحميل الإصدار 1.2.0</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-Browser-Extension.zip">إضافة المتصفح</a>
+</p>
+
+<p dir="rtl" align="right">الموقع متوفر بالعربية والإنجليزية.</p>
