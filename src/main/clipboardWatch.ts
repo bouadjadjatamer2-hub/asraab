@@ -18,7 +18,9 @@ const offered = new Set<string>()
 
 /** Electron 44 answers the clipboard asynchronously; awaiting also covers older signatures. */
 async function readClipboard(): Promise<string> {
-  return String(await clipboard.readText()).slice(0, MAX_TEXT).trim()
+  return String(await clipboard.readText())
+    .slice(0, MAX_TEXT)
+    .trim()
 }
 
 async function check(): Promise<void> {
@@ -39,10 +41,7 @@ async function check(): Promise<void> {
 
 /** On: watch the clipboard and hand every new file link to `offer`. Off: stop, and forget what
  * was copied before the switch so turning it on doesn't immediately offer an old link. */
-export async function setClipboardWatch(
-  on: boolean,
-  offer: (url: string) => void
-): Promise<void> {
+export async function setClipboardWatch(on: boolean, offer: (url: string) => void): Promise<void> {
   offerLink = offer
   enabled = on
   if (!on) {

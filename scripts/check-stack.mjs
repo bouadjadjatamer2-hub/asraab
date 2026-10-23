@@ -4,14 +4,19 @@ import https from 'node:https'
 import { _electron as electron } from 'playwright'
 
 const URL_UNDER_TEST = 'https://ankergames.net/game/warhammer-40000-boltgun-2'
-const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36'
+const UA =
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36'
 const headers = { 'User-Agent': UA, Accept: '*/*', Referer: 'https://ankergames.net/' }
 
 const nodeStatus = await new Promise((resolve) => {
-  const req = https.request(URL_UNDER_TEST, { headers: { ...headers, Range: 'bytes=0-1023' } }, (res) => {
-    resolve(res.statusCode)
-    res.destroy()
-  })
+  const req = https.request(
+    URL_UNDER_TEST,
+    { headers: { ...headers, Range: 'bytes=0-1023' } },
+    (res) => {
+      resolve(res.statusCode)
+      res.destroy()
+    }
+  )
   req.on('error', (error) => resolve(`err:${error.message}`))
   req.end()
 })
@@ -29,7 +34,11 @@ const result = await app.evaluate(
       for (const [key, value] of Object.entries(headers)) request.setHeader(key, value)
       request.setHeader('Range', 'bytes=0-1023')
       request.on('response', (response) => {
-        resolve({ status: response.statusCode, type: response.headers['content-type'], ua: response.headers['server'] })
+        resolve({
+          status: response.statusCode,
+          type: response.headers['content-type'],
+          ua: response.headers['server']
+        })
         response.destroy()
       })
       request.on('error', (error) => resolve({ status: `err:${error.message}` }))

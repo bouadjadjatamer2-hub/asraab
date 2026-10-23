@@ -8,13 +8,19 @@ const app = await electron.launch({
 })
 const win = await app.firstWindow()
 await win.waitForTimeout(2000)
-await win.getByRole('button', { name: /New download/ }).first().click()
+await win
+  .getByRole('button', { name: /New download/ })
+  .first()
+  .click()
 await win.waitForTimeout(600)
 
 const input = win.getByPlaceholder(/Paste a link/)
 const readError = async () => {
   const body = await win.locator('[role="dialog"]').innerText()
-  return body.split('\n').filter((line) => /page|refused|status|download/i.test(line)).join(' | ')
+  return body
+    .split('\n')
+    .filter((line) => /page|refused|status|download/i.test(line))
+    .join(' | ')
 }
 
 await input.fill('https://ankergames.net/game/warhammer-40000-boltgun-2')

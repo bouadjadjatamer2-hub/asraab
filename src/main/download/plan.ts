@@ -103,7 +103,8 @@ export function planDownload(request: PlanRequest): DownloadPlan {
     return { blockSizeBytes: Math.max(totalBytes, 0), blockCount: 1 }
   }
 
-  const maxBlockBytes = request.maxBlockBytes ?? (turbo ? TURBO_MAX_BLOCK_BYTES : DEFAULT_MAX_BLOCK_BYTES)
+  const maxBlockBytes =
+    request.maxBlockBytes ?? (turbo ? TURBO_MAX_BLOCK_BYTES : DEFAULT_MAX_BLOCK_BYTES)
   const targetBlocks = networkCount * maxStreamsPerNetwork() * BLOCKS_PER_STREAM
   const blockSizeBytes = clamp(
     Math.ceil(totalBytes / targetBlocks),
@@ -123,10 +124,7 @@ export function startingStreams(
   requested = startStreamsPerNetwork()
 ): number {
   const perNetwork = Math.ceil(waiting / Math.max(1, networkCount))
-  return Math.max(
-    1,
-    Math.min(clamp(Math.floor(requested), 1, maxStreamsPerNetwork()), perNetwork)
-  )
+  return Math.max(1, Math.min(clamp(Math.floor(requested), 1, maxStreamsPerNetwork()), perNetwork))
 }
 
 /** The blocks a file of `totalBytes` is cut into, none of them started. An unknown size is one

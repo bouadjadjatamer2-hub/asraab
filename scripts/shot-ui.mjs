@@ -11,13 +11,19 @@ win.on('console', (message) => {
 await win.waitForTimeout(2500)
 await win.screenshot({ path: 'C:\\Users\\Lenovo\\Downloads\\tayyar\\dist\\_ui-main.png' })
 
-await win.getByRole('button', { name: /New download/ }).first().click()
+await win
+  .getByRole('button', { name: /New download/ })
+  .first()
+  .click()
 await win.waitForTimeout(700)
 await win.screenshot({ path: 'C:\\Users\\Lenovo\\Downloads\\tayyar\\dist\\_ui-new.png' })
 await win.keyboard.press('Escape')
 await win.waitForTimeout(400)
 
-await win.getByRole('button', { name: /network/i }).first().click()
+await win
+  .getByRole('button', { name: /network/i })
+  .first()
+  .click()
 await win.waitForTimeout(500)
 await win.getByText('Speed & data limits').click()
 await win.waitForTimeout(700)

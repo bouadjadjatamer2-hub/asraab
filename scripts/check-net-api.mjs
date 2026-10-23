@@ -62,7 +62,11 @@ const report = await app.evaluate(async ({ net }) => {
     'manual'
   )
   const redirected = await probe('http://proof.ovh.net/files/10Mb.dat', {}, 'manual')
-  const followed = await probe('http://proof.ovh.net/files/10Mb.dat', { Range: 'bytes=0-99' }, 'follow')
+  const followed = await probe(
+    'http://proof.ovh.net/files/10Mb.dat',
+    { Range: 'bytes=0-99' },
+    'follow'
+  )
   return { ranged, redirected, followed }
 })
 console.log(JSON.stringify(report, null, 2))

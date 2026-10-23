@@ -14,7 +14,10 @@ await app.evaluate(({ nativeTheme }) => {
 await win.waitForTimeout(2000)
 await win.screenshot({ path: 'C:\\Users\\Lenovo\\Downloads\\tayyar\\dist\\_ui-dark.png' })
 
-await win.getByRole('button', { name: /New download/ }).first().click()
+await win
+  .getByRole('button', { name: /New download/ })
+  .first()
+  .click()
 await win.waitForTimeout(700)
 await win.screenshot({ path: 'C:\\Users\\Lenovo\\Downloads\\tayyar\\dist\\_ui-new-dark.png' })
 

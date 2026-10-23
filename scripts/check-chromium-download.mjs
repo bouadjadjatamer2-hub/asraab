@@ -50,22 +50,25 @@ const app = await electron.launch({
 const win = await app.firstWindow()
 await win.waitForTimeout(2200)
 
-const started = await win.evaluate(async ({ dest }) => {
-  const interfaces = await window.plexo.listInterfaces()
-  const id = await window.plexo.startDownload({
-    kind: 'http',
-    url: 'http://127.0.0.1:8972/file.bin',
-    destinationDir: dest,
-    suggestedFileName: 'chromium-test.bin',
-    totalBytes: 2 * 1024 * 1024,
-    supportsRanges: true,
-    interfaceIds: [interfaces.find((entry) => entry.kind === 'wifi')?.id ?? interfaces[0].id],
-    etag: null,
-    lastModified: null,
-    transport: 'chromium'
-  })
-  return { id, interfaceIds: interfaces.map((entry) => entry.id) }
-}, { dest })
+const started = await win.evaluate(
+  async ({ dest }) => {
+    const interfaces = await window.plexo.listInterfaces()
+    const id = await window.plexo.startDownload({
+      kind: 'http',
+      url: 'http://127.0.0.1:8972/file.bin',
+      destinationDir: dest,
+      suggestedFileName: 'chromium-test.bin',
+      totalBytes: 2 * 1024 * 1024,
+      supportsRanges: true,
+      interfaceIds: [interfaces.find((entry) => entry.kind === 'wifi')?.id ?? interfaces[0].id],
+      etag: null,
+      lastModified: null,
+      transport: 'chromium'
+    })
+    return { id, interfaceIds: interfaces.map((entry) => entry.id) }
+  },
+  { dest }
+)
 console.log('started:', JSON.stringify(started))
 
 let state = null
@@ -80,7 +83,14 @@ for (let i = 0; i < 40; i += 1) {
   }, started.id)
   if (state && (state.status === 'completed' || state.status === 'error')) break
 }
-console.log('status:', state?.status, '| bytes:', state?.bytesDownloaded, '| error:', state?.error ?? '-')
+console.log(
+  'status:',
+  state?.status,
+  '| bytes:',
+  state?.bytesDownloaded,
+  '| error:',
+  state?.error ?? '-'
+)
 
 const file = `${dest}\\chromium-test.bin`
 await win.waitForTimeout(800)

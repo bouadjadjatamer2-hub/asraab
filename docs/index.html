@@ -4,22 +4,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script>
-      (function () {
-        var root = document.documentElement;
-        root.classList.remove('no-js');
-        root.classList.add('js');
+      ;(function () {
+        var root = document.documentElement
+        root.classList.remove('no-js')
+        root.classList.add('js')
         try {
-          var theme = localStorage.getItem('tayyar-theme');
-          if (theme === 'light' || theme === 'dark') root.dataset.theme = theme;
-          var lang = localStorage.getItem('tayyar-lang');
+          var theme = localStorage.getItem('tayyar-theme')
+          if (theme === 'light' || theme === 'dark') root.dataset.theme = theme
+          var lang = localStorage.getItem('tayyar-lang')
           if (lang === 'ar') {
-            root.lang = 'ar';
-            root.dir = 'rtl';
+            root.lang = 'ar'
+            root.dir = 'rtl'
           }
         } catch (error) {
           /* Private mode and storage-disabled browsers keep the defaults. */
         }
-      })();
+      })()
     </script>
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#0A0B10" id="themeColor" />
@@ -31,10 +31,7 @@
     <meta name="application-name" content="Tayyar" />
     <meta name="robots" content="index,follow" />
     <title>Tayyar — Every connection. One download.</title>
-    <link
-      rel="canonical"
-      href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/"
-    />
+    <link rel="canonical" href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/" />
     <link rel="icon" href="./favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" href="./assets/img/icon-192.png" />
     <link rel="apple-touch-icon" href="./assets/img/apple-touch-icon.png" />
@@ -111,9 +108,7 @@
           "name": "Tayyar contributors",
           "url": "https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-"
         },
-        "sameAs": [
-          "https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-"
-        ]
+        "sameAs": ["https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-"]
       }
     </script>
     <script src="./assets/config.js" defer></script>
@@ -150,7 +145,9 @@
         <path d="m6 15 6-6 6 6"></path>
       </symbol>
       <symbol id="i-external" viewBox="0 0 24 24">
-        <path d="M14 4h6m0 0v6m0-6-9 9M19 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4"></path>
+        <path
+          d="M14 4h6m0 0v6m0-6-9 9M19 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4"
+        ></path>
       </symbol>
       <symbol id="i-check" viewBox="0 0 24 24">
         <path d="m4 12 5 5L20 6"></path>
@@ -195,17 +192,23 @@
       </symbol>
       <symbol id="i-globe" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="9"></circle>
-        <path d="M3 12h18M12 3c2.5 2.5 3.8 5.7 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3Z"></path>
+        <path
+          d="M3 12h18M12 3c2.5 2.5 3.8 5.7 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3Z"
+        ></path>
       </symbol>
       <symbol id="i-sun" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="4"></circle>
-        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+        <path
+          d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+        ></path>
       </symbol>
       <symbol id="i-moon" viewBox="0 0 24 24">
         <path d="M20.2 15.2A8.5 8.5 0 0 1 8.8 3.8 8.6 8.6 0 1 0 20.2 15.2Z"></path>
       </symbol>
       <symbol id="i-github" viewBox="0 0 24 24">
-        <path d="M12 .7a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.2.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.7-1.3-1.7-1.1-.8.1-.8.1-.8 1.2.1 1.9 1.3 1.9 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.4-1.3-5.4-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.4 5.9.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6A11.5 11.5 0 0 0 12 .7Z"></path>
+        <path
+          d="M12 .7a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.2.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.7-1.3-1.7-1.1-.8.1-.8.1-.8 1.2.1 1.9 1.3 1.9 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.4-1.3-5.4-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.4 5.9.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6A11.5 11.5 0 0 0 12 .7Z"
+        ></path>
       </symbol>
       <symbol id="i-chevron-left" viewBox="0 0 24 24">
         <path d="m15 18-6-6 6-6"></path>
@@ -227,7 +230,9 @@
         <path d="m8 9-4 3 4 3M16 9l4 3-4 3M14 5l-4 14"></path>
       </symbol>
       <symbol id="i-puzzle" viewBox="0 0 24 24">
-        <path d="M9 4a2 2 0 1 1 4 0v2h3a1 1 0 0 1 1 1v3h2a2 2 0 1 1 0 4h-2v3a1 1 0 0 1-1 1h-3v2a2 2 0 1 1-4 0v-2H6a1 1 0 0 1-1-1v-3H3a2 2 0 1 1 0-4h2V7a1 1 0 0 1 1-1h3V4Z"></path>
+        <path
+          d="M9 4a2 2 0 1 1 4 0v2h3a1 1 0 0 1 1 1v3h2a2 2 0 1 1 0 4h-2v3a1 1 0 0 1-1 1h-3v2a2 2 0 1 1-4 0v-2H6a1 1 0 0 1-1-1v-3H3a2 2 0 1 1 0-4h2V7a1 1 0 0 1 1-1h3V4Z"
+        ></path>
       </symbol>
       <symbol id="i-file" viewBox="0 0 24 24">
         <path d="M6 3h8l4 4v14H6zM14 3v5h4"></path>
@@ -241,17 +246,32 @@
     <header class="site-header" id="siteHeader">
       <div class="wrap nav-wrap">
         <a class="brand" href="#top" aria-label="Tayyar home" data-i18n-aria-label="a11y.home">
-          <img class="brand-mark" src="./assets/img/tayyar-icon.png" width="27" height="27" alt="" aria-hidden="true" />
+          <img
+            class="brand-mark"
+            src="./assets/img/tayyar-icon.png"
+            width="27"
+            height="27"
+            alt=""
+            aria-hidden="true"
+          />
           <span class="brand-word">TAYYAR</span>
           <span class="brand-version" data-config="version" data-prefix="v">v1.2.0</span>
         </a>
 
         <nav class="desktop-nav" aria-label="Primary" data-i18n-aria-label="nav.primary">
-          <a class="nav-link" href="#features" data-nav="features" data-i18n="nav.features">Features</a>
+          <a class="nav-link" href="#features" data-nav="features" data-i18n="nav.features"
+            >Features</a
+          >
           <a class="nav-link" href="#how" data-nav="how" data-i18n="nav.how">How it works</a>
-          <a class="nav-link" href="#connections" data-nav="connections" data-i18n="nav.connections">Connections</a>
-          <a class="nav-link" href="#download" data-nav="download" data-i18n="nav.download">Download</a>
-          <a class="nav-link" href="#extension" data-nav="extension" data-i18n="nav.extension">Extension</a>
+          <a class="nav-link" href="#connections" data-nav="connections" data-i18n="nav.connections"
+            >Connections</a
+          >
+          <a class="nav-link" href="#download" data-nav="download" data-i18n="nav.download"
+            >Download</a
+          >
+          <a class="nav-link" href="#extension" data-nav="extension" data-i18n="nav.extension"
+            >Extension</a
+          >
           <a class="nav-link" href="#faq" data-nav="faq" data-i18n="nav.faq">FAQ</a>
         </nav>
 
@@ -311,7 +331,9 @@
             aria-label="Open menu"
             data-i18n-aria-label="nav.menu"
           >
-            <span class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span class="menu-lines" aria-hidden="true"
+              ><span></span><span></span><span></span
+            ></span>
           </button>
         </div>
       </div>
@@ -319,11 +341,21 @@
 
     <div class="mobile-menu" id="mobileMenu" hidden>
       <nav aria-label="Mobile primary" data-i18n-aria-label="nav.mobilePrimary">
-        <a href="#features" data-nav="features"><span>01</span><span data-i18n="nav.features">Features</span></a>
-        <a href="#how" data-nav="how"><span>02</span><span data-i18n="nav.how">How it works</span></a>
-        <a href="#connections" data-nav="connections"><span>03</span><span data-i18n="nav.connections">Connections</span></a>
-        <a href="#download" data-nav="download"><span>04</span><span data-i18n="nav.download">Download</span></a>
-        <a href="#extension" data-nav="extension"><span>05</span><span data-i18n="nav.extension">Extension</span></a>
+        <a href="#features" data-nav="features"
+          ><span>01</span><span data-i18n="nav.features">Features</span></a
+        >
+        <a href="#how" data-nav="how"
+          ><span>02</span><span data-i18n="nav.how">How it works</span></a
+        >
+        <a href="#connections" data-nav="connections"
+          ><span>03</span><span data-i18n="nav.connections">Connections</span></a
+        >
+        <a href="#download" data-nav="download"
+          ><span>04</span><span data-i18n="nav.download">Download</span></a
+        >
+        <a href="#extension" data-nav="extension"
+          ><span>05</span><span data-i18n="nav.extension">Extension</span></a
+        >
         <a href="#faq" data-nav="faq"><span>06</span><span data-i18n="nav.faq">FAQ</span></a>
       </nav>
       <div class="mobile-menu-actions">
@@ -352,7 +384,9 @@
         A download manager that uses every connection you have.
       </p>
       <div class="mobile-menu-footer">
-        <span class="mono" dir="ltr" style="color: var(--dim); font-size: 9px">TAYYAR / <span data-config="version" data-prefix="v">v1.2.0</span></span>
+        <span class="mono" dir="ltr" style="color: var(--dim); font-size: 9px"
+          >TAYYAR / <span data-config="version" data-prefix="v">v1.2.0</span></span
+        >
         <a
           href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.0"
           target="_blank"
@@ -360,7 +394,8 @@
           style="font-size: 11px; min-height: 0; border: 0"
           data-config-href="releaseTag"
           data-i18n="download.releaseNotes"
-        >Release notes</a>
+          >Release notes</a
+        >
       </div>
     </div>
 
@@ -377,9 +412,8 @@
               <span class="line-two gradient-text" data-i18n="hero.title2">Every connection.</span>
             </h1>
             <p class="hero-lede" data-i18n="hero.lede">
-              Tayyar splits a file into blocks and pulls it over Wi-Fi, Ethernet and USB at the
-              same time — with resume after restarts, queues, and extract-while-downloading built
-              in.
+              Tayyar splits a file into blocks and pulls it over Wi-Fi, Ethernet and USB at the same
+              time — with resume after restarts, queues, and extract-while-downloading built in.
             </p>
             <div class="hero-actions">
               <a
@@ -394,7 +428,9 @@
               </a>
               <a class="btn btn-secondary btn-lg" href="#how">
                 <span data-i18n="hero.secondary">See how it works</span>
-                <svg class="icon arrow-icon" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                <svg class="icon arrow-icon" aria-hidden="true">
+                  <use href="#i-arrow-right"></use>
+                </svg>
               </a>
             </div>
             <div class="hero-meta">
@@ -422,7 +458,13 @@
 
             <div class="app-window" dir="ltr" aria-hidden="true">
               <div class="app-titlebar">
-                <img class="app-mark" src="./assets/img/tayyar-icon.png" width="14" height="14" alt="" />
+                <img
+                  class="app-mark"
+                  src="./assets/img/tayyar-icon.png"
+                  width="14"
+                  height="14"
+                  alt=""
+                />
                 <span class="app-name">TAYYAR</span>
                 <span class="app-version">v<span data-config="versionPlain">1.2.0</span></span>
                 <span class="app-turbo">TURBO</span>
@@ -443,15 +485,46 @@
 
               <div class="app-hero">
                 <div class="app-diagram">
-                  <svg viewBox="0 0 220 78" role="img" aria-label="Three networks feeding one download">
+                  <svg
+                    viewBox="0 0 220 78"
+                    role="img"
+                    aria-label="Three networks feeding one download"
+                  >
                     <g fill="none" stroke-width="2.2" stroke-linecap="round">
-                      <path d="M70 14 C101 14 126 39 151 39" stroke="#4ea89a" stroke-dasharray="4 5" opacity="0.9"></path>
-                      <path d="M70 39 C101 39 126 39 151 39" stroke="#d8a44c" stroke-dasharray="4 5" opacity="0.9"></path>
-                      <path d="M70 64 C101 64 126 39 151 39" stroke="#7e93bd" stroke-dasharray="4 5" opacity="0.8"></path>
+                      <path
+                        d="M70 14 C101 14 126 39 151 39"
+                        stroke="#4ea89a"
+                        stroke-dasharray="4 5"
+                        opacity="0.9"
+                      ></path>
+                      <path
+                        d="M70 39 C101 39 126 39 151 39"
+                        stroke="#d8a44c"
+                        stroke-dasharray="4 5"
+                        opacity="0.9"
+                      ></path>
+                      <path
+                        d="M70 64 C101 64 126 39 151 39"
+                        stroke="#7e93bd"
+                        stroke-dasharray="4 5"
+                        opacity="0.8"
+                      ></path>
                     </g>
-                    <circle cx="151" cy="39" r="8.5" fill="none" stroke="#8b6cff" stroke-opacity="0.35"></circle>
+                    <circle
+                      cx="151"
+                      cy="39"
+                      r="8.5"
+                      fill="none"
+                      stroke="#8b6cff"
+                      stroke-opacity="0.35"
+                    ></circle>
                     <circle cx="151" cy="39" r="3.2" fill="#8b6cff"></circle>
-                    <path d="M160 39h32" stroke="#c9c0ff" stroke-width="5" stroke-linecap="round"></path>
+                    <path
+                      d="M160 39h32"
+                      stroke="#c9c0ff"
+                      stroke-width="5"
+                      stroke-linecap="round"
+                    ></path>
                     <path d="m188 34 6 5-6 5" fill="#c9c0ff"></path>
                     <g font-family="Roboto Mono, monospace" font-size="6.2" letter-spacing="0.7">
                       <text x="64" y="12" text-anchor="end" fill="#8d93a6">WI-FI</text>
@@ -469,24 +542,57 @@
 
                 <div class="app-total">
                   <span class="app-label">TOTAL SPEED</span>
-                  <div class="app-speed"><strong id="mockSpeed">42.8</strong><small>MB/s</small></div>
+                  <div class="app-speed">
+                    <strong id="mockSpeed">42.8</strong><small>MB/s</small>
+                  </div>
                   <div class="app-speed-sub">AVG 39.4 MB/s · PEAK 48.1 MB/s</div>
                 </div>
 
                 <div class="app-chart">
                   <span class="app-label">THROUGHPUT · LAST 60S</span>
-                  <svg viewBox="0 0 300 80" preserveAspectRatio="none" role="img" aria-label="Combined throughput chart">
+                  <svg
+                    viewBox="0 0 300 80"
+                    preserveAspectRatio="none"
+                    role="img"
+                    aria-label="Combined throughput chart"
+                  >
                     <g stroke="#8d93a6" stroke-opacity="0.18" stroke-width="1">
                       <line x1="0" y1="20" x2="300" y2="20"></line>
                       <line x1="0" y1="40" x2="300" y2="40"></line>
                       <line x1="0" y1="60" x2="300" y2="60"></line>
                     </g>
-                    <polygon points="0,80 0,43 24,37 48,44 72,30 96,34 120,23 144,27 168,18 192,25 216,16 240,22 264,12 288,18 300,14 300,80" fill="#4ea89a" fill-opacity="0.28"></polygon>
-                    <polygon points="0,80 0,53 24,48 48,55 72,45 96,50 120,39 144,43 168,34 192,40 216,32 240,37 264,28 288,33 300,29 300,80" fill="#d8a44c" fill-opacity="0.2"></polygon>
-                    <polygon points="0,80 0,62 24,58 48,63 72,55 96,60 120,50 144,54 168,46 192,51 216,44 240,48 264,40 288,45 300,41 300,80" fill="#7e93bd" fill-opacity="0.21"></polygon>
-                    <polyline points="0,43 24,37 48,44 72,30 96,34 120,23 144,27 168,18 192,25 216,16 240,22 264,12 288,18 300,14" fill="none" stroke="#c9c0ff" stroke-width="1.7" stroke-opacity="0.9"></polyline>
+                    <polygon
+                      points="0,80 0,43 24,37 48,44 72,30 96,34 120,23 144,27 168,18 192,25 216,16 240,22 264,12 288,18 300,14 300,80"
+                      fill="#4ea89a"
+                      fill-opacity="0.28"
+                    ></polygon>
+                    <polygon
+                      points="0,80 0,53 24,48 48,55 72,45 96,50 120,39 144,43 168,34 192,40 216,32 240,37 264,28 288,33 300,29 300,80"
+                      fill="#d8a44c"
+                      fill-opacity="0.2"
+                    ></polygon>
+                    <polygon
+                      points="0,80 0,62 24,58 48,63 72,55 96,60 120,50 144,54 168,46 192,51 216,44 240,48 264,40 288,45 300,41 300,80"
+                      fill="#7e93bd"
+                      fill-opacity="0.21"
+                    ></polygon>
+                    <polyline
+                      points="0,43 24,37 48,44 72,30 96,34 120,23 144,27 168,18 192,25 216,16 240,22 264,12 288,18 300,14"
+                      fill="none"
+                      stroke="#c9c0ff"
+                      stroke-width="1.7"
+                      stroke-opacity="0.9"
+                    ></polyline>
                     <g class="chart-scan">
-                      <line x1="150" y1="0" x2="150" y2="80" stroke="#22d3ee" stroke-width="1" stroke-opacity="0.35"></line>
+                      <line
+                        x1="150"
+                        y1="0"
+                        x2="150"
+                        y2="80"
+                        stroke="#22d3ee"
+                        stroke-width="1"
+                        stroke-opacity="0.35"
+                      ></line>
                       <circle cx="150" cy="22" r="2.5" fill="#22d3ee"></circle>
                     </g>
                   </svg>
@@ -509,14 +615,30 @@
               </div>
 
               <div class="app-grid" aria-hidden="true">
-                <i class="app-cell done"></i><i class="app-cell done"></i><i class="app-cell done"></i><i class="app-cell done"></i><i class="app-cell done"></i><i class="app-cell done"></i><i class="app-cell done"></i><i class="app-cell done"></i>
-                <i class="app-cell done"></i><i class="app-cell done"></i><i class="app-cell done"></i><i class="app-cell done"></i><i class="app-cell live"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i>
-                <i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i>
-                <i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i>
-                <i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i>
-                <i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i>
-                <i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i>
-                <i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i>
+                <i class="app-cell done"></i><i class="app-cell done"></i
+                ><i class="app-cell done"></i><i class="app-cell done"></i
+                ><i class="app-cell done"></i><i class="app-cell done"></i
+                ><i class="app-cell done"></i><i class="app-cell done"></i>
+                <i class="app-cell done"></i><i class="app-cell done"></i
+                ><i class="app-cell done"></i><i class="app-cell done"></i
+                ><i class="app-cell live"></i><i class="app-cell"></i><i class="app-cell"></i
+                ><i class="app-cell"></i> <i class="app-cell"></i><i class="app-cell"></i
+                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
+                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i>
+                <i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
+                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
+                ><i class="app-cell"></i><i class="app-cell"></i> <i class="app-cell"></i
+                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
+                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
+                ><i class="app-cell"></i> <i class="app-cell"></i><i class="app-cell"></i
+                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
+                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i>
+                <i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
+                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
+                ><i class="app-cell"></i><i class="app-cell"></i> <i class="app-cell"></i
+                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
+                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
+                ><i class="app-cell"></i>
               </div>
 
               <div class="app-networks">
@@ -554,10 +676,16 @@
           </div>
         </div>
 
-        <div class="wrap hero-stats" aria-label="Tayyar at a glance" data-i18n-aria-label="hero.statsAria">
+        <div
+          class="wrap hero-stats"
+          aria-label="Tayyar at a glance"
+          data-i18n-aria-label="hero.statsAria"
+        >
           <div class="hero-stat">
             <div class="hero-stat-value" dir="ltr">2–64</div>
-            <div class="hero-stat-label" data-i18n="hero.stats.streamsLabel">streams per network</div>
+            <div class="hero-stat-label" data-i18n="hero.stats.streamsLabel">
+              streams per network
+            </div>
           </div>
           <div class="hero-stat">
             <div class="hero-stat-value" dir="ltr">3</div>
@@ -565,11 +693,15 @@
           </div>
           <div class="hero-stat">
             <div class="hero-stat-value is-formats" dir="ltr">ZIP · RAR · TAR</div>
-            <div class="hero-stat-label" data-i18n="hero.stats.extractLabel">extract while downloading</div>
+            <div class="hero-stat-label" data-i18n="hero.stats.extractLabel">
+              extract while downloading
+            </div>
           </div>
           <div class="hero-stat">
             <div class="hero-stat-value" dir="ltr">0</div>
-            <div class="hero-stat-label" data-i18n="hero.stats.accountsLabel">accounts required</div>
+            <div class="hero-stat-label" data-i18n="hero.stats.accountsLabel">
+              accounts required
+            </div>
           </div>
         </div>
       </section>
@@ -578,8 +710,13 @@
         <div class="wrap">
           <div class="section-head reveal">
             <div>
-              <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span><span data-i18n="features.eyebrow">Built for big files</span></p>
-              <h2 class="section-title" id="features-title" data-i18n="features.title">Speed when there’s headroom.</h2>
+              <p class="eyebrow">
+                <span class="eyebrow-dot" aria-hidden="true"></span
+                ><span data-i18n="features.eyebrow">Built for big files</span>
+              </p>
+              <h2 class="section-title" id="features-title" data-i18n="features.title">
+                Speed when there’s headroom.
+              </h2>
             </div>
             <p class="section-lede" data-i18n="features.lede">
               Tayyar does the unglamorous work: splits files, keeps every connection busy, verifies
@@ -590,7 +727,9 @@
           <div class="feature-grid">
             <article class="feature-card reveal" style="--reveal-delay: 0ms">
               <div class="feature-card-top">
-                <span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="#i-network"></use></svg></span>
+                <span class="feature-icon"
+                  ><svg class="icon" aria-hidden="true"><use href="#i-network"></use></svg
+                ></span>
                 <span class="feature-tag" data-i18n="features.f1Tag">MULTI-NET</span>
               </div>
               <h3 data-i18n="features.f1Title">Every connection, together</h3>
@@ -602,7 +741,9 @@
 
             <article class="feature-card reveal" style="--reveal-delay: 55ms">
               <div class="feature-card-top">
-                <span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="#i-streams"></use></svg></span>
+                <span class="feature-icon"
+                  ><svg class="icon" aria-hidden="true"><use href="#i-streams"></use></svg
+                ></span>
                 <span class="feature-tag" data-i18n="features.f2Tag">STREAMS</span>
               </div>
               <h3 data-i18n="features.f2Title">2 to 64 connections</h3>
@@ -614,7 +755,9 @@
 
             <article class="feature-card reveal" style="--reveal-delay: 110ms">
               <div class="feature-card-top">
-                <span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="#i-archive"></use></svg></span>
+                <span class="feature-icon"
+                  ><svg class="icon" aria-hidden="true"><use href="#i-archive"></use></svg
+                ></span>
                 <span class="feature-tag" data-i18n="features.f3Tag">EXTRACT</span>
               </div>
               <h3 data-i18n="features.f3Title">Download + extract</h3>
@@ -623,13 +766,16 @@
                 download. No second pass.
               </p>
               <div class="feature-formats" aria-hidden="true">
-                <span class="format-chip">ZIP</span><span class="format-chip">RAR</span><span class="format-chip">TAR</span><span class="format-chip">.TAR.GZ</span>
+                <span class="format-chip">ZIP</span><span class="format-chip">RAR</span
+                ><span class="format-chip">TAR</span><span class="format-chip">.TAR.GZ</span>
               </div>
             </article>
 
             <article class="feature-card reveal" style="--reveal-delay: 0ms">
               <div class="feature-card-top">
-                <span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="#i-link"></use></svg></span>
+                <span class="feature-icon"
+                  ><svg class="icon" aria-hidden="true"><use href="#i-link"></use></svg
+                ></span>
                 <span class="feature-tag" data-i18n="features.f4Tag">DIRECT</span>
               </div>
               <h3 data-i18n="features.f4Title">Direct links stay direct</h3>
@@ -641,7 +787,9 @@
 
             <article class="feature-card reveal" style="--reveal-delay: 55ms">
               <div class="feature-card-top">
-                <span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="#i-browser"></use></svg></span>
+                <span class="feature-icon"
+                  ><svg class="icon" aria-hidden="true"><use href="#i-browser"></use></svg
+                ></span>
                 <span class="feature-tag" data-i18n="features.f5Tag">BROWSER</span>
               </div>
               <h3 data-i18n="features.f5Title">From browser to Tayyar</h3>
@@ -653,7 +801,9 @@
 
             <article class="feature-card reveal" style="--reveal-delay: 110ms">
               <div class="feature-card-top">
-                <span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="#i-tray"></use></svg></span>
+                <span class="feature-icon"
+                  ><svg class="icon" aria-hidden="true"><use href="#i-tray"></use></svg
+                ></span>
                 <span class="feature-tag" data-i18n="features.f6Tag">TRAY</span>
               </div>
               <h3 data-i18n="features.f6Title">Closes to the tray</h3>
@@ -681,17 +831,26 @@
         <div class="wrap">
           <div class="section-head reveal">
             <div>
-              <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span><span data-i18n="how.eyebrow">Three steps</span></p>
-              <h2 class="section-title" id="how-title" data-i18n="how.title">From link to finished file.</h2>
+              <p class="eyebrow">
+                <span class="eyebrow-dot" aria-hidden="true"></span
+                ><span data-i18n="how.eyebrow">Three steps</span>
+              </p>
+              <h2 class="section-title" id="how-title" data-i18n="how.title">
+                From link to finished file.
+              </h2>
             </div>
-            <p class="section-lede" data-i18n="how.lede">No setup maze. Install, paste, and let it run.</p>
+            <p class="section-lede" data-i18n="how.lede">
+              No setup maze. Install, paste, and let it run.
+            </p>
           </div>
 
           <div class="how-grid">
             <article class="how-step reveal" style="--reveal-delay: 0ms">
               <div class="how-step-top">
                 <span class="step-number" aria-hidden="true">01</span>
-                <span class="step-icon"><svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg></span>
+                <span class="step-icon"
+                  ><svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg
+                ></span>
               </div>
               <div class="step-tag" data-i18n="how.step1Tag">01 / INSTALL</div>
               <h3 data-i18n="how.step1Title">Install Tayyar</h3>
@@ -704,7 +863,9 @@
             <article class="how-step reveal" style="--reveal-delay: 70ms">
               <div class="how-step-top">
                 <span class="step-number" aria-hidden="true">02</span>
-                <span class="step-icon"><svg class="icon" aria-hidden="true"><use href="#i-link"></use></svg></span>
+                <span class="step-icon"
+                  ><svg class="icon" aria-hidden="true"><use href="#i-link"></use></svg
+                ></span>
               </div>
               <div class="step-tag" data-i18n="how.step2Tag">02 / ADD</div>
               <h3 data-i18n="how.step2Title">Add what you want</h3>
@@ -716,7 +877,9 @@
             <article class="how-step reveal" style="--reveal-delay: 140ms">
               <div class="how-step-top">
                 <span class="step-number" aria-hidden="true">03</span>
-                <span class="step-icon"><svg class="icon" aria-hidden="true"><use href="#i-zap"></use></svg></span>
+                <span class="step-icon"
+                  ><svg class="icon" aria-hidden="true"><use href="#i-zap"></use></svg
+                ></span>
               </div>
               <div class="step-tag" data-i18n="how.step3Tag">03 / RUN</div>
               <h3 data-i18n="how.step3Title">Let Tayyar work</h3>
@@ -729,7 +892,9 @@
 
           <p class="how-note reveal">
             <svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg>
-            <span data-i18n="how.note">You can pause, resume, reorder or schedule from the queue.</span>
+            <span data-i18n="how.note"
+              >You can pause, resume, reorder or schedule from the queue.</span
+            >
           </p>
         </div>
       </section>
@@ -738,8 +903,13 @@
         <div class="wrap">
           <div class="section-head reveal">
             <div>
-              <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span><span data-i18n="connections.eyebrow">Parallel by design</span></p>
-              <h2 class="section-title" id="connections-title" data-i18n="connections.title">More streams. Less waiting.</h2>
+              <p class="eyebrow">
+                <span class="eyebrow-dot" aria-hidden="true"></span
+                ><span data-i18n="connections.eyebrow">Parallel by design</span>
+              </p>
+              <h2 class="section-title" id="connections-title" data-i18n="connections.title">
+                More streams. Less waiting.
+              </h2>
             </div>
             <p class="section-lede" data-i18n="connections.lede">
               Choose how many connections Tayyar may open per network. More streams help when the
@@ -755,15 +925,21 @@
               <div class="connections-points">
                 <div class="connections-point">
                   <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>
-                  <span data-i18n="connections.point1">2–32 presets; Turbo takes it to 64 per network.</span>
+                  <span data-i18n="connections.point1"
+                    >2–32 presets; Turbo takes it to 64 per network.</span
+                  >
                 </div>
                 <div class="connections-point">
                   <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>
-                  <span data-i18n="connections.point2">Every stream stays bound to the network you chose.</span>
+                  <span data-i18n="connections.point2"
+                    >Every stream stays bound to the network you chose.</span
+                  >
                 </div>
                 <div class="connections-point">
                   <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>
-                  <span data-i18n="connections.point3">Blocks move to whichever connection is free.</span>
+                  <span data-i18n="connections.point3"
+                    >Blocks move to whichever connection is free.</span
+                  >
                 </div>
               </div>
               <div class="connections-footnote">
@@ -782,34 +958,78 @@
               </div>
               <div class="console-count-row">
                 <span class="console-count" data-stream-count>08</span>
-                <span class="console-count-copy" data-i18n="connections.perNetwork">streams / network</span>
+                <span class="console-count-copy" data-i18n="connections.perNetwork"
+                  >streams / network</span
+                >
               </div>
 
-              <div class="preset-row" role="group" aria-label="Connections per network" data-i18n-aria-label="connections.presets">
-                <button class="preset" type="button" data-streams="2" aria-pressed="false">2</button>
-                <button class="preset" type="button" data-streams="4" aria-pressed="false">4</button>
+              <div
+                class="preset-row"
+                role="group"
+                aria-label="Connections per network"
+                data-i18n-aria-label="connections.presets"
+              >
+                <button class="preset" type="button" data-streams="2" aria-pressed="false">
+                  2
+                </button>
+                <button class="preset" type="button" data-streams="4" aria-pressed="false">
+                  4
+                </button>
                 <button class="preset" type="button" data-streams="8" aria-pressed="true">8</button>
-                <button class="preset" type="button" data-streams="16" aria-pressed="false">16</button>
-                <button class="preset" type="button" data-streams="32" aria-pressed="false">32</button>
-                <button class="preset" type="button" data-streams="64" aria-pressed="false">64 <span class="preset-turbo" data-i18n="connections.turbo">TURBO</span></button>
+                <button class="preset" type="button" data-streams="16" aria-pressed="false">
+                  16
+                </button>
+                <button class="preset" type="button" data-streams="32" aria-pressed="false">
+                  32
+                </button>
+                <button class="preset" type="button" data-streams="64" aria-pressed="false">
+                  64 <span class="preset-turbo" data-i18n="connections.turbo">TURBO</span>
+                </button>
               </div>
 
               <div class="stream-map" aria-hidden="true">
-                <i class="stream-cell is-on"></i><i class="stream-cell is-on"></i><i class="stream-cell is-on"></i><i class="stream-cell is-on"></i><i class="stream-cell is-on"></i><i class="stream-cell is-on"></i><i class="stream-cell is-on"></i><i class="stream-cell is-on"></i>
-                <i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i>
-                <i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i>
-                <i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i>
-                <i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i>
-                <i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i>
-                <i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i>
-                <i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i>
+                <i class="stream-cell is-on"></i><i class="stream-cell is-on"></i
+                ><i class="stream-cell is-on"></i><i class="stream-cell is-on"></i
+                ><i class="stream-cell is-on"></i><i class="stream-cell is-on"></i
+                ><i class="stream-cell is-on"></i><i class="stream-cell is-on"></i>
+                <i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
+                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
+                ><i class="stream-cell"></i><i class="stream-cell"></i> <i class="stream-cell"></i
+                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
+                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
+                ><i class="stream-cell"></i> <i class="stream-cell"></i><i class="stream-cell"></i
+                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
+                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i>
+                <i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
+                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
+                ><i class="stream-cell"></i><i class="stream-cell"></i> <i class="stream-cell"></i
+                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
+                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
+                ><i class="stream-cell"></i> <i class="stream-cell"></i><i class="stream-cell"></i
+                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
+                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i>
+                <i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
+                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
+                ><i class="stream-cell"></i><i class="stream-cell"></i>
               </div>
 
-              <p class="console-summary" data-connections-summary aria-live="polite">3 networks × 8 streams = 24 active streams</p>
-              <div class="console-networks" aria-label="Active networks" data-i18n-aria-label="connections.activeNetworks">
-                <span class="console-network" style="--network-color: var(--wifi)"><span class="dot"></span>Wi-Fi</span>
-                <span class="console-network" style="--network-color: var(--eth)"><span class="dot"></span>Ethernet</span>
-                <span class="console-network" style="--network-color: var(--usb)"><span class="dot"></span>USB</span>
+              <p class="console-summary" data-connections-summary aria-live="polite">
+                3 networks × 8 streams = 24 active streams
+              </p>
+              <div
+                class="console-networks"
+                aria-label="Active networks"
+                data-i18n-aria-label="connections.activeNetworks"
+              >
+                <span class="console-network" style="--network-color: var(--wifi)"
+                  ><span class="dot"></span>Wi-Fi</span
+                >
+                <span class="console-network" style="--network-color: var(--eth)"
+                  ><span class="dot"></span>Ethernet</span
+                >
+                <span class="console-network" style="--network-color: var(--usb)"
+                  ><span class="dot"></span>USB</span
+                >
               </div>
               <p class="console-disclaimer" data-i18n="connections.disclaimer">
                 Illustrative only — actual throughput depends on the server, your ISP and your
@@ -824,11 +1044,23 @@
         <div class="wrap">
           <div class="download-card reveal">
             <div class="download-copy">
-              <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span><span data-i18n="download.eyebrow">Windows 10 &amp; 11 · 64-bit</span></p>
+              <p class="eyebrow">
+                <span class="eyebrow-dot" aria-hidden="true"></span
+                ><span data-i18n="download.eyebrow">Windows 10 &amp; 11 · 64-bit</span>
+              </p>
               <div class="app-icon-wrap">
-                <img class="app-icon" src="./assets/img/tayyar-icon.png" width="70" height="70" alt="Tayyar app icon" data-i18n-alt="download.appIconAlt" />
+                <img
+                  class="app-icon"
+                  src="./assets/img/tayyar-icon.png"
+                  width="70"
+                  height="70"
+                  alt="Tayyar app icon"
+                  data-i18n-alt="download.appIconAlt"
+                />
               </div>
-              <h2 class="download-title" id="download-title" data-i18n="download.title">Ready when you are.</h2>
+              <h2 class="download-title" id="download-title" data-i18n="download.title">
+                Ready when you are.
+              </h2>
               <p class="download-lede" data-i18n="download.lede">
                 One installer. No account. The latest build and its checksum are below.
               </p>
@@ -843,7 +1075,9 @@
                   <svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg>
                   <span class="download-button-label">
                     <span data-i18n="download.button">Download installer</span>
-                    <span class="download-button-version" data-config="version" data-prefix="v">v1.2.0</span>
+                    <span class="download-button-version" data-config="version" data-prefix="v"
+                      >v1.2.0</span
+                    >
                   </span>
                 </a>
                 <a
@@ -857,7 +1091,6 @@
                   <span data-i18n="download.releaseNotes">Release notes</span>
                 </a>
               </div>
-
             </div>
 
             <div class="release-card">
@@ -897,12 +1130,20 @@
               <div class="release-checksum">
                 <div class="checksum-head">
                   <span class="label" data-i18n="download.checksumLabel">SHA-256</span>
-                  <button class="copy-btn" id="copyChecksum" type="button" aria-label="Copy SHA-256 checksum" data-i18n-aria-label="download.copyChecksum">
+                  <button
+                    class="copy-btn"
+                    id="copyChecksum"
+                    type="button"
+                    aria-label="Copy SHA-256 checksum"
+                    data-i18n-aria-label="download.copyChecksum"
+                  >
                     <svg class="icon" aria-hidden="true"><use href="#i-copy"></use></svg>
                     <span data-copy-label data-i18n="common.copy">Copy</span>
                   </button>
                 </div>
-                <code class="checksum" data-config="sha256">643DD40A89A86019B75A8BFE84FCDE6DF4C506371031313019EC49E4AABE2C6B</code>
+                <code class="checksum" data-config="sha256"
+                  >643DD40A89A86019B75A8BFE84FCDE6DF4C506371031313019EC49E4AABE2C6B</code
+                >
               </div>
             </div>
           </div>
@@ -910,16 +1151,28 @@
           <div class="download-whats-new reveal">
             <p class="whats-new-label" data-i18n="download.whatsNew">What's new in {version}</p>
             <ul class="whats-new-list">
-              <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg><span data-i18n="download.whatsNew1">Better recovery from slow first-byte responses</span></li>
-              <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg><span data-i18n="download.whatsNew2">Extract archives while downloading</span></li>
-              <li><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg><span data-i18n="download.whatsNew3">Start with Windows and stay in the tray</span></li>
+              <li>
+                <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg
+                ><span data-i18n="download.whatsNew1"
+                  >Better recovery from slow first-byte responses</span
+                >
+              </li>
+              <li>
+                <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg
+                ><span data-i18n="download.whatsNew2">Extract archives while downloading</span>
+              </li>
+              <li>
+                <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg
+                ><span data-i18n="download.whatsNew3">Start with Windows and stay in the tray</span>
+              </li>
             </ul>
           </div>
 
           <div class="download-warning reveal">
             <svg class="icon" aria-hidden="true"><use href="#i-warning"></use></svg>
             <div>
-              <strong data-i18n="download.unsignedTitle">About the SmartScreen warning</strong><br />
+              <strong data-i18n="download.unsignedTitle">About the SmartScreen warning</strong
+              ><br />
               <span data-i18n="download.unsignedBody">
                 The installer is not code-signed, so Windows may show a SmartScreen warning. Choose
                 More info → Run anyway, or build from source. The project does not have a
@@ -929,11 +1182,21 @@
           </div>
 
           <div class="download-links reveal">
-            <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" data-config-href="license">
+            <a
+              href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/blob/main/LICENSE"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-config-href="license"
+            >
               <svg class="icon" aria-hidden="true"><use href="#i-code"></use></svg>
               <span data-i18n="download.source">Source code (MIT)</span>
             </a>
-            <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/issues" target="_blank" rel="noopener noreferrer" data-config-href="issues">
+            <a
+              href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-config-href="issues"
+            >
               <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
               <span data-i18n="footer.issues">Issues &amp; ideas</span>
             </a>
@@ -947,14 +1210,24 @@
       <section class="section extension" id="extension" aria-labelledby="extension-title">
         <div class="wrap extension-grid">
           <div class="extension-copy">
-            <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span><span data-i18n="extension.eyebrow">Chromium extension</span></p>
-            <h2 class="section-title" id="extension-title" data-i18n="extension.title">Browsers can hand it over.</h2>
+            <p class="eyebrow">
+              <span class="eyebrow-dot" aria-hidden="true"></span
+              ><span data-i18n="extension.eyebrow">Chromium extension</span>
+            </p>
+            <h2 class="section-title" id="extension-title" data-i18n="extension.title">
+              Browsers can hand it over.
+            </h2>
             <p class="section-lede" data-i18n="extension.lede">
               Install the extension, and downloads open in Tayyar instead of your browser’s download
               shelf — cookies included.
             </p>
-            <div class="extension-browsers" aria-label="Supported browsers" data-i18n-aria-label="extension.supported">
-              <span class="browser-chip">Chrome</span><span class="browser-chip">Edge</span><span class="browser-chip">Brave</span><span class="browser-chip">Opera</span>
+            <div
+              class="extension-browsers"
+              aria-label="Supported browsers"
+              data-i18n-aria-label="extension.supported"
+            >
+              <span class="browser-chip">Chrome</span><span class="browser-chip">Edge</span
+              ><span class="browser-chip">Brave</span><span class="browser-chip">Opera</span>
             </div>
             <div class="extension-actions">
               <a
@@ -972,30 +1245,43 @@
                 href="./extension/privacy/"
                 data-config-href="privacy"
                 data-i18n="extension.privacyLink"
-              >Read the privacy policy</a>
+                >Read the privacy policy</a
+              >
             </div>
 
             <ol class="extension-steps">
               <li class="extension-step">
                 <h3 data-i18n="extension.step1Title">Download and unzip</h3>
-                <p data-i18n="extension.step1Body">Get the zip from the same release page and extract it somewhere you’ll remember.</p>
+                <p data-i18n="extension.step1Body">
+                  Get the zip from the same release page and extract it somewhere you’ll remember.
+                </p>
               </li>
               <li class="extension-step">
                 <h3 data-i18n="extension.step2Title">Open extensions</h3>
-                <p data-i18n="extension.step2Body">In Chrome, Edge, Brave or Opera, open chrome://extensions and turn on Developer mode.</p>
+                <p data-i18n="extension.step2Body">
+                  In Chrome, Edge, Brave or Opera, open chrome://extensions and turn on Developer
+                  mode.
+                </p>
               </li>
               <li class="extension-step">
                 <h3 data-i18n="extension.step3Title">Load unpacked</h3>
-                <p data-i18n="extension.step3Body">Choose Load unpacked and select the chrome folder inside the extracted zip.</p>
+                <p data-i18n="extension.step3Body">
+                  Choose Load unpacked and select the chrome folder inside the extracted zip.
+                </p>
               </li>
               <li class="extension-step">
                 <h3 data-i18n="extension.step4Title">Send a download</h3>
-                <p data-i18n="extension.step4Body">Use the toolbar button or the right-click menu. Tayyar must be running.</p>
+                <p data-i18n="extension.step4Body">
+                  Use the toolbar button or the right-click menu. Tayyar must be running.
+                </p>
               </li>
             </ol>
 
             <div class="extension-manual">
-              <strong><svg class="icon" aria-hidden="true"><use href="#i-warning"></use></svg><span data-i18n="extension.manualTitle">Manual install</span></strong>
+              <strong
+                ><svg class="icon" aria-hidden="true"><use href="#i-warning"></use></svg
+                ><span data-i18n="extension.manualTitle">Manual install</span></strong
+              >
               <span data-i18n="extension.manualBody">
                 This isn’t on the Chrome Web Store yet, so the browser won’t update it for you.
                 Re-download the zip when a new release lands.
@@ -1003,7 +1289,9 @@
             </div>
             <p class="extension-local">
               <svg class="icon" aria-hidden="true"><use href="#i-lock"></use></svg>
-              <span data-i18n="extension.localNote">The extension only talks to Tayyar on 127.0.0.1 — no developer servers.</span>
+              <span data-i18n="extension.localNote"
+                >The extension only talks to Tayyar on 127.0.0.1 — no developer servers.</span
+              >
             </p>
           </div>
 
@@ -1026,7 +1314,13 @@
                       <strong>Download with Tayyar</strong>
                       <span data-i18n="extension.connected">Connected to Tayyar</span>
                     </span>
-                    <svg class="icon" style="width: 12px; height: 12px; color: #6f7587" aria-hidden="true"><use href="#i-puzzle"></use></svg>
+                    <svg
+                      class="icon"
+                      style="width: 12px; height: 12px; color: #6f7587"
+                      aria-hidden="true"
+                    >
+                      <use href="#i-puzzle"></use>
+                    </svg>
                   </div>
                   <div class="extension-popup-file">
                     <span class="file-icon">ZIP</span>
@@ -1053,10 +1347,23 @@
       <section class="section faq" id="faq" aria-labelledby="faq-title">
         <div class="wrap faq-grid">
           <div class="faq-intro">
-            <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span><span data-i18n="faq.eyebrow">Questions, answered</span></p>
-            <h2 class="section-title" id="faq-title" data-i18n="faq.title">The honest version, rough edges included.</h2>
-            <p class="section-lede" data-i18n="faq.lede">If you can’t find your answer, open an issue on GitHub.</p>
-            <a class="faq-cta" href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/issues" target="_blank" rel="noopener noreferrer" data-config-href="issues">
+            <p class="eyebrow">
+              <span class="eyebrow-dot" aria-hidden="true"></span
+              ><span data-i18n="faq.eyebrow">Questions, answered</span>
+            </p>
+            <h2 class="section-title" id="faq-title" data-i18n="faq.title">
+              The honest version, rough edges included.
+            </h2>
+            <p class="section-lede" data-i18n="faq.lede">
+              If you can’t find your answer, open an issue on GitHub.
+            </p>
+            <a
+              class="faq-cta"
+              href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-config-href="issues"
+            >
               <span data-i18n="faq.ask">Open an issue</span>
               <svg class="icon flip-rtl" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
             </a>
@@ -1064,7 +1371,11 @@
 
           <div class="faq-list">
             <details class="faq-item" open>
-              <summary><span class="faq-question" data-i18n="faq.q1">Does Tayyar really combine my connections?</span><span class="faq-plus" aria-hidden="true"></span></summary>
+              <summary>
+                <span class="faq-question" data-i18n="faq.q1"
+                  >Does Tayyar really combine my connections?</span
+                ><span class="faq-plus" aria-hidden="true"></span>
+              </summary>
               <div class="faq-answer" data-i18n="faq.a1">
                 Yes — when more than one network is active and the server supports range requests.
                 It splits the file into blocks and binds streams to different interfaces. A server
@@ -1072,18 +1383,30 @@
               </div>
             </details>
             <details class="faq-item">
-              <summary><span class="faq-question" data-i18n="faq.q2">Which versions of Windows are supported?</span><span class="faq-plus" aria-hidden="true"></span></summary>
-              <div class="faq-answer" data-i18n="faq.a2">Windows 10 and 11, 64-bit. The current installer is built for x64.</div>
+              <summary>
+                <span class="faq-question" data-i18n="faq.q2"
+                  >Which versions of Windows are supported?</span
+                ><span class="faq-plus" aria-hidden="true"></span>
+              </summary>
+              <div class="faq-answer" data-i18n="faq.a2">
+                Windows 10 and 11, 64-bit. The current installer is built for x64.
+              </div>
             </details>
             <details class="faq-item">
-              <summary><span class="faq-question" data-i18n="faq.q3">Is it free?</span><span class="faq-plus" aria-hidden="true"></span></summary>
+              <summary>
+                <span class="faq-question" data-i18n="faq.q3">Is it free?</span
+                ><span class="faq-plus" aria-hidden="true"></span>
+              </summary>
               <div class="faq-answer" data-i18n="faq.a3">
                 Yes. Tayyar is free and open source under the MIT license, based on Plexo. There is
                 no account, subscription or ad.
               </div>
             </details>
             <details class="faq-item">
-              <summary><span class="faq-question" data-i18n="faq.q4">Why does Windows warn me?</span><span class="faq-plus" aria-hidden="true"></span></summary>
+              <summary>
+                <span class="faq-question" data-i18n="faq.q4">Why does Windows warn me?</span
+                ><span class="faq-plus" aria-hidden="true"></span>
+              </summary>
               <div class="faq-answer" data-i18n="faq.a4">
                 The installer is unsigned, so SmartScreen can’t verify its publisher. Choose More
                 info → Run anyway, or build from source. Signing requires a paid certificate, which
@@ -1091,22 +1414,33 @@
               </div>
             </details>
             <details class="faq-item">
-              <summary><span class="faq-question" data-i18n="faq.q5">Where is the browser extension?</span><span class="faq-plus" aria-hidden="true"></span></summary>
+              <summary>
+                <span class="faq-question" data-i18n="faq.q5">Where is the browser extension?</span
+                ><span class="faq-plus" aria-hidden="true"></span>
+              </summary>
               <div class="faq-answer" data-i18n="faq.a5">
                 It’s a separate zip on the releases page, not inside the installer and not on the
                 Chrome Web Store. Install it manually with Developer mode; steps are above.
               </div>
             </details>
             <details class="faq-item">
-              <summary><span class="faq-question" data-i18n="faq.q6">Which archives extract while downloading?</span><span class="faq-plus" aria-hidden="true"></span></summary>
+              <summary>
+                <span class="faq-question" data-i18n="faq.q6"
+                  >Which archives extract while downloading?</span
+                ><span class="faq-plus" aria-hidden="true"></span>
+              </summary>
               <div class="faq-answer" data-i18n="faq.a6">
-                ZIP, RAR and TAR archives, including .tar.gz, .tar.bz2 and .tar.xz. .7z and multipart
-                archives can’t be stream-extracted; download them fully, then extract with your usual
-                tool.
+                ZIP, RAR and TAR archives, including .tar.gz, .tar.bz2 and .tar.xz. .7z and
+                multipart archives can’t be stream-extracted; download them fully, then extract with
+                your usual tool.
               </div>
             </details>
             <details class="faq-item">
-              <summary><span class="faq-question" data-i18n="faq.q7">Will it make every download faster?</span><span class="faq-plus" aria-hidden="true"></span></summary>
+              <summary>
+                <span class="faq-question" data-i18n="faq.q7"
+                  >Will it make every download faster?</span
+                ><span class="faq-plus" aria-hidden="true"></span>
+              </summary>
               <div class="faq-answer" data-i18n="faq.a7">
                 No. Tayyar makes the most of the connections and server capacity you have. If the
                 server limits you to one slow stream, more connections won’t help. Turbo mode can
@@ -1114,7 +1448,10 @@
               </div>
             </details>
             <details class="faq-item">
-              <summary><span class="faq-question" data-i18n="faq.q8">Does it collect my data?</span><span class="faq-plus" aria-hidden="true"></span></summary>
+              <summary>
+                <span class="faq-question" data-i18n="faq.q8">Does it collect my data?</span
+                ><span class="faq-plus" aria-hidden="true"></span>
+              </summary>
               <div class="faq-answer" data-i18n="faq.a8">
                 Tayyar keeps settings and download history on your PC. The browser extension only
                 talks to Tayyar on 127.0.0.1 — not to developer servers. See the extension privacy
@@ -1122,10 +1459,13 @@
               </div>
             </details>
             <details class="faq-item">
-              <summary><span class="faq-question" data-i18n="faq.q9">Can I use it for torrents?</span><span class="faq-plus" aria-hidden="true"></span></summary>
+              <summary>
+                <span class="faq-question" data-i18n="faq.q9">Can I use it for torrents?</span
+                ><span class="faq-plus" aria-hidden="true"></span>
+              </summary>
               <div class="faq-answer" data-i18n="faq.a9">
-                Yes, .torrent files and magnet links can be opened with Tayyar. The installer doesn’t
-                take over your torrent associations.
+                Yes, .torrent files and magnet links can be opened with Tayyar. The installer
+                doesn’t take over your torrent associations.
               </div>
             </details>
           </div>
@@ -1138,11 +1478,22 @@
         <div class="footer-grid">
           <div class="footer-brand">
             <a class="brand" href="#top" aria-label="Tayyar home" data-i18n-aria-label="a11y.home">
-              <img class="brand-mark" src="./assets/img/tayyar-icon.png" width="24" height="24" alt="" aria-hidden="true" />
+              <img
+                class="brand-mark"
+                src="./assets/img/tayyar-icon.png"
+                width="24"
+                height="24"
+                alt=""
+                aria-hidden="true"
+              />
               <span class="brand-word">TAYYAR</span>
             </a>
-            <p class="footer-tagline" data-i18n="footer.tagline">A download manager that uses every connection you have.</p>
-            <p class="footer-status">Windows 10 / 11 · v<span data-config="versionPlain">1.2.0</span> · MIT</p>
+            <p class="footer-tagline" data-i18n="footer.tagline">
+              A download manager that uses every connection you have.
+            </p>
+            <p class="footer-status">
+              Windows 10 / 11 · v<span data-config="versionPlain">1.2.0</span> · MIT
+            </p>
           </div>
 
           <div class="footer-col">
@@ -1150,7 +1501,12 @@
             <a href="#features" data-i18n="footer.features">Features</a>
             <a href="#download" data-i18n="footer.download">Download</a>
             <a href="#extension" data-i18n="footer.extension">Browser extension</a>
-            <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.0" target="_blank" rel="noopener noreferrer" data-config-href="releaseTag">
+            <a
+              href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.0"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-config-href="releaseTag"
+            >
               <span data-i18n="footer.release">Latest release</span>
               <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
             </a>
@@ -1158,19 +1514,39 @@
 
           <div class="footer-col">
             <h2 data-i18n="footer.project">Project</h2>
-            <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-" target="_blank" rel="noopener noreferrer" data-config-href="github">
+            <a
+              href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-config-href="github"
+            >
               <span data-i18n="footer.github">GitHub</span>
               <svg class="icon fill" aria-hidden="true"><use href="#i-github"></use></svg>
             </a>
-            <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/issues" target="_blank" rel="noopener noreferrer" data-config-href="issues">
+            <a
+              href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-config-href="issues"
+            >
               <span data-i18n="footer.issues">Issues &amp; ideas</span>
               <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
             </a>
-            <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" data-config-href="license">
+            <a
+              href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/blob/main/LICENSE"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-config-href="license"
+            >
               <span data-i18n="footer.license">MIT license</span>
               <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
             </a>
-            <a href="https://github.com/anmolkapil/plexo" target="_blank" rel="noopener noreferrer" data-config-href="plexo">
+            <a
+              href="https://github.com/anmolkapil/plexo"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-config-href="plexo"
+            >
               <span data-i18n="footer.basedOn">Based on Plexo</span>
               <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
             </a>
@@ -1179,7 +1555,9 @@
           <div class="footer-col">
             <h2 data-i18n="footer.help">Help</h2>
             <a href="#faq" data-i18n="footer.faq">FAQ</a>
-            <a href="./extension/privacy/" data-config-href="privacy" data-i18n="footer.privacy">Privacy</a>
+            <a href="./extension/privacy/" data-config-href="privacy" data-i18n="footer.privacy"
+              >Privacy</a
+            >
             <a href="#top" data-i18n="footer.backTop">Back to top</a>
             <button class="footer-lang" type="button" data-lang-toggle>
               <svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg>
@@ -1192,7 +1570,9 @@
           <div class="footer-bottom-left">
             <span data-i18n="footer.rights">© {year} Tayyar contributors.</span>
             <span class="sep" aria-hidden="true">·</span>
-            <span data-i18n="footer.disclaimer">Not affiliated with Internet Download Manager or Tonec Inc.</span>
+            <span data-i18n="footer.disclaimer"
+              >Not affiliated with Internet Download Manager or Tonec Inc.</span
+            >
           </div>
           <div class="footer-bottom-right">
             <span data-i18n="footer.made">Made for Windows</span>

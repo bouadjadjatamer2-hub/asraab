@@ -19,7 +19,11 @@ const server = http.createServer((req, res) => {
     res.end(payload.subarray(start, end + 1))
     return
   }
-  res.writeHead(200, { 'Content-Type': 'application/octet-stream', 'Content-Length': SIZE, 'Accept-Ranges': 'bytes' })
+  res.writeHead(200, {
+    'Content-Type': 'application/octet-stream',
+    'Content-Length': SIZE,
+    'Accept-Ranges': 'bytes'
+  })
   res.end(payload)
 })
 await new Promise((resolve) => server.listen(8973, '127.0.0.1', resolve))
@@ -35,25 +39,30 @@ const app = await electron.launch({
 app.process().stderr?.on('data', (chunk) => console.log('main stderr:', String(chunk).trim()))
 app.process().stdout?.on('data', (chunk) => console.log('main stdout:', String(chunk).trim()))
 const win = await app.firstWindow()
-win.on('console', (message) => console.log('renderer:', message.type(), message.text().slice(0, 300)))
+win.on('console', (message) =>
+  console.log('renderer:', message.type(), message.text().slice(0, 300))
+)
 await win.waitForTimeout(2200)
 
-const started = await win.evaluate(async ({ dest }) => {
-  const interfaces = await window.plexo.listInterfaces()
-  const id = await window.plexo.startDownload({
-    kind: 'http',
-    url: 'http://127.0.0.1:8973/file.bin',
-    destinationDir: dest,
-    suggestedFileName: 'chromium-test.bin',
-    totalBytes: 2 * 1024 * 1024,
-    supportsRanges: true,
-    interfaceIds: [interfaces[0].id],
-    etag: null,
-    lastModified: null,
-    transport: 'chromium'
-  })
-  return { id, interfaces }
-}, { dest })
+const started = await win.evaluate(
+  async ({ dest }) => {
+    const interfaces = await window.plexo.listInterfaces()
+    const id = await window.plexo.startDownload({
+      kind: 'http',
+      url: 'http://127.0.0.1:8973/file.bin',
+      destinationDir: dest,
+      suggestedFileName: 'chromium-test.bin',
+      totalBytes: 2 * 1024 * 1024,
+      supportsRanges: true,
+      interfaceIds: [interfaces[0].id],
+      etag: null,
+      lastModified: null,
+      transport: 'chromium'
+    })
+    return { id, interfaces }
+  },
+  { dest }
+)
 console.log('started:', JSON.stringify(started).slice(0, 400))
 
 for (const wait of [500, 1000, 2000, 4000]) {
@@ -64,9 +73,16 @@ for (const wait of [500, 1000, 2000, 4000]) {
     return {
       downloads: downloadList.map((entry) => {
         const state = entry.state ?? entry
-        return { id: state.id, status: state.status, bytes: state.bytesDownloaded, error: state.error }
+        return {
+          id: state.id,
+          status: state.status,
+          bytes: state.bytesDownloaded,
+          error: state.error
+        }
       }),
-      history: history.slice(0, 3).map((entry) => ({ id: entry.id, status: entry.status, name: entry.fileName }))
+      history: history
+        .slice(0, 3)
+        .map((entry) => ({ id: entry.id, status: entry.status, name: entry.fileName }))
     }
   })
   console.log(`after ${wait}ms:`, JSON.stringify(snapshot).slice(0, 700))

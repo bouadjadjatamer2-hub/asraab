@@ -13,6 +13,7 @@ extended for maximum throughput. See [NOTICE.md](NOTICE.md) for what changed.
 ## Features
 
 **Speed**
+
 - Dynamic segmentation: 8 streams per network at start, growing to 32 (64 in Turbo mode) as the
   server and the disk keep up. Blocks are pulled from a shared queue, so a faster network simply
   takes more of them.
@@ -22,6 +23,7 @@ extended for maximum throughput. See [NOTICE.md](NOTICE.md) for what changed.
 - Turbo mode: 16–64 streams per network and 4 MB blocks, for servers that can take it.
 
 **Reliability**
+
 - Resume across restarts, sleep/wake reconnection, expired-link replacement without losing bytes.
 - ETag / Last-Modified validation so a file republished mid-download is never stitched together
   from two versions.
@@ -29,6 +31,7 @@ extended for maximum throughput. See [NOTICE.md](NOTICE.md) for what changed.
   under the final name.
 
 **Control**
+
 - Queues, concurrent-download limits, per-network speed caps and data budgets (daily/weekly/monthly).
 - Download schedule by time and day.
 - Categories: finished files are sorted into Video, Audio, Programs, Documents, Archives, Images.
@@ -37,6 +40,7 @@ extended for maximum throughput. See [NOTICE.md](NOTICE.md) for what changed.
 - Optional shutdown when the queue finishes.
 
 **Browser**
+
 - Extension (Chromium and Firefox) hands downloads to the app with the browser's cookies, so
   signed-in downloads work.
 
