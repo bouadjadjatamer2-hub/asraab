@@ -124,8 +124,7 @@ window.TAYYAR_I18N = {
 
     'download.eyebrow': 'ويندوز 10 و11 · 64 بت',
     'download.title': 'جاهز عندما تكون جاهزاً.',
-    'download.lede':
-      'ملف تثبيت واحد. بدون حساب. أحدث إصدار وبصمته بالأسفل.',
+    'download.lede': 'ملف تثبيت واحد. بدون حساب. أحدث إصدار وبصمته بالأسفل.',
     'download.button': 'حمّل تيار',
     'download.releaseNotes': 'ملاحظات الإصدار',
     'download.releaseChannel': 'قناة الإصدار',
@@ -170,8 +169,7 @@ window.TAYYAR_I18N = {
     'extension.step3Title': 'اختر Load unpacked',
     'extension.step3Body': 'اختر Load unpacked ثم حدّد مجلد chrome داخل الملف المستخرج.',
     'extension.step4Title': 'أرسل تحميلاً',
-    'extension.step4Body':
-      'استخدم زر الإضافة أو قائمة النقر الأيمن. يجب أن يكون تيار قيد التشغيل.',
+    'extension.step4Body': 'استخدم زر الإضافة أو قائمة النقر الأيمن. يجب أن يكون تيار قيد التشغيل.',
     'extension.manualTitle': 'تثبيت يدوي',
     'extension.manualBody':
       'الإضافة ليست على Chrome Web Store بعد، لذا لن يحدّثها المتصفح تلقائياً. أعد تنزيل ملف zip مع كل إصدار جديد.',
@@ -258,4 +256,4 @@ window.TAYYAR_I18N = {
     'lang.arabic': 'العربية',
     'lang.english': 'English'
   }
-};
+}
