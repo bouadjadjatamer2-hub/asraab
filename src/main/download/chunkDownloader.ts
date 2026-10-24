@@ -5,6 +5,7 @@ import { asConnectionError, type HttpConnection } from '../network/routes'
 import type { BrowserContext } from '../../shared/types'
 import { testKnobs } from '../testKnobs'
 import { requestHeaders } from './browserContext'
+import { diskCoalesceBytes } from './diskWriter'
 import { compareVersion, type FileVersion, type VersionCheck } from './fileVersion'
 
 export interface ChunkDownloadOptions {
@@ -100,7 +101,7 @@ const MAX_REDIRECTS = 5
 // (downloadFile.ts): a full writer still means the disk is behind (see DiskWatch), not batching.
 // 512 KiB is deliberately larger than a socket's usual 16-64 KiB reads: on a rotating disk each
 // separate write costs a seek, so one contiguous batch does far more good than one tiny write.
-const WRITE_COALESCE_BYTES = 512 * 1024
+const WRITE_COALESCE_BYTES = diskCoalesceBytes()
 const WRITE_COALESCE_MS = 20
 
 interface ServedRange {

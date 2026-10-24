@@ -192,7 +192,10 @@ test.describe('resume safety checks @smoke', () => {
 })
 
 test.describe('cancel and remove @smoke', () => {
-  test('cancel while paused', async ({ plexo, serve }) => {
+  test('cancel while paused removes it from the list and deletes its files', async ({
+    plexo,
+    serve
+  }) => {
     const origin = await serve({ size: SIZE })
     const reached = origin.hold(7 * BLOCK)
     const id = await plexo.start(origin.url(), origin.sha256)
@@ -203,7 +206,8 @@ test.describe('cancel and remove @smoke', () => {
     expect(existsSync(staging), 'pausing keeps the staging file').toBe(true)
     origin.release()
     await plexo.api.cancelDownload(id)
-    await plexo.waitForHttpStatus('cancelled')
+    // Cancelling takes it off the list at once; the disk cleanup finishes in the background.
+    expect(await plexo.currentHttp()).toBeNull()
     await expect.poll(() => existsSync(staging), { message: 'cancelling removes it' }).toBe(false)
   })
 

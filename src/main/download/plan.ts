@@ -16,11 +16,16 @@ export const DEFAULT_MAX_BLOCK_BYTES = 8 * MIB
  * megabyte the round trips cost more than splitting the file saves. */
 export const MIN_BLOCK_BYTES = MIB
 
-/** Streams each network starts with, as download managers do (IDM, XDM: 8). From there it
- * doubles once they are all receiving (see concurrency.ts). */
+/** Streams each network starts with, as download managers do (IDM, XDM: 8). Auto keeps this
+ * count: IDM's steady default is also eight, and growing a mobile or a busy server past it is
+ * what makes a speed chart saw-tooth. A picked count (or Turbo) can still use more. */
 export const START_STREAMS_PER_NETWORK = 8
 
-/** The most streams a network can grow to (IDM's limit). Enough for a far server, where TCP holds
+/** Auto on a rotating disk: fewer streams mean fewer seeks between blocks being written at
+ * once. The user can still pick 8, 16 or 32 for one download. */
+export const AUTO_HDD_STREAMS_PER_NETWORK = 4
+
+/** The most streams a network may run (IDM's limit). Enough for a far server, where TCP holds
  * each connection to a megabyte or so a second; a server that wants fewer says so by refusing. */
 export const MAX_STREAMS_PER_NETWORK = 32
 
@@ -69,6 +74,10 @@ export interface PlanRequest {
   splittable: boolean
   /** The networks it starts on. More can join later; this only sizes the blocks. */
   networkCount: number
+  /** Streams each network will actually run at first. The plan leaves each of them two blocks;
+   * sizing by the old 32-stream ceiling cut a 126 MB file into 1 MB requests even though Auto
+   * only runs eight streams. Left out: the mode's ceiling. */
+  streamsPerNetwork?: number
   maxBlockBytes?: number
 }
 
@@ -105,7 +114,14 @@ export function planDownload(request: PlanRequest): DownloadPlan {
 
   const maxBlockBytes =
     request.maxBlockBytes ?? (turbo ? TURBO_MAX_BLOCK_BYTES : DEFAULT_MAX_BLOCK_BYTES)
-  const targetBlocks = networkCount * maxStreamsPerNetwork() * BLOCKS_PER_STREAM
+  const streams = Math.max(
+    1,
+    Math.min(
+      maxStreamsPerNetwork(),
+      Math.floor(request.streamsPerNetwork ?? maxStreamsPerNetwork())
+    )
+  )
+  const targetBlocks = networkCount * streams * BLOCKS_PER_STREAM
   const blockSizeBytes = clamp(
     Math.ceil(totalBytes / targetBlocks),
     Math.min(MIN_BLOCK_BYTES, maxBlockBytes),

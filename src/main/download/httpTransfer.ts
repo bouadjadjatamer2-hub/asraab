@@ -19,7 +19,13 @@ import {
 } from './concurrency'
 import { downloadChunk, fetchRange, HttpStatusError, RemoteChangedError } from './chunkDownloader'
 import { compareVersion, type FileVersion } from './fileVersion'
-import { interleave, maxStreamsPerNetwork, startStreamsPerNetwork, startingStreams } from './plan'
+import {
+  interleave,
+  maxStreamsPerNetwork,
+  startStreamsPerNetwork,
+  startingStreams,
+  turboMode
+} from './plan'
 import { pickWork, type SchedulerPolicy, type Work } from './scheduler'
 import {
   delay,
@@ -179,11 +185,31 @@ function concurrencyFor(
 ): ConcurrencyController | null {
   if (!splittable(request) || testStreamsPerNetwork() !== null) return null
   const picked = pickedStreams(request)
-  return picked === undefined
-    ? new ConcurrencyController(maxStreamsPerNetwork(), true, (networkId) =>
-        Math.floor(maxStreamsPerNetwork() / Math.max(1, host.downloadsOn(networkId)))
-      )
-    : new ConcurrencyController(picked, false)
+  const count = streamsForRequest(request)
+  // No doubling on Auto. IDM's stable default is eight connections per file, and a count that
+  // stays put keeps a mobile link's queue from growing until the link collapses. A stream that
+  // ends some other way is still made up for; refusals still lower the count and recover slowly.
+  // Auto also stays disk-aware: a rotating disk can still cut it further, while a count the user
+  // picked is left exactly as picked. Turbo is the explicit opt-in to the old growth, up to its
+  // own higher ceiling.
+  const ceiling = picked === undefined && turboMode() ? maxStreamsPerNetwork() : count
+  return new ConcurrencyController(
+    count,
+    picked === undefined && turboMode(),
+    (networkId) => Math.floor(ceiling / Math.max(1, host.downloadsOn(networkId))),
+    picked === undefined
+  )
+}
+
+/** The streams each network runs when it joins: the user's pick, else the disk-aware Auto count
+ * saved when the download started, else the mode's start count. */
+export function streamsForRequest(request: StartHttpDownloadRequest): number {
+  return (
+    pickedStreams(request) ??
+    (Number.isInteger(request.autoStreams) && request.autoStreams! >= 1
+      ? Math.min(request.autoStreams!, maxStreamsPerNetwork())
+      : startStreamsPerNetwork())
+  )
 }
 
 /** The streams per network the user picked for this download, if they didn't leave it on Auto. */
@@ -361,9 +387,7 @@ export class HttpTransfer implements Transfer {
       ? startingStreams(
           this.runtime.blocks.filter((block) => block.status === 'pending').length,
           joining.length,
-          testStreamsPerNetwork() ??
-            pickedStreams(this.runtime.requestPayload) ??
-            startStreamsPerNetwork()
+          testStreamsPerNetwork() ?? streamsForRequest(this.runtime.requestPayload)
         )
       : 1
 

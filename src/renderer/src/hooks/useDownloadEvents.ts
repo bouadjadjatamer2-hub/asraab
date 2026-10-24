@@ -4,6 +4,7 @@ import { useAppStore } from '../store/useAppStore'
 /** Subscribes once to main-process download pushes for the lifetime of the app. */
 export function useDownloadEvents(): void {
   const receiveDownloadUpdate = useAppStore((store) => store.receiveDownloadUpdate)
+  const forgetDownload = useAppStore((store) => store.forgetDownload)
   const receiveHistory = useAppStore((store) => store.receiveHistory)
 
   useEffect(() => {
@@ -19,6 +20,9 @@ export function useDownloadEvents(): void {
     // Subscribed before the snapshots are asked for, so nothing sent in between is missed; each
     // update carries a count, so whichever arrives late can't undo the other.
     const unsubscribe = window.plexo.onDownloadUpdated(receiveDownloadUpdate)
+    // The main process can take a download off the list before the action's reply arrives (or
+    // from a cancel not started by a row). Drop it as soon as it says so.
+    const unsubscribeRemoved = window.plexo.onDownloadRemoved(forgetDownload)
     // A bulk removal changes history once per download: list it once they've settled, rather
     // than re-checking every entry's file after each one. The rows already went from the store.
     let reload: ReturnType<typeof setTimeout> | undefined
@@ -44,7 +48,8 @@ export function useDownloadEvents(): void {
       clearTimeout(reload)
       window.removeEventListener('focus', loadHistory)
       unsubscribe()
+      unsubscribeRemoved()
       unsubscribeHistory()
     }
-  }, [receiveDownloadUpdate, receiveHistory])
+  }, [receiveDownloadUpdate, forgetDownload, receiveHistory])
 }

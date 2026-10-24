@@ -1,11 +1,11 @@
 // How many streams each network runs. Deliberately simple, after Gopeed and aria2: no timers and
 // no speed comparisons, so noise on a flaky network can't move it.
 //
-// - A network starts with START_STREAMS_PER_NETWORK (see reconcile in downloadManager.ts), or
-//   with the count the user picked, which it then keeps rather than grows.
-// - Once every one of its streams has received data, it doubles, up to the limit. Another
-//   connection costs little when the link is already full, and a server that caps each
-//   connection's speed is only outrun by more of them.
+// - A network starts with its count: Auto's steady eight (four on a rotating disk), the count the
+//   user picked, or Turbo's higher default. Auto keeps that count rather than doubling: IDM's
+//   stable default is eight, and growing a mobile link's queue past it is what makes a speed chart
+//   saw-tooth. A stream lost some other way is made up for. Turbo and a picked count work the same
+//   way, each at its own number.
 // - A server that refuses some of a network's streams (503, 429, 403, or leaves them unanswered
 //   for SILENT_AFTER_MS, see downloadManager.ts) while it is sending data down others is saying
 //   it wants fewer connections from this address: the refused streams close, and the network
@@ -139,18 +139,22 @@ export class ConcurrencyController {
   constructor(
     /** The most streams a network may run. */
     private readonly maxPerNetwork: number,
-    /** false: keep each network at maxPerNetwork (the user's pick) rather than doubling to it. */
+    /** false: keep each network at maxPerNetwork (Auto's steady count, or the user's pick) rather
+     * than doubling to it. */
     private readonly grows = true,
     /** The most a network may run for this download's share of it now (see the rules above). */
-    private readonly share: (networkId: string) => number = () => Infinity
+    private readonly share: (networkId: string) => number = () => Infinity,
+    /** Whether the disk may lower the count. Auto is disk-aware even though it doesn't grow; a
+     * count the user picked is left exactly as picked. */
+    private readonly diskAware = grows
   ) {}
 
   tick(snapshot: Snapshot): Action[] {
     const actions: Action[] = []
     const { now } = snapshot
     let spare = snapshot.spareWork
-    if (this.grows) this.judgeDisk(snapshot)
-    const diskHolds = this.grows && !!snapshot.disk && snapshot.disk.reading !== 'keeping-up'
+    if (this.diskAware) this.judgeDisk(snapshot)
+    const diskHolds = this.diskAware && !!snapshot.disk && snapshot.disk.reading !== 'keeping-up'
     for (const network of snapshot.networks) {
       const { id, streams } = network
       const refusedNow = network.refused > 0 && network.served > 0

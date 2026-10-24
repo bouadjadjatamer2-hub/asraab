@@ -1,4 +1,5 @@
 import { trashDownload } from './trashDownload'
+import { PendingDeletions } from './pendingDeletions'
 import { describeError } from '../../shared/errors'
 import { extractFolderName } from '../../shared/archive'
 import { spawn } from 'node:child_process'
@@ -40,12 +41,28 @@ import { Limits } from '../network/limits'
 import { mainLocale, t } from '../i18n'
 import { loadSettings } from '../settings'
 import { addToHistory, findInHistory, removeFromHistory } from './history'
-import { testKnobs } from '../testKnobs'
+import { testKnobs, testStreamsPerNetwork } from '../testKnobs'
 import { DownloadFile } from './downloadFile'
-import { compareSamples, HttpTransfer, pickedStreams, splittable } from './httpTransfer'
+import {
+  compareSamples,
+  HttpTransfer,
+  pickedStreams,
+  splittable,
+  streamsForRequest
+} from './httpTransfer'
 import { normalizeEtag } from './fileVersion'
 import { ensureDirectory, pathExists, reserveDestinationPath, reserveDirectory } from './paths'
-import { planBlocks, planDownload, planPieces, setTurboMode } from './plan'
+import {
+  AUTO_HDD_STREAMS_PER_NETWORK,
+  maxStreamsPerNetwork,
+  planBlocks,
+  planDownload,
+  planPieces,
+  setTurboMode,
+  startStreamsPerNetwork,
+  turboMode
+} from './plan'
+import { diskKindForPath } from './diskInfo'
 import { organizeFile, scanFile } from './postProcess'
 import { restoreBlocks, restorePieces, saveBlocks, type SavedBlocks } from './savedProgress'
 import { chosenFiles, finishedFiles, wantedPieces } from './torrent/files'
@@ -380,6 +397,10 @@ export class DownloadManager {
   private shutdownStarted = false
   /** Speed and data limits, for every download together. */
   readonly limits = new Limits(() => this.limitsChanged())
+  /** Paths a cancelled download left behind, kept across a crash until Windows lets go. */
+  private readonly deletions = new PendingDeletions(
+    join(app.getPath('userData'), 'pending-deletions.json')
+  )
 
   constructor(
     private getWindow: () => BrowserWindow | null,
@@ -389,6 +410,9 @@ export class DownloadManager {
       async () => {
         // Read after recovery, including any settings saved while the manifests were loading.
         await this.configureSettings(await loadSettings())
+        // Leftovers from a cancellation that was interrupted by a crash or a locked file go now;
+        // a path Windows still holds is kept for the next start.
+        void this.deletions.sweep()
       }
     )
   }
@@ -642,6 +666,9 @@ export class DownloadManager {
     const restored: DownloadRuntime[] = []
     await Promise.all(
       entries.map(async (id) => {
+        // A cancelled download whose cleanup was interrupted is not restored: its manifest and
+        // files are on the deletion list, and the background sweep will finish them.
+        if (await this.deletions.has(this.downloadDir(id))) return
         await rm(`${this.manifestPath(id)}.tmp`, { force: true }).catch(() => {})
         let persisted: unknown
         try {
@@ -985,6 +1012,24 @@ export class DownloadManager {
       throw new Error('Select at least one network')
     }
     await ensureDirectory(requestPayload.destinationDir)
+    // Auto keeps a lower count on a rotating disk; a picked count is the user's own and is left
+    // alone. Detection is cached per drive, so this costs one short query the first time.
+    if (
+      requestPayload.kind === 'http' &&
+      pickedStreams(requestPayload) === undefined &&
+      testStreamsPerNetwork() === null
+    ) {
+      const disk = await diskKindForPath(requestPayload.destinationDir)
+      requestPayload = {
+        ...requestPayload,
+        autoStreams:
+          disk === 'hdd'
+            ? turboMode()
+              ? Math.min(8, startStreamsPerNetwork())
+              : AUTO_HDD_STREAMS_PER_NETWORK
+            : startStreamsPerNetwork()
+      }
+    }
     const id = randomUUID()
     let runtime: DownloadRuntime
     if (requestPayload.kind === 'torrent') {
@@ -1074,6 +1119,9 @@ export class DownloadManager {
             totalBytes: requestPayload.totalBytes,
             splittable: requestPayload.supportsRanges,
             networkCount: usable.length,
+            streamsPerNetwork: turboMode()
+              ? maxStreamsPerNetwork()
+              : streamsForRequest(requestPayload),
             maxBlockBytes: testKnobs.blockBytes
           }).blockSizeBytes
       const blocks = planBlocks(requestPayload.totalBytes, blockSizeBytes)
@@ -1591,6 +1639,7 @@ export class DownloadManager {
   }
 
   async cancel(id: string): Promise<void> {
+    await this.initialization
     const runtime = this.runtimes.get(id)
     if (runtime?.cancelPromise) return runtime.cancelPromise
     if (
@@ -1603,53 +1652,84 @@ export class DownloadManager {
     )
       return
 
-    runtime.cancelPromise = this.cancelRuntime(runtime)
+    const operation = this.beginCancel(runtime)
+    runtime.cancelPromise = operation
     try {
-      await runtime.cancelPromise
+      await operation
     } finally {
       runtime.cancelPromise = undefined
     }
   }
 
-  private async cancelRuntime(runtime: DownloadRuntime): Promise<void> {
-    try {
-      // Stop writing first, but keep the item visible until its files and manifest are gone.
-      await this.pause(runtime.state.id)
-      if (runtime.state.status !== 'error') {
-        runtime.state.status = 'paused'
-        runtime.state.queuedAt = undefined
-        runtime.state.pausedAt ??= Date.now()
-      }
-      clearSpeeds(runtime.state)
-      this.stopRun(runtime)
-      this.pushUpdate(runtime, false)
-      await runtime.runPromise?.catch(() => {})
-      await runtime.file.discard()
-      if (runtime.kind === 'http' && runtime.requestPayload.streamExtract?.dir) {
-        await rm(runtime.requestPayload.streamExtract.dir, {
-          recursive: true,
-          force: true
-        }).catch(() => {})
-      }
-      await this.removePersistedDownload(runtime, false)
-      runtime.state.status = 'cancelled'
-      if (runtime.kind === 'http') {
-        for (const stream of runtime.state.streams) stream.status = 'cancelled'
-      }
-      this.pushUpdate(runtime, false)
-    } catch (error) {
-      runtime.removed = false
-      runtime.state.status = 'error'
-      runtime.state.error = error instanceof Error ? error.message : String(error)
-      // Cleanup may have removed only some files: retry cancellation rather than resuming them.
-      runtime.state.resumable = false
-      this.pushUpdate(runtime, false)
-      await this.persistNow(runtime)
-      throw error
-    } finally {
-      // A queued one never ran, so no run's end makes room after it.
-      this.pump()
+  /**
+   * Takes a cancelled download off the list at once. Connections and the writer are stopped
+   * before anything is deleted; the files and manifest go in the background, with retries for a
+   * file Windows still holds. The deletion list is saved first, so a crash at any point leaves
+   * the next start able to finish the job rather than restore a download the user cancelled.
+   */
+  private async beginCancel(runtime: DownloadRuntime): Promise<void> {
+    const extractDir =
+      runtime.kind === 'http' ? runtime.requestPayload.streamExtract?.dir : undefined
+    const paths =
+      runtime.kind === 'http'
+        ? [runtime.file.path, extractDir, this.downloadDir(runtime.state.id)]
+        : // A torrent's folder is removed through its owned-file check, which refuses to follow a
+          // link. Never hand that folder to a recursive delete here.
+          [this.downloadDir(runtime.state.id)]
+    await this.deletions.add(paths.filter((path): path is string => Boolean(path)))
+
+    runtime.removed = true
+    if (runtime.state.status !== 'error') runtime.state.status = 'cancelled'
+    runtime.state.queuedAt = undefined
+    runtime.state.pausedAt ??= Date.now()
+    clearSpeeds(runtime.state)
+    if (runtime.kind === 'http') {
+      for (const stream of runtime.state.streams) stream.status = 'cancelled'
     }
+    // The window already forgot it: the reply to removeDownload is what lets it drop the row.
+    this.runtimes.delete(runtime.state.id)
+    this.sendRemoved(runtime.state.id)
+    this.stopRun(runtime)
+    this.pump()
+    void this.finishCancellation(runtime, extractDir)
+  }
+
+  /** Tells the window a row is gone, whichever action (or direct cancel) took it off the list. */
+  private sendRemoved(id: string): void {
+    const window = this.getWindow()
+    if (window && !window.isDestroyed()) {
+      window.webContents.send(IpcChannels.downloadRemoved, id)
+    }
+  }
+
+  private async finishCancellation(
+    runtime: DownloadRuntime,
+    extractDir: string | undefined
+  ): Promise<void> {
+    // Nothing may read or write the partial file after its connections are gone.
+    await runtime.runPromise?.catch(() => {})
+    await this.discardCancelled(runtime)
+    if (extractDir) await rm(extractDir, { recursive: true, force: true }).catch(() => {})
+    await this.removePersistedDownload(runtime, false).catch(() => {})
+    // Retries are silent; a path that stays locked is kept in the list for the next start.
+    await this.deletions.sweep().catch(() => {})
+  }
+
+  /** One quick retry for a file Windows still holds. An HTTP staging file is also kept on the
+   * deletion list, so it gets the slower sweep; a torrent's files are removed only through its
+   * owned-file check (which refuses to follow a link). */
+  private async discardCancelled(runtime: DownloadRuntime): Promise<void> {
+    let last: unknown
+    for (const wait of [0, 1_000, 2_000]) {
+      if (wait > 0) await new Promise((resolve) => setTimeout(resolve, wait))
+      try {
+        await runtime.file.discard()
+        return
+      } catch (error) {
+        last = error
+      }
+    }
+    console.warn('[tayyar] the cancelled download’s files are still locked', last)
   }
 
   /** Removes a download, cancelling one under way. A finished one's file stays where it is,
@@ -1658,12 +1738,19 @@ export class DownloadManager {
   async remove(id: string, trashFile = false): Promise<void> {
     await this.initialization
     let runtime = this.runtimes.get(id)
+    // A publish is a rename in progress: wait for it rather than delete the staging file out from
+    // under the rename. It is quick, and the item is either completed or failed afterwards.
+    if (runtime?.publishing) {
+      await runtime.runPromise?.catch(() => {})
+      runtime = this.runtimes.get(id)
+    }
     if (runtime?.state.status === 'completed') {
       // Completion is shown before history is saved. Let that move finish before choosing
       // whether to remove a live runtime or a history entry, including for torrent file removal.
       await runtime.runPromise?.catch(() => {})
       runtime = this.runtimes.get(id)
     }
+    let cancelled = false
     if (
       runtime &&
       (runtime.state.status === 'downloading' ||
@@ -1672,6 +1759,8 @@ export class DownloadManager {
         runtime.state.status === 'error')
     ) {
       await this.cancel(id)
+      // beginCancel takes the runtime off the map before it returns; cleanup is still running.
+      cancelled = this.runtimes.get(id) !== runtime
     }
     if (runtime) {
       if (trashFile && runtime.state.status === 'completed') {
@@ -1684,7 +1773,7 @@ export class DownloadManager {
         await trashDownload(runtime.state, owned)
       }
       this.runtimes.delete(id)
-      await this.removePersistedDownload(runtime)
+      if (!cancelled) await this.removePersistedDownload(runtime)
       if (runtime.state.status === 'completed') {
         await removeFromHistory([id])
         this.historyChanged()

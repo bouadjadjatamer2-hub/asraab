@@ -141,9 +141,8 @@ test.describe('removal during completion @smoke', () => {
   })
 })
 
-test('failed torrent cancellation stays visible across restart and can be retried @smoke', async ({
-  plexo,
-  dirs
+test('cancelling a torrent whose folder became a link removes the row without following it @smoke', async ({
+  plexo
 }) => {
   const swarm = await new Swarm().start()
   try {
@@ -167,40 +166,61 @@ test('failed torrent cancellation stays visible across restart and can be retrie
     await rename(paused.destinationPath, original)
     await symlink(original, paused.destinationPath, 'junction')
 
-    await expect(plexo.api.removeDownload(id)).rejects.toThrow(/folder is now a link/)
-    const failed = await plexo.waitForTorrentStatus('error')
-    expect(failed.error).toMatch(/folder is now a link/)
-    expect(failed.resumable).toBe(false)
+    // The row goes at once, like any other cancellation. The folder's owned-file check refuses to
+    // follow the link, so the retries leave both the link and what it points at untouched.
+    await plexo.api.removeDownload(id)
+    expect((await plexo.api.listDownloads()).find((entry) => entry.state.id === id)).toBeUndefined()
     const row = plexo.page.getByRole('button', { name: `Open ${paused.fileName}`, exact: true })
-    await expect(row).toBeVisible()
-    expect(
-      plexo.sessions
-        .flat()
-        .filter((state) => state.id === id)
-        .some((state) => state.status === 'cancelled')
-    ).toBe(false)
-    const manifest = join(dirs.userData, 'downloads', id, 'manifest.json')
-    expect(JSON.parse(await readFile(manifest, 'utf8')).state.status).toBe('error')
+    await expect(row).toHaveCount(0)
+    await plexo.page.waitForTimeout(4_000)
+    expect(existsSync(paused.destinationPath)).toBe(true)
+    expect(await readFile(join(original, 'personal.txt'), 'utf8')).toBe('keep me')
 
     await plexo.relaunch()
+    expect((await plexo.api.listDownloads()).find((entry) => entry.state.id === id)).toBeUndefined()
     await expect(
       plexo.page.getByRole('button', { name: `Open ${paused.fileName}`, exact: true })
-    ).toBeVisible()
-    expect((await plexo.waitForTorrentStatus('error')).error).toMatch(/folder is now a link/)
+    ).toHaveCount(0)
+    expect(existsSync(paused.destinationPath)).toBe(true)
+    expect(await readFile(join(original, 'personal.txt'), 'utf8')).toBe('keep me')
+
     await unlink(paused.destinationPath)
     await rename(original, paused.destinationPath)
-    await plexo.api.removeDownload(id)
-    expect(await plexo.all()).toEqual([])
-    expect(existsSync(manifest)).toBe(false)
-    expect(await readFile(join(paused.destinationPath, 'personal.txt'), 'utf8')).toBe('keep me')
-    for (const name of ['a.bin', 'b.bin'])
-      expect(existsSync(join(paused.destinationPath, name))).toBe(false)
   } finally {
     await swarm.stop()
   }
 })
 
-test('cleanup failure keeps an active HTTP download visible and blocks resume during cancellation @smoke', async ({
+test('startup finishes a cancellation that a crash interrupted @smoke', async ({
+  plexo,
+  serve,
+  dirs
+}) => {
+  const origin = await serve({ size: 24 * BLOCK })
+  const reached = origin.hold(7 * BLOCK)
+  const id = await plexo.start(origin.url(), origin.sha256)
+  await reached
+  await plexo.api.pauseDownload(id)
+  const paused = await plexo.waitForHttpStatus('paused')
+  origin.release()
+  const staging = `${paused.destinationPath}.plexo`
+  const manifestDir = join(dirs.userData, 'downloads', id)
+  expect(existsSync(staging)).toBe(true)
+  // What beginCancel writes before it stops anything. A crash after this point must not bring the
+  // cancelled download back as paused on the next start.
+  await writeFile(
+    join(dirs.userData, 'pending-deletions.json'),
+    JSON.stringify([staging, paused.destinationPath, manifestDir]),
+    'utf-8'
+  )
+  await plexo.relaunch()
+  await expect.poll(() => existsSync(staging), { timeout: 20_000 }).toBe(false)
+  await expect.poll(() => existsSync(manifestDir), { timeout: 20_000 }).toBe(false)
+  expect((await plexo.api.listDownloads()).find((entry) => entry.state.id === id)).toBeUndefined()
+  expect(await plexo.all()).toEqual([])
+})
+
+test('cancellation removes the row immediately and deletes a locked file in the background @smoke', async ({
   plexo,
   serve,
   dirs
@@ -211,6 +231,7 @@ test('cleanup failure keeps an active HTTP download visible and blocks resume du
   await reached
   const state = (await plexo.currentHttp())!
   const staging = `${state.destinationPath}.plexo`
+  const manifestDir = join(dirs.userData, 'downloads', id)
   await plexo.evaluateMain((_electron, path) => {
     const fs = process.getBuiltinModule('node:fs/promises')
     const original = fs.rm
@@ -235,47 +256,30 @@ test('cleanup failure keeps an active HTTP download visible and blocks resume du
     }
   }, staging)
   try {
-    const removing = plexo.api.removeDownload(id).then(
-      () => null,
-      (error: Error) => error.message
-    )
+    // The UI gets its answer at once: the row is gone before the locked file is deleted.
+    await plexo.api.removeDownload(id)
+    expect((await plexo.api.listDownloads()).find((entry) => entry.state.id === id)).toBeUndefined()
+    await expect(
+      plexo.page.getByRole('button', { name: `Open ${state.fileName}`, exact: true })
+    ).toHaveCount(0)
+
+    // Cleanup is trying in the background; the user was shown no error.
     await expect
       .poll(() =>
         plexo.evaluateMain(() => (globalThis as Record<string, unknown>).__discardHeld, null)
       )
       .toBe(true)
-    const alsoRemoving = plexo.api.removeDownload(id).then(
-      () => null,
-      (error: Error) => error.message
-    )
-    await plexo.api.resumeDownload(id)
-    expect(
-      (await plexo.api.listDownloads()).find((entry) => entry.state.id === id)?.state.status
-    ).toBe('paused')
-    await expect(
-      plexo.page.getByRole('button', { name: `Open ${state.fileName}`, exact: true })
-    ).toBeVisible()
+    await plexo.api.removeDownload(id)
+    await plexo.api.resumeDownload(id).catch(() => {})
+    expect((await plexo.api.listDownloads()).find((entry) => entry.state.id === id)).toBeUndefined()
+
+    // Let the held delete fail; the retry queue then removes it once the lock is gone.
     await plexo.evaluateMain(() => {
       ;((globalThis as Record<string, unknown>).__releaseDiscard as () => void)()
     }, null)
-    expect(await removing).toMatch(/Permission denied/)
-    expect(await alsoRemoving).toMatch(/Permission denied/)
-    const failed = await plexo.waitForHttpStatus('error')
-    expect(failed.resumable).toBe(false)
-    expect(existsSync(staging)).toBe(true)
-    expect(
-      plexo.sessions
-        .flat()
-        .filter((entry) => entry.id === id)
-        .some((entry) => entry.status === 'cancelled')
-    ).toBe(false)
-    expect(
-      JSON.parse(await readFile(join(dirs.userData, 'downloads', id, 'manifest.json'), 'utf8'))
-        .state.status
-    ).toBe('error')
-    await plexo.api.removeDownload(id)
-    expect(existsSync(staging)).toBe(false)
-    expect(await plexo.all()).toEqual([])
+    await expect.poll(() => existsSync(staging), { timeout: 15_000 }).toBe(false)
+    await expect.poll(() => existsSync(manifestDir), { timeout: 15_000 }).toBe(false)
+    expect((await plexo.all()).find((entry) => entry.id === id)).toBeUndefined()
   } finally {
     if (plexo.alive)
       await plexo

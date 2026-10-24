@@ -53,7 +53,14 @@ export const testKnobs = {
   torrentDht: env['PLEXO_E2E_DHT'] !== '0',
   /** `PLEXO_E2E_DHT_BOOTSTRAP=127.0.0.1:9` starts the DHT from these nodes instead of the
    * internet's, so a test can have a DHT that reaches no one. */
-  torrentDhtBootstrap: env['PLEXO_E2E_DHT_BOOTSTRAP']?.split(',').filter(Boolean)
+  torrentDhtBootstrap: env['PLEXO_E2E_DHT_BOOTSTRAP']?.split(',').filter(Boolean),
+  /** `hdd` or `ssd` makes disk detection deterministic in tests. */
+  diskKind:
+    env['PLEXO_E2E_DISK'] === 'hdd'
+      ? ('hdd' as const)
+      : env['PLEXO_E2E_DISK'] === 'ssd'
+        ? ('ssd' as const)
+        : null
 }
 
 /** `PLEXO_E2E_STREAMS=2` fixes how many streams each network runs and turns the automatic

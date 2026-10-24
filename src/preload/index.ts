@@ -77,6 +77,13 @@ const plexoApi = {
     return () => ipcRenderer.removeListener(IpcChannels.downloadUpdated, listener)
   },
 
+  /** A download left the list (cancelled, or removed): drop its row now. */
+  onDownloadRemoved: (callback: (id: string) => void): (() => void) => {
+    const listener = (_event: IpcRendererEvent, id: string): void => callback(id)
+    ipcRenderer.on(IpcChannels.downloadRemoved, listener)
+    return () => ipcRenderer.removeListener(IpcChannels.downloadRemoved, listener)
+  },
+
   /** A download was added to the finished ones or forgotten: listHistory() has them. */
   onHistoryChanged: (callback: () => void): (() => void) => {
     const listener = (): void => callback()

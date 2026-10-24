@@ -77,9 +77,10 @@ test.describe('automatic stream count', () => {
       await plexo.start(origin.url(), origin.sha256, { connections: 'auto' })
       const state = await plexo.waitForHttpStatus('completed', 40_000)
       expect(origin.log.some((request) => request.status === 503)).toBe(true)
-      // Every stream was turned away alike, so none was closed for it, and the count still grew.
-      expect(peakStreams(plexo), 'the count grew once the server served').toBeGreaterThan(8)
-      expect(state.streams.length).toBeGreaterThan(8)
+      // Every stream was turned away alike, so none was closed for it. Auto now keeps the same
+      // eight streams once the server serves, instead of doubling on a link that just recovered.
+      expect(peakStreams(plexo), 'the count stayed at Auto’s stable eight').toBe(8)
+      expect(state.streams.length).toBe(8)
     })
   })
 
@@ -87,6 +88,18 @@ test.describe('automatic stream count', () => {
     const origin = await serve({ size: 96 * BLOCK, bytesPerSecond: 256 * 1024 })
     await plexo.start(origin.url(), origin.sha256, { connections: 'auto', streamsPerNetwork: 4 })
     await plexo.waitForHttpStatus('completed', 40_000)
-    expect(peakStreams(plexo), 'Auto would have doubled to 8 and on').toBe(4)
+    expect(peakStreams(plexo), 'a picked count is kept, never grown').toBe(4)
+  })
+
+  test.describe('rotating disk', () => {
+    test.use({ appEnv: { PLEXO_E2E_DISK: 'hdd' } })
+
+    test('Auto starts four streams instead of eight', async ({ plexo, serve }) => {
+      const origin = await serve({ size: 32 * BLOCK })
+      await plexo.start(origin.url(), origin.sha256, { connections: 'auto' })
+      const state = await plexo.waitForHttpStatus('completed', 40_000)
+      expect(state.streams).toHaveLength(4)
+      expect(peakStreams(plexo), 'the disk-aware count stayed at four').toBe(4)
+    })
   })
 })

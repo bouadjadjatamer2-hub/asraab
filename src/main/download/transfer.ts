@@ -83,9 +83,11 @@ export interface TransferHost {
 }
 
 // Raw per-event deltas are too noisy to display (socket buffers flush in
-// irregular bursts a few ms apart). Averaging over a few seconds instead
-// gives a speed/ETA reading that tracks reality without jumping around.
-const SPEED_WINDOW_MS = 3000
+// irregular bursts a few ms apart, and one mobile network can stall for a
+// couple of seconds while the other keeps going). Five seconds is long enough
+// that the number and the chart read as a speed rather than a sequence of
+// stalls, and short enough to show a real change promptly.
+const SPEED_WINDOW_MS = 5000
 
 /**
  * Bytes counted as they arrive, and read as a rate only on the download's clock (its tick).

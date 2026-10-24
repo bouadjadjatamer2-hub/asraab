@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe"><img src="https://img.shields.io/badge/Download_for_Windows-v1.2.0-7C5CFF?style=for-the-badge&amp;logo=windows&amp;logoColor=white" alt="Download Tayyar 1.2.0 for Windows" /></a>
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.1/Tayyar-1.2.1-Setup.exe"><img src="https://img.shields.io/badge/Download_for_Windows-v1.2.1-7C5CFF?style=for-the-badge&amp;logo=windows&amp;logoColor=white" alt="Download Tayyar 1.2.1 for Windows" /></a>
   <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/"><img src="https://img.shields.io/badge/Asraab-website-22C7B8?style=for-the-badge" alt="Open the Asraab website" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-4CC38A?style=for-the-badge" alt="MIT License" /></a>
 </p>
@@ -22,9 +22,9 @@
 <p align="center">
   <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/">Asraab</a> ·
   <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/tayyar/">Tayyar page</a> ·
-  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe">Download</a> ·
-  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-Browser-Extension.zip">Browser extension</a> ·
-  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.0">Release notes</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.1/Tayyar-1.2.1-Setup.exe">Download</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.1/Tayyar-Browser-Extension.zip">Browser extension</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.1">Release notes</a> ·
   <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/issues">Issues</a>
 </p>
 
@@ -111,7 +111,7 @@ The [Asraab catalog](https://bouadjadjatamer2-hub.github.io/tayyar-download-mana
 
 1. **Probe the link.** Tayyar reads the response headers, filename, size, range support and validators.
 2. **Plan the blocks.** The file becomes a queue of byte ranges sized for the connection and disk.
-3. **Bind and pull.** Each request is bound to a chosen interface. Streams grow when the server and disk keep up, and slow blocks are raced near the end.
+3. **Bind and pull.** Each request is bound to a chosen interface. Auto keeps a stable count (8 streams per network, 4 on a hard disk) instead of growing until the link collapses; Turbo is the explicit opt-in to more.
 4. **Assemble and publish.** Blocks land in a preallocated staging file, get verified, and are renamed only after the download is whole.
 
 When an archive is being extracted, completed blocks are fed to the extractor as soon as their data is available. The download and extraction share the same progress state, so pause, resume and cancel still behave normally.
@@ -120,23 +120,24 @@ When an archive is being extracted, completed blocks are fed to the extractor as
 
 ## Download
 
-**Windows 10 / 11 · 64-bit · v1.2.0 · 125.8 MB**
+**Windows 10 / 11 · 64-bit · v1.2.1 · 125.3 MB**
 
-[**Download Tayyar-1.2.0-Setup.exe**](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe) · [Release notes](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.0) · [All releases](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases)
+[**Download Tayyar-1.2.1-Setup.exe**](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.1/Tayyar-1.2.1-Setup.exe) · [Release notes](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.1) · [All releases](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases)
 
 |                      |                                     |
 | -------------------- | ----------------------------------- |
-| **Version**          | 1.2.0                               |
+| **Version**          | 1.2.1                               |
 | **Platform**         | Windows 10 / 11, 64-bit             |
-| **Installer**        | `Tayyar-1.2.0-Setup.exe` · 125.8 MB |
+| **Installer**        | `Tayyar-1.2.1-Setup.exe` · 125.3 MB |
 | **License**          | MIT                                 |
 | **Account required** | No                                  |
 
-### What's new in 1.2.0
+### What's new in 1.2.1
 
-- Extract ZIP, RAR and TAR archives while downloading.
-- Start with Windows and stay in the tray.
-- Better recovery from slow first-byte responses.
+- Stable Auto speed: 8 connections per network, and 4 when the destination is a hard disk.
+- Disk writes run on a separate writer thread, with fewer stalls on weak machines and large files.
+- ZIP extraction runs off the UI thread, so the window stays responsive.
+- Cancel now removes the row immediately and cleans up in the background, including locked files.
 
 > [!WARNING]
 > The installer is not code-signed, so Windows SmartScreen may show a warning. Choose **More info → Run anyway**, or build from source. The project does not have a code-signing certificate yet.
@@ -145,13 +146,13 @@ When an archive is being extracted, completed blocks are fed to the extractor as
 <summary>Verify the SHA-256 checksum</summary>
 
 ```powershell
-Get-FileHash .\Tayyar-1.2.0-Setup.exe -Algorithm SHA256
+Get-FileHash .\Tayyar-1.2.1-Setup.exe -Algorithm SHA256
 ```
 
 Expected:
 
 ```text
-C0E5D52718B1728C5250D95135140078A80CFE706D359D74574D14EDC354FA63
+DDBB1E8BE18ABBD991FAF2103A079DA1F0632502F054BC5248914A5918180D4F
 ```
 
 </details>
@@ -160,7 +161,7 @@ C0E5D52718B1728C5250D95135140078A80CFE706D359D74574D14EDC354FA63
 
 ## Browser extension (optional)
 
-[**Download Tayyar-Browser-Extension.zip**](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-Browser-Extension.zip) · [Privacy policy](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/extension/privacy/)
+[**Download Tayyar-Browser-Extension.zip**](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.1/Tayyar-Browser-Extension.zip) · [Privacy policy](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/extension/privacy/)
 
 The Chromium extension hands downloads to Tayyar with the browser's cookies, so signed-in files work. It supports Chrome, Edge, Brave and Opera.
 
@@ -242,8 +243,8 @@ Bundled tools and their licenses — including UnRAR and `unzipper` — are also
 <p dir="rtl" align="right">
   <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/">موقع أسراب</a> ·
   <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/tayyar/">صفحة تيار</a> ·
-  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe">تحميل الإصدار 1.2.0</a> ·
-  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-Browser-Extension.zip">إضافة المتصفح</a>
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.1/Tayyar-1.2.1-Setup.exe">تحميل الإصدار 1.2.1</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.1/Tayyar-Browser-Extension.zip">إضافة المتصفح</a>
 </p>
 
 <p dir="rtl" align="right">تيار هو أول تطبيق في كتالوج أسراب، والمزيد في الطريق. الموقع متوفر بالعربية والإنجليزية.</p>

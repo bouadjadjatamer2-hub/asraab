@@ -60,6 +60,26 @@ test.describe('download plan', () => {
     expect(startingStreams(plan.blockCount, 2, 8)).toBe(1)
   })
 
+  test('Auto’s eight streams make fewer, larger blocks than the old 32-stream ceiling', () => {
+    const file = 126 * MIB
+    const auto = planDownload({
+      totalBytes: file,
+      splittable: true,
+      networkCount: 2,
+      streamsPerNetwork: START_STREAMS_PER_NETWORK
+    })
+    const maximum = planDownload({
+      totalBytes: file,
+      splittable: true,
+      networkCount: 2,
+      streamsPerNetwork: MAX_STREAMS_PER_NETWORK
+    })
+    expect(auto.blockSizeBytes).toBeGreaterThan(maximum.blockSizeBytes)
+    expect(auto.blockCount).toBeLessThan(maximum.blockCount)
+    // Two blocks per stream: request churn stays low without leaving a stream idle.
+    expect(auto.blockCount).toBe(2 * 2 * START_STREAMS_PER_NETWORK)
+  })
+
   test('a big file has blocks enough for every network to grow to its limit', () => {
     const plan = planDownload({ totalBytes: 512 * MIB, splittable: true, networkCount: 2 })
     // Streams added later need waiting blocks to take: two each, at the most every network can have.

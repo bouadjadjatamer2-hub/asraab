@@ -446,6 +446,10 @@ export interface StartHttpDownloadRequest extends StartDownloadRequestBase {
   kind: 'http'
   /** Streams per network the user picked; left out, the count is decided automatically. */
   streamsPerNetwork?: number
+  /** The Auto count chosen for this download when it started (eight, or four on a rotating
+   * disk). Kept in the saved request so a resume runs the same plan. Internal: never sent by
+   * the interface, and ignored when `streamsPerNetwork` is set. */
+  autoStreams?: number
   /** Carried from the probe: Chromium's stack, when Node's was refused. */
   transport?: 'chromium'
   browser?: BrowserContext

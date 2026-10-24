@@ -1,10 +1,9 @@
 import { spawn, type ChildProcess } from 'node:child_process'
-import { createWriteStream, existsSync, mkdirSync } from 'node:fs'
-import { mkdir, rm } from 'node:fs/promises'
-import { dirname, join } from 'node:path'
-import { pipeline } from 'node:stream/promises'
-import type { Writable } from 'node:stream'
-import * as unzipper from 'unzipper'
+import { existsSync, mkdirSync } from 'node:fs'
+import { rm } from 'node:fs/promises'
+import { join } from 'node:path'
+import { Writable } from 'node:stream'
+import { Worker } from 'node:worker_threads'
 import { app } from 'electron'
 import type { ArchiveFormat } from '../../shared/types'
 
@@ -26,8 +25,8 @@ export interface StreamUnpacker {
   remove(): Promise<void>
 }
 
-/** The unpacker for a format: UnRAR/TAR as a child process, ZIP in-process (Windows' tar can't
- * stream a ZIP reliably: a short read loses the entry it was in). */
+/** The unpacker for a format: ZIP in a worker thread, UnRAR/TAR as a child process (Windows' tar
+ * can't stream a ZIP reliably: a short read loses the entry it was in). */
 export function createUnpacker(format: ArchiveFormat, dir: string): StreamUnpacker {
   return format === 'zip' ? new ZipExtractor(dir) : new ArchiveExtractor(format, dir)
 }
@@ -161,43 +160,65 @@ export class ArchiveExtractor implements StreamUnpacker {
   }
 }
 
-/** A path inside the archive, or null if it would land outside the destination. */
-function safeArchivePath(name: string): string | null {
-  const slashed = name.replace(/\\/g, '/')
-  if (slashed.startsWith('/') || /^[a-zA-Z]:/.test(slashed)) return null
-  const parts = slashed.split('/').filter((part) => part !== '' && part !== '.')
-  if (parts.length === 0 || parts.some((part) => part === '..')) return null
-  return parts.join('/')
-}
-
 /**
- * Unpacks a ZIP in-process. Windows' tar can stream a TAR from a pipe but not a ZIP: a read
- * that comes back short loses the entry it was in, which a network pause is enough to cause.
- * `unzipper` follows the local headers instead, so a retry simply carries on.
+ * Unpacks a ZIP in a worker thread. Windows' tar can stream a TAR from a pipe but not a ZIP: a
+ * read that comes back short loses the entry it was in, which a network pause is enough to cause.
+ * `unzipper` follows the local headers instead, so a retry simply carries on. The parser and every
+ * file write live in the worker, so a large archive can't block the window, the download's
+ * progress, or the main process.
  */
 export class ZipExtractor implements StreamUnpacker {
   readonly dir: string
-  private readonly parser: ReturnType<typeof unzipper.Parse>
-  private readonly consumed: Promise<void>
+  private readonly worker: Worker
+  private readonly sink: Writable
+  private nextId = 1
+  private readonly pending = new Map<
+    number,
+    { resolve: () => void; reject: (error: Error) => void }
+  >()
   private failure: Error | null = null
   private aborted = false
 
   constructor(dir: string) {
     this.dir = dir
     mkdirSync(dir, { recursive: true })
-    this.parser = unzipper.Parse({ forceStream: true })
-    // A parser error must not become an uncaught 'error' event; the download watches the
-    // destination too, and finish() reports the real reason.
-    this.parser.on('error', (error: Error) => {
-      this.failure ??= error
+    this.worker = new Worker(ZIP_WORKER_SOURCE, {
+      eval: true,
+      workerData: { dir, unzipper: require.resolve('unzipper') }
     })
-    this.consumed = this.consume().catch((error) => {
-      this.failure ??= error instanceof Error ? error : new Error(String(error))
+    this.worker.on('message', (message: { type: string; id: number; error?: string }) => {
+      const pending = this.pending.get(message.id)
+      if (!pending) return
+      this.pending.delete(message.id)
+      if (message.error) {
+        const error = new Error(message.error)
+        this.failure ??= error
+        pending.reject(error)
+      } else {
+        pending.resolve()
+      }
+    })
+    this.worker.on('error', (error) => this.failAll(error))
+    this.worker.on('exit', (code) => {
+      if (!this.aborted && code !== 0) {
+        this.failAll(new Error(`The ZIP unpacker stopped (${code})`))
+      }
+    })
+    // A large high-water mark lets a fast connection hand over a whole batch while the worker
+    // inflates and writes the previous one; backpressure comes back through this stream.
+    this.sink = new Writable({
+      highWaterMark: 4 * 1024 * 1024,
+      write: (chunk: Buffer, _encoding, callback) => {
+        this.send({ type: 'chunk', buffer: chunk }).then(
+          () => callback(),
+          (error) => callback(error)
+        )
+      }
     })
   }
 
   get destination(): Writable {
-    return this.parser
+    return this.sink
   }
 
   get hasExited(): boolean {
@@ -206,53 +227,197 @@ export class ZipExtractor implements StreamUnpacker {
 
   async finish(): Promise<void> {
     if (this.aborted) throw new Error('Unpacking was stopped.')
-    // If it already failed, it was destroyed, and end() would only throw over that.
-    if (!this.parser.destroyed) this.parser.end()
-    await this.consumed
+    await this.send({ type: 'end' })
     if (this.failure) throw this.failure
+    await this.close()
   }
 
   abort(): void {
+    if (this.aborted) return
     this.aborted = true
-    this.parser.destroy()
+    try {
+      this.worker.postMessage({ type: 'abort', id: 0 })
+    } catch {
+      // Already gone.
+    }
+    this.failAll(new Error('Unpacking was stopped.'))
+    this.worker.removeAllListeners()
+    void this.worker.terminate().catch(() => {})
   }
 
   async remove(): Promise<void> {
+    this.abort()
     await rm(this.dir, { recursive: true, force: true }).catch(() => {})
   }
 
-  private async consume(): Promise<void> {
-    try {
-      for await (const entry of this.parser) {
-        if (this.aborted) {
-          entry.autodrain()
-          continue
-        }
-        const relative = safeArchivePath(entry.path)
-        if (relative === null) {
-          entry.autodrain()
-          throw new Error(`The archive contains an unsafe path: ${entry.path}`)
-        }
-        if (entry.type === 'Directory') {
-          await mkdir(join(this.dir, relative), { recursive: true })
-          entry.autodrain()
-          continue
-        }
-        if ((entry.vars as { encrypted?: boolean } | undefined)?.encrypted) {
-          entry.autodrain()
-          throw new Error(
-            'The archive is password-protected. Save it and unpack it with your archive tool.'
+  private send(message: { type: 'chunk'; buffer: Buffer } | { type: 'end' }): Promise<void> {
+    if (this.aborted) return Promise.reject(new Error('Unpacking was stopped.'))
+    if (this.failure) return Promise.reject(this.failure)
+    const id = this.nextId++
+    return new Promise((resolve, reject) => {
+      this.pending.set(id, { resolve, reject })
+      try {
+        if (message.type === 'chunk') {
+          const full =
+            message.buffer.byteOffset === 0 &&
+            message.buffer.byteLength === message.buffer.buffer.byteLength
+          const data = full ? message.buffer : Buffer.from(message.buffer)
+          this.worker.postMessage(
+            { type: 'chunk', id, buffer: data },
+            full ? [data.buffer as ArrayBuffer] : []
           )
+        } else {
+          this.worker.postMessage({ type: 'end', id })
         }
-        const target = join(this.dir, relative)
-        await mkdir(dirname(target), { recursive: true })
-        await pipeline(entry, createWriteStream(target))
+      } catch (error) {
+        this.pending.delete(id)
+        reject(error instanceof Error ? error : new Error(String(error)))
       }
-    } catch (error) {
-      this.failure ??= error instanceof Error ? error : new Error(String(error))
-      // Stop the input: nothing more should be accepted into a folder that won't be complete.
-      if (!this.parser.destroyed) this.parser.destroy()
-      throw this.failure
-    }
+    })
+  }
+
+  private async close(): Promise<void> {
+    this.worker.removeAllListeners()
+    await this.worker.terminate().catch(() => {})
+  }
+
+  private failAll(error: Error): void {
+    this.failure ??= error
+    for (const pending of this.pending.values()) pending.reject(error)
+    this.pending.clear()
   }
 }
+
+/** The worker's whole program. It keeps `unzipper` and all file writes off the main process. */
+const ZIP_WORKER_SOURCE = String.raw`
+const { parentPort, workerData } = require('node:worker_threads')
+const { mkdirSync, createWriteStream } = require('node:fs')
+const { mkdir } = require('node:fs/promises')
+const { dirname, join } = require('node:path')
+const { pipeline } = require('node:stream/promises')
+const unzipper = require(workerData.unzipper)
+const dir = workerData.dir
+mkdirSync(dir, { recursive: true })
+const parser = unzipper.Parse({ forceStream: true })
+let failure = null
+let stopped = false
+
+function safePath(name) {
+  const slashed = String(name).replace(/\\/g, '/')
+  if (slashed.startsWith('/') || /^[a-zA-Z]:/.test(slashed)) return null
+  const parts = slashed.split('/').filter((part) => part !== '' && part !== '.')
+  if (parts.length === 0 || parts.some((part) => part === '..')) return null
+  return parts.join('/')
+}
+
+const consumed = (async () => {
+  for await (const entry of parser) {
+    if (stopped) {
+      entry.autodrain()
+      continue
+    }
+    const relative = safePath(entry.path)
+    if (relative === null) {
+      entry.autodrain()
+      throw new Error('The archive contains an unsafe path: ' + entry.path)
+    }
+    if (entry.type === 'Directory') {
+      await mkdir(join(dir, relative), { recursive: true })
+      entry.autodrain()
+      continue
+    }
+    if (entry.vars && entry.vars.encrypted) {
+      entry.autodrain()
+      throw new Error('The archive is password-protected. Save it and unpack it with your archive tool.')
+    }
+    const target = join(dir, relative)
+    await mkdir(dirname(target), { recursive: true })
+    await pipeline(entry, createWriteStream(target))
+  }
+})().catch((error) => {
+  failure = error instanceof Error ? error : new Error(String(error))
+  if (!parser.destroyed) parser.destroy()
+})
+
+parser.on('error', (error) => {
+  failure ??= error
+})
+
+function waitForDrain() {
+  return new Promise((resolve, reject) => {
+    const cleanup = () => {
+      parser.off('drain', onDrain)
+      parser.off('error', onError)
+      parser.off('close', onClose)
+    }
+    const onDrain = () => {
+      cleanup()
+      resolve()
+    }
+    const onError = (error) => {
+      cleanup()
+      reject(error)
+    }
+    const onClose = () => {
+      cleanup()
+      reject(failure ?? new Error('The archive stream closed'))
+    }
+    parser.once('drain', onDrain)
+    parser.once('error', onError)
+    parser.once('close', onClose)
+  })
+}
+
+// Messages are handled one at a time: a chunk is acknowledged only after the parser has room for
+// it, so the transfer's stream gets real backpressure rather than an unbounded worker queue.
+let chain = Promise.resolve()
+parentPort.on('message', (message) => {
+  chain = chain.then(async () => {
+    try {
+      if (message.type === 'chunk') {
+        if (failure) {
+          parentPort.postMessage({ type: 'ack', id: message.id, error: failure.message })
+          return
+        }
+        let accepted = true
+        try {
+          accepted = parser.write(message.buffer)
+        } catch (error) {
+          failure = error instanceof Error ? error : new Error(String(error))
+        }
+        if (!accepted && !failure) {
+          try {
+            await waitForDrain()
+          } catch (error) {
+            failure ??= error
+          }
+        }
+        parentPort.postMessage({
+          type: 'ack',
+          id: message.id,
+          error: failure ? failure.message : undefined
+        })
+      } else if (message.type === 'end') {
+        if (!parser.destroyed) parser.end()
+        await consumed
+        parentPort.postMessage({
+          type: 'done',
+          id: message.id,
+          error: failure ? failure.message : undefined
+        })
+      } else if (message.type === 'abort') {
+        stopped = true
+        if (!parser.destroyed) parser.destroy()
+        parentPort.postMessage({ type: 'done', id: message.id })
+      }
+    } catch (error) {
+      failure ??= error instanceof Error ? error : new Error(String(error))
+      parentPort.postMessage({
+        type: 'ack',
+        id: message.id,
+        error: failure.message
+      })
+    }
+  })
+})
+`

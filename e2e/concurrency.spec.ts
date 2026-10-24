@@ -210,6 +210,24 @@ test.describe('stream count', () => {
     ])
   })
 
+  test('Auto keeps its steady eight, and still lets a rotating disk cut it', () => {
+    const controller = new ConcurrencyController(8, false, () => 8, true)
+    expect(controller.tick({ now: 0, networks: [network('a', 8)], spareWork: 1000 })).toEqual([])
+    // No growth after every stream has answered, unlike the old controller.
+    expect(controller.tick({ now: 1_000, networks: [network('a', 8)], spareWork: 1000 })).toEqual(
+      []
+    )
+    // A disk that stays behind still lowers the count, even though Auto doesn't grow.
+    expect(
+      controller.tick({
+        now: DISK_PATIENCE_MS,
+        networks: [network('a', 8)],
+        spareWork: 0,
+        disk: { reading: 'behind', since: 0 }
+      })
+    ).toEqual([{ kind: 'retire', networkId: 'a', count: 4 }])
+  })
+
   test('a count the user picked is kept, not grown, and still backs off when refused', () => {
     const controller = new ConcurrencyController(4, false)
     expect(controller.tick({ now: 0, networks: [network('a', 4)], spareWork: 1000 })).toEqual([])
