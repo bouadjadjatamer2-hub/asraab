@@ -1,7 +1,7 @@
 {
-  "name": "Tayyar — Download manager for Windows",
-  "short_name": "Tayyar",
-  "description": "A free, open-source Windows download manager that uses Wi-Fi, Ethernet and USB at the same time.",
+  "name": "Asraab — Apps that fly together",
+  "short_name": "Asraab",
+  "description": "A small, hand-picked catalog of independent Windows software. First up: Tayyar, a free and open-source download manager.",
   "lang": "en",
   "dir": "ltr",
   "start_url": "./",

@@ -1,5 +1,13 @@
 <!doctype html>
-<html lang="en" dir="ltr" data-theme="dark" class="no-js">
+<html
+  lang="en"
+  dir="ltr"
+  data-theme="dark"
+  class="no-js"
+  data-page="home"
+  data-meta-title="home.metaTitle"
+  data-meta-description="home.metaDescription"
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,9 +17,9 @@
         root.classList.remove('no-js')
         root.classList.add('js')
         try {
-          var theme = localStorage.getItem('tayyar-theme')
+          var theme = localStorage.getItem('asraab-theme') || localStorage.getItem('tayyar-theme')
           if (theme === 'light' || theme === 'dark') root.dataset.theme = theme
-          var lang = localStorage.getItem('tayyar-lang')
+          var lang = localStorage.getItem('asraab-lang') || localStorage.getItem('tayyar-lang')
           if (lang === 'ar') {
             root.lang = 'ar'
             root.dir = 'rtl'
@@ -25,12 +33,12 @@
     <meta name="theme-color" content="#0A0B10" id="themeColor" />
     <meta
       name="description"
-      content="Tayyar is a free, open-source Windows download manager that splits files across Wi-Fi, Ethernet and USB, with 2–64 connections, extract-while-downloading and a Chromium extension."
+      content="Asraab is a small, hand-picked catalog of independent Windows software. One app so far, with more on the way: Tayyar, a free and open-source download manager."
     />
-    <meta name="author" content="Tayyar contributors" />
-    <meta name="application-name" content="Tayyar" />
+    <meta name="author" content="Asraab contributors" />
+    <meta name="application-name" content="Asraab" />
     <meta name="robots" content="index,follow" />
-    <title>Tayyar — Every connection. One download.</title>
+    <title>Asraab — Fewer apps. Better ones.</title>
     <link rel="canonical" href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/" />
     <link rel="icon" href="./favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" href="./assets/img/icon-192.png" />
@@ -51,15 +59,16 @@
       crossorigin
     />
     <link rel="stylesheet" href="./assets/site.css" />
+    <link rel="stylesheet" href="./assets/hub.css" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Tayyar" />
+    <meta property="og:site_name" content="Asraab" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="ar_SA" />
-    <meta property="og:title" content="Tayyar — Every connection. One download." />
+    <meta property="og:title" content="Asraab — Fewer apps. Better ones." />
     <meta
       property="og:description"
-      content="A Windows download manager that uses Wi-Fi, Ethernet and USB at the same time. 2–64 connections, streaming extraction, resume and a Chromium extension. Free and open source."
+      content="A small catalog of independent Windows software. No account walls, no bundleware, no dark patterns. First up: Tayyar."
     />
     <meta
       property="og:url"
@@ -67,51 +76,50 @@
     />
     <meta
       property="og:image"
-      content="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/og.png"
+      content="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/og-asraab.png"
     />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="Tayyar download manager with a dark app preview and violet-to-cyan accent."
+      content="Asraab wordmark, the line Fewer apps. Better ones., and a Tayyar catalog card."
     />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Tayyar — Every connection. One download." />
+    <meta name="twitter:title" content="Asraab — Fewer apps. Better ones." />
     <meta
       name="twitter:description"
-      content="A Windows download manager that uses Wi-Fi, Ethernet and USB at the same time. Free, open source, and honest about the limits."
+      content="A small catalog of independent Windows software. First up: Tayyar, a free and open-source download manager."
     />
     <meta
       name="twitter:image"
-      content="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/og.png"
+      content="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/og-asraab.png"
     />
 
-    <script type="application/ld+json" id="softwareSchema">
+    <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Tayyar",
-        "alternateName": "تيار",
-        "operatingSystem": "Windows 10, Windows 11",
-        "applicationCategory": "UtilitiesApplication",
-        "softwareVersion": "1.2.0",
-        "description": "A free, open-source Windows download manager that splits files across multiple network connections.",
-        "downloadUrl": "https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe",
-        "license": "https://opensource.org/licenses/MIT",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        },
-        "author": {
+        "@type": "WebSite",
+        "name": "Asraab",
+        "alternateName": "أسراب",
+        "url": "https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/",
+        "description": "A small, hand-picked catalog of independent Windows software.",
+        "inLanguage": ["en", "ar"],
+        "publisher": {
           "@type": "Organization",
-          "name": "Tayyar contributors",
-          "url": "https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-"
+          "name": "Asraab",
+          "url": "https://github.com/bouadjadjatamer2-hub"
         },
-        "sameAs": ["https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-"]
+        "hasPart": {
+          "@type": "SoftwareApplication",
+          "name": "Tayyar",
+          "url": "https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/tayyar/",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Windows 10, Windows 11",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+        }
       }
     </script>
-    <script src="./assets/config.js" defer></script>
+    <script src="./assets/apps.js" defer></script>
     <script src="./assets/i18n.js" defer></script>
     <script src="./assets/site.js" defer></script>
   </head>
@@ -245,34 +253,30 @@
 
     <header class="site-header" id="siteHeader">
       <div class="wrap nav-wrap">
-        <a class="brand" href="#top" aria-label="Tayyar home" data-i18n-aria-label="a11y.home">
+        <a
+          class="brand brand-site"
+          href="#top"
+          aria-label="Asraab home"
+          data-i18n-aria-label="site.a11yHome"
+        >
           <img
             class="brand-mark"
-            src="./assets/img/tayyar-icon.png"
+            src="./assets/img/asraab-mark.svg"
             width="27"
             height="27"
             alt=""
             aria-hidden="true"
           />
-          <span class="brand-word">TAYYAR</span>
-          <span class="brand-version" data-config="version" data-prefix="v">v1.2.0</span>
+          <span class="brand-word">ASRAAB</span>
+          <span class="brand-version brand-count" data-catalog-count-short>1 app</span>
         </a>
 
         <nav class="desktop-nav" aria-label="Primary" data-i18n-aria-label="nav.primary">
-          <a class="nav-link" href="#features" data-nav="features" data-i18n="nav.features"
-            >Features</a
+          <a class="nav-link" href="#apps" data-nav="apps" data-i18n="site.nav.apps">Apps</a>
+          <a class="nav-link" href="#standards" data-nav="standards" data-i18n="site.nav.standards"
+            >Standards</a
           >
-          <a class="nav-link" href="#how" data-nav="how" data-i18n="nav.how">How it works</a>
-          <a class="nav-link" href="#connections" data-nav="connections" data-i18n="nav.connections"
-            >Connections</a
-          >
-          <a class="nav-link" href="#download" data-nav="download" data-i18n="nav.download"
-            >Download</a
-          >
-          <a class="nav-link" href="#extension" data-nav="extension" data-i18n="nav.extension"
-            >Extension</a
-          >
-          <a class="nav-link" href="#faq" data-nav="faq" data-i18n="nav.faq">FAQ</a>
+          <a class="nav-link" href="#about" data-nav="about" data-i18n="site.nav.about">About</a>
         </nav>
 
         <div class="nav-actions">
@@ -301,23 +305,18 @@
 
           <a
             class="icon-btn"
-            href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-"
+            href="https://github.com/bouadjadjatamer2-hub"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Tayyar on GitHub"
-            data-i18n-aria-label="nav.github"
-            data-config-href="github"
+            aria-label="Asraab on GitHub"
+            data-i18n-aria-label="site.github"
           >
             <svg class="icon fill" aria-hidden="true"><use href="#i-github"></use></svg>
           </a>
 
-          <a
-            class="btn btn-primary btn-sm nav-download"
-            href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe"
-            data-config-href="download"
-          >
-            <svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg>
-            <span data-i18n="nav.downloadShort">Get Tayyar</span>
+          <a class="btn btn-primary btn-sm nav-download" href="#apps">
+            <svg class="icon" aria-hidden="true"><use href="#i-archive"></use></svg>
+            <span data-i18n="site.browse">Browse apps</span>
           </a>
 
           <button
@@ -339,1126 +338,553 @@
 
     <div class="mobile-menu" id="mobileMenu" hidden>
       <nav aria-label="Mobile primary" data-i18n-aria-label="nav.mobilePrimary">
-        <a href="#features" data-nav="features"
-          ><span>01</span><span data-i18n="nav.features">Features</span></a
+        <a href="#apps" data-nav="apps"
+          ><span>01</span><span data-i18n="site.nav.apps">Apps</span></a
         >
-        <a href="#how" data-nav="how"
-          ><span>02</span><span data-i18n="nav.how">How it works</span></a
+        <a href="#standards" data-nav="standards"
+          ><span>02</span><span data-i18n="site.nav.standards">Standards</span></a
         >
-        <a href="#connections" data-nav="connections"
-          ><span>03</span><span data-i18n="nav.connections">Connections</span></a
+        <a href="#about" data-nav="about"
+          ><span>03</span><span data-i18n="site.nav.about">About</span></a
         >
-        <a href="#download" data-nav="download"
-          ><span>04</span><span data-i18n="nav.download">Download</span></a
-        >
-        <a href="#extension" data-nav="extension"
-          ><span>05</span><span data-i18n="nav.extension">Extension</span></a
-        >
-        <a href="#faq" data-nav="faq"><span>06</span><span data-i18n="nav.faq">FAQ</span></a>
       </nav>
       <div class="mobile-menu-actions">
-        <a
-          class="btn btn-primary"
-          href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe"
-          data-config-href="download"
-        >
-          <svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg>
-          <span data-i18n="nav.downloadShort">Get Tayyar</span>
+        <a class="btn btn-primary" href="#apps">
+          <svg class="icon" aria-hidden="true"><use href="#i-archive"></use></svg>
+          <span data-i18n="site.browse">Browse apps</span>
         </a>
         <a
           class="btn btn-secondary"
-          href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-"
+          href="https://github.com/bouadjadjatamer2-hub"
           target="_blank"
           rel="noopener noreferrer"
-          data-config-href="github"
         >
           <svg class="icon fill" aria-hidden="true"><use href="#i-github"></use></svg>
           <span data-i18n="footer.github">GitHub</span>
         </a>
       </div>
-      <p class="mobile-menu-tagline" data-i18n="footer.tagline">
-        A download manager that uses every connection you have.
-      </p>
+      <p class="mobile-menu-tagline" data-i18n="site.tagline">Apps that fly together.</p>
       <div class="mobile-menu-footer">
         <span class="mono" dir="ltr" style="color: var(--dim); font-size: 9px"
-          >TAYYAR / <span data-config="version" data-prefix="v">v1.2.0</span></span
+          >ASRAAB / <span data-catalog-count-short>1 app</span></span
         >
-        <a
-          href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.0"
-          target="_blank"
-          rel="noopener noreferrer"
-          style="font-size: 11px; min-height: 0; border: 0"
-          data-config-href="releaseTag"
-          data-i18n="download.releaseNotes"
-          >Release notes</a
-        >
+        <a href="#apps" data-i18n="site.browse">Browse apps</a>
       </div>
     </div>
 
     <main id="main">
-      <section class="hero" id="top" aria-labelledby="hero-title">
-        <div class="wrap hero-grid">
-          <div class="hero-copy">
+      <section class="hero hub-hero" aria-labelledby="hero-title">
+        <div class="wrap hero-grid hub-hero-grid">
+          <div class="hero-copy hub-copy">
             <p class="eyebrow">
               <span class="eyebrow-dot" aria-hidden="true"></span>
-              <span data-i18n="hero.eyebrow">Windows download manager</span>
+              <span data-i18n="home.eyebrow">Independent Windows software</span>
             </p>
-            <h1 class="hero-title" id="hero-title">
-              <span data-i18n="hero.title1">One download.</span>
-              <span class="line-two gradient-text" data-i18n="hero.title2">Every connection.</span>
+            <h1 class="hero-title hub-title" id="hero-title">
+              <span data-i18n="home.title1">Fewer apps.</span>
+              <span class="line-two gradient-text" data-i18n="home.title2">Better ones.</span>
             </h1>
-            <p class="hero-lede" data-i18n="hero.lede">
-              Tayyar splits a file into blocks and pulls it over Wi-Fi, Ethernet and USB at the same
-              time — with resume after restarts, queues, and extract-while-downloading built in.
+            <p class="hero-lede" data-i18n="home.lede">
+              Asraab is a small, hand-picked catalog of independent Windows software. One app so
+              far, and more on the way — no account walls, no bundleware, no dark patterns.
             </p>
             <div class="hero-actions">
-              <a
-                class="btn btn-primary btn-lg"
-                href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe"
-                data-config-href="download"
-              >
-                <svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg>
-                <span data-i18n="hero.download">Download for Windows</span>
+              <a class="btn btn-primary btn-lg" href="#apps">
+                <span data-i18n="site.browse">Browse the catalog</span>
+                <svg class="icon arrow-icon" aria-hidden="true">
+                  <use href="#i-arrow-right"></use>
+                </svg>
               </a>
-              <a class="btn btn-secondary btn-lg" href="#how">
-                <span data-i18n="hero.secondary">See how it works</span>
+              <a class="btn btn-secondary btn-lg" href="./apps/tayyar/">
+                <span data-i18n="home.meetTayyar">Meet Tayyar</span>
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+              </a>
+            </div>
+            <div class="hero-meta">
+              <span data-catalog-count>1 app live</span>
+              <span class="dot" aria-hidden="true"></span>
+              <span data-i18n="home.metaAccounts">No accounts</span>
+              <span class="dot" aria-hidden="true"></span>
+              <span data-i18n="home.metaDirect">Direct downloads</span>
+            </div>
+            <p class="hero-note">
+              <svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg>
+              <span data-i18n="home.note"
+                >Free where possible. Open source where it counts. Honest either way.</span
+              >
+            </p>
+          </div>
+
+          <div class="hub-visual">
+            <div class="flock-field" aria-hidden="true">
+              <svg viewBox="0 0 640 580" fill="none">
+                <defs>
+                  <linearGradient id="flock-light" x1="80" y1="500" x2="560" y2="80">
+                    <stop offset="0" stop-color="#8b6cff" stop-opacity="0.55" />
+                    <stop offset="0.56" stop-color="#6d8bff" stop-opacity="0.32" />
+                    <stop offset="1" stop-color="#22d3ee" stop-opacity="0.18" />
+                  </linearGradient>
+                </defs>
+                <path
+                  class="flock-path"
+                  d="M40 474c128-52 208-142 300-246C402 154 482 96 590 62"
+                  stroke="url(#flock-light)"
+                  stroke-width="1.4"
+                  stroke-dasharray="2 10"
+                  stroke-linecap="round"
+                />
+                <path
+                  class="flock-path flock-path-two"
+                  d="M108 528c118-48 184-124 262-218 54-65 118-108 206-130"
+                  stroke="url(#flock-light)"
+                  stroke-width="1.1"
+                  stroke-dasharray="2 12"
+                  stroke-linecap="round"
+                />
+                <g
+                  fill="none"
+                  stroke="url(#flock-light)"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M470 155c5 0 8-3 11-8 3 5 6 8 11 8" stroke-width="2.4" />
+                  <path d="M432 188c4 0 6-2 8-6 2 4 4 6 8 6" stroke-width="1.9" opacity="0.6" />
+                </g>
+              </svg>
+            </div>
+
+            <div class="float-chip hub-chip-a">
+              <span class="chip-dot" aria-hidden="true"></span>
+              <span data-i18n="home.chipCurated">Hand-picked, not scraped</span>
+            </div>
+            <div class="float-chip hub-chip-b">
+              <svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg>
+              <span data-i18n="home.chipDirect">Direct from the app page</span>
+            </div>
+
+            <div class="catalog-window" aria-hidden="true">
+              <div class="catalog-bar">
+                <img
+                  class="catalog-bar-mark"
+                  src="./assets/img/asraab-mark.svg"
+                  width="17"
+                  height="17"
+                  alt=""
+                />
+                <span class="catalog-bar-title">ASRAAB / CATALOG</span>
+                <span class="catalog-bar-live"
+                  ><i></i><span data-i18n="home.mockLive">LIVE</span></span
+                >
+                <span class="catalog-window-controls"
+                  ><span>−</span><span>□</span><span>×</span></span
+                >
+              </div>
+
+              <div class="catalog-body">
+                <div class="catalog-meta">
+                  <span data-i18n="home.mockApps">01 — APPS</span>
+                  <span data-i18n="home.mockUpdated">UPDATED 2026</span>
+                </div>
+
+                <div class="catalog-feature">
+                  <div class="catalog-feature-head">
+                    <span class="catalog-feature-icon">
+                      <img src="./assets/img/tayyar-icon.png" width="46" height="46" alt="" />
+                    </span>
+                    <span class="catalog-feature-id">
+                      <strong>TAYYAR</strong>
+                      <span data-i18n="home.mockCategory">WINDOWS DOWNLOAD MANAGER</span>
+                    </span>
+                    <span class="catalog-feature-status"
+                      ><i></i><span data-i18n="home.mockLive">LIVE</span></span
+                    >
+                  </div>
+                  <p class="catalog-feature-tagline" data-i18n="home.mockTagline">
+                    Every connection. One download.
+                  </p>
+                  <p class="catalog-feature-copy" data-i18n="home.mockCopy">
+                    Splits files across Wi-Fi, Ethernet and USB at the same time.
+                  </p>
+
+                  <div class="catalog-meter">
+                    <i style="--h: 14px; --d: 0ms"></i>
+                    <i style="--h: 22px; --d: 80ms"></i>
+                    <i style="--h: 18px; --d: 160ms"></i>
+                    <i style="--h: 30px; --d: 240ms"></i>
+                    <i style="--h: 24px; --d: 320ms"></i>
+                    <i style="--h: 36px; --d: 400ms"></i>
+                    <i style="--h: 28px; --d: 480ms"></i>
+                    <i style="--h: 42px; --d: 560ms"></i>
+                    <i style="--h: 34px; --d: 640ms"></i>
+                    <i style="--h: 38px; --d: 720ms"></i>
+                    <i style="--h: 31px; --d: 800ms"></i>
+                    <i style="--h: 45px; --d: 880ms"></i>
+                    <i style="--h: 39px; --d: 960ms"></i>
+                    <i style="--h: 47px; --d: 1040ms"></i>
+                    <i style="--h: 43px; --d: 1120ms"></i>
+                    <i style="--h: 50px; --d: 1200ms"></i>
+                  </div>
+
+                  <div class="catalog-speed">
+                    <strong>42.8</strong><span>MB/s</span>
+                    <span class="catalog-network" data-i18n="home.mockNetworks"
+                      >3 NETWORKS · 24 STREAMS</span
+                    >
+                  </div>
+
+                  <div class="catalog-feature-foot">
+                    <span>WINDOWS 10/11</span>
+                    <span>v1.2.0</span>
+                    <span>MIT</span>
+                  </div>
+                </div>
+
+                <div class="catalog-ghost-row">
+                  <span class="catalog-plus" aria-hidden="true">
+                    <svg class="icon"><use href="#i-clock"></use></svg>
+                  </span>
+                  <span class="catalog-ghost-copy">
+                    <strong data-i18n="home.mockNext">What’s next</strong>
+                    <span data-i18n="home.mockNextBody">Great apps are on the way</span>
+                  </span>
+                  <span class="catalog-ghost-tag" data-i18n="home.mockSoon">SOON</span>
+                </div>
+
+                <div class="catalog-foot">
+                  <span data-catalog-count>1 app live</span>
+                  <span data-i18n="home.mockCurated">CURATED, NOT SCRAPED</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrap hub-rail reveal">
+          <span class="hub-rail-label mono">ASRAAB / 2026</span>
+          <span class="hub-rail-line" aria-hidden="true"></span>
+          <span class="hub-rail-copy" data-i18n="home.rail"
+            >Small on purpose. Useful by design.</span
+          >
+          <span class="hub-rail-count mono" data-catalog-count>1 app live</span>
+        </div>
+      </section>
+
+      <section class="section catalog-section" id="apps" aria-labelledby="apps-title">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">
+                <span class="eyebrow-dot" aria-hidden="true"></span>
+                <span data-i18n="home.catalogEyebrow">The catalog</span>
+              </p>
+              <h2 class="section-title" id="apps-title" data-i18n="home.catalogTitle">
+                One good app, to start.
+              </h2>
+            </div>
+            <p class="section-lede" data-i18n="home.catalogLede">
+              Every app gets its own page, its own repository and a direct download. No account
+              walls, no release-page detours.
+            </p>
+          </div>
+
+          <div class="app-catalog-grid" id="appGrid" data-catalog-grid>
+            <article class="app-card app-card-fallback" aria-labelledby="fallback-tayyar">
+              <div class="app-card-glow" aria-hidden="true"></div>
+              <div class="app-card-head">
+                <span class="app-card-icon">
+                  <img src="./assets/img/tayyar-icon.png" width="54" height="54" alt="" />
+                </span>
+                <span class="app-card-id">
+                  <span class="app-card-category">Download manager</span>
+                  <h3 class="app-card-name" id="fallback-tayyar">Tayyar</h3>
+                </span>
+                <span class="app-card-status"><i></i>Live</span>
+              </div>
+              <p class="app-card-tagline">Every connection. One download.</p>
+              <p class="app-card-desc">
+                Splits a download across Wi-Fi, Ethernet and USB at the same time, with resume,
+                queues, and extract-while-downloading.
+              </p>
+              <ul class="app-card-facts">
+                <li>
+                  <svg class="icon" aria-hidden="true"><use href="#i-windows"></use></svg>
+                  <span>Windows 10/11</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true"><use href="#i-code"></use></svg>
+                  <span>MIT</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true"><use href="#i-archive"></use></svg>
+                  <span>125.2 MB</span>
+                </li>
+              </ul>
+              <div class="app-card-foot">
+                <span class="app-card-version mono">v1.2.0</span>
+                <a class="app-card-link" href="./apps/tayyar/">
+                  <span>Meet Tayyar</span>
+                  <svg class="icon arrow-icon" aria-hidden="true">
+                    <use href="#i-arrow-right"></use>
+                  </svg>
+                </a>
+              </div>
+            </article>
+
+            <article
+              class="app-card app-card-ghost"
+              data-catalog-ghost
+              aria-labelledby="coming-title"
+            >
+              <span class="ghost-orbit" aria-hidden="true">
+                <svg class="icon"><use href="#i-zap"></use></svg>
+              </span>
+              <span class="app-card-category" data-i18n="home.comingKicker">Coming soon</span>
+              <h3 class="ghost-title" id="coming-title" data-i18n="home.comingTitle">
+                More great apps are on the way.
+              </h3>
+              <p class="ghost-copy" data-i18n="home.comingBody">
+                We’re testing a few that might make the cut. The next one lands only when it’s ready
+                — and it will be worth the wait.
+              </p>
+              <a class="ghost-link" href="#standards">
+                <span data-i18n="home.comingLink">See what we look for</span>
+                <svg class="icon arrow-icon" aria-hidden="true">
+                  <use href="#i-arrow-right"></use>
+                </svg>
+              </a>
+            </article>
+          </div>
+
+          <template id="appCardTemplate">
+            <article class="app-card" data-app-card>
+              <div class="app-card-glow" aria-hidden="true"></div>
+              <div class="app-card-head">
+                <span class="app-card-icon"><img width="54" height="54" alt="" /></span>
+                <span class="app-card-id">
+                  <span class="app-card-category"></span>
+                  <h3 class="app-card-name"></h3>
+                </span>
+                <span class="app-card-status"><i></i><span></span></span>
+              </div>
+              <p class="app-card-tagline"></p>
+              <p class="app-card-desc"></p>
+              <ul class="app-card-facts">
+                <li>
+                  <svg class="icon" aria-hidden="true"><use href="#i-windows"></use></svg>
+                  <span data-app-field="platform"></span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true"><use href="#i-code"></use></svg>
+                  <span data-app-field="license"></span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true"><use href="#i-archive"></use></svg>
+                  <span data-app-field="size"></span>
+                </li>
+              </ul>
+              <div class="app-card-foot">
+                <span class="app-card-version mono" data-app-field="version"></span>
+                <a class="app-card-link">
+                  <span data-app-field="actionLabel"></span>
+                  <svg class="icon arrow-icon" aria-hidden="true">
+                    <use href="#i-arrow-right"></use>
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </template>
+
+          <div class="catalog-note reveal">
+            <span class="catalog-note-line" aria-hidden="true"></span>
+            <p data-i18n="home.catalogNote">
+              One app today, with more on the way. The next one lands when it’s ready.
+            </p>
+            <span class="mono" data-catalog-count>1 app live</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section standards" id="standards" aria-labelledby="standards-title">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">
+                <span class="eyebrow-dot" aria-hidden="true"></span>
+                <span data-i18n="home.standardsEyebrow">The filter</span>
+              </p>
+              <h2 class="section-title" id="standards-title" data-i18n="home.standardsTitle">
+                How we choose.
+              </h2>
+            </div>
+            <p class="section-lede" data-i18n="home.standardsLede">
+              A catalog is only useful if it leaves things out. These are the three tests every app
+              has to pass.
+            </p>
+          </div>
+
+          <div class="feature-grid">
+            <article class="feature-card standard-card reveal">
+              <div class="feature-card-top">
+                <span class="feature-icon">
+                  <svg class="icon" aria-hidden="true"><use href="#i-zap"></use></svg>
+                </span>
+                <span class="feature-tag">01 / USEFUL</span>
+              </div>
+              <h3 data-i18n="home.standard1Title">It has to solve something.</h3>
+              <p data-i18n="home.standard1Body">
+                Not another wrapper around the same API. Not a demo with a download button. It has
+                to be the tool you reach for twice.
+              </p>
+              <span class="standard-rule" aria-hidden="true"></span>
+              <span class="standard-foot" data-i18n="home.standard1Foot">Useful before clever</span>
+            </article>
+
+            <article class="feature-card standard-card reveal">
+              <div class="feature-card-top">
+                <span class="feature-icon">
+                  <svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg>
+                </span>
+                <span class="feature-tag">02 / RESPECTFUL</span>
+              </div>
+              <h3 data-i18n="home.standard2Title">No account tax.</h3>
+              <p data-i18n="home.standard2Body">
+                No sign-up wall between you and the download. No bundleware, no silent extras, no
+                “recommended” installs. The app does its job and gets out of the way.
+              </p>
+              <span class="standard-rule" aria-hidden="true"></span>
+              <span class="standard-foot" data-i18n="home.standard2Foot"
+                >No accounts, no tricks</span
+              >
+            </article>
+
+            <article class="feature-card standard-card reveal">
+              <div class="feature-card-top">
+                <span class="feature-icon">
+                  <svg class="icon" aria-hidden="true"><use href="#i-link"></use></svg>
+                </span>
+                <span class="feature-tag">03 / HONEST</span>
+              </div>
+              <h3 data-i18n="home.standard3Title">The limits are stated.</h3>
+              <p data-i18n="home.standard3Body">
+                Downloads start directly from the app page. Warnings are explained before you click,
+                and the copy doesn’t promise more than the software can do.
+              </p>
+              <span class="standard-rule" aria-hidden="true"></span>
+              <span class="standard-foot" data-i18n="home.standard3Foot"
+                >Receipts over slogans</span
+              >
+            </article>
+          </div>
+
+          <figure class="standards-quote reveal">
+            <blockquote data-i18n="home.quote">
+              “Small on purpose. Every app has to earn its place.”
+            </blockquote>
+            <figcaption class="mono" data-i18n="home.quoteBy">
+              ASRAAB / EDITORIAL RULE 01
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section about" id="about" aria-labelledby="about-title">
+        <div class="wrap about-grid">
+          <div class="about-copy">
+            <p class="eyebrow">
+              <span class="eyebrow-dot" aria-hidden="true"></span>
+              <span data-i18n="home.aboutEyebrow">Built in the open</span>
+            </p>
+            <h2 class="section-title" id="about-title" data-i18n="home.aboutTitle">
+              A catalog, not a content farm.
+            </h2>
+            <p class="section-lede about-lede" data-i18n="home.aboutLede">
+              Each app keeps its own repository, release notes, license and download page. Asraab is
+              the index — not a middleman.
+            </p>
+
+            <ul class="about-points">
+              <li>
+                <span class="mono">01</span>
+                <div>
+                  <strong data-i18n="home.aboutPoint1Title">One app, one repository.</strong>
+                  <p data-i18n="home.aboutPoint1Body">
+                    Updates and issue reports live with the app that ships them. No central release
+                    bundle to untangle.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span class="mono">02</span>
+                <div>
+                  <strong data-i18n="home.aboutPoint2Title">No tracking, no account.</strong>
+                  <p data-i18n="home.aboutPoint2Body">
+                    The site is static, makes no third-party requests, and stores only your theme
+                    and language preference.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span class="mono">03</span>
+                <div>
+                  <strong data-i18n="home.aboutPoint3Title">Apps can leave.</strong>
+                  <p data-i18n="home.aboutPoint3Body">
+                    If an app stops meeting the bar, it comes out of the catalog. Small is the
+                    point, not a phase.
+                  </p>
+                </div>
+              </li>
+            </ul>
+
+            <div class="about-actions">
+              <a
+                class="btn btn-primary"
+                href="https://github.com/bouadjadjatamer2-hub"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg class="icon fill" aria-hidden="true"><use href="#i-github"></use></svg>
+                <span data-i18n="site.githubProfile">Asraab on GitHub</span>
+              </a>
+              <a class="btn btn-secondary" href="./apps/tayyar/">
+                <span data-i18n="home.meetTayyar">Meet Tayyar</span>
                 <svg class="icon arrow-icon" aria-hidden="true">
                   <use href="#i-arrow-right"></use>
                 </svg>
               </a>
             </div>
-            <div class="hero-meta">
-              <span data-i18n="hero.windows">Windows 10 &amp; 11</span>
-              <span class="dot" aria-hidden="true"></span>
-              <span data-config="version" data-prefix="v">v1.2.0</span>
-              <span class="dot" aria-hidden="true"></span>
-              <span data-config="installerSize">125.2 MB</span>
-            </div>
-            <p class="hero-note">
-              <svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg>
-              <span data-i18n="hero.note">Free and open source (MIT) · No account needed</span>
-            </p>
           </div>
 
-          <div class="hero-visual">
-            <div class="float-chip chip-a">
-              <span class="chip-dot" aria-hidden="true"></span>
-              <span data-i18n="hero.chipNetworks">3 networks combined</span>
+          <div
+            class="repo-panel reveal"
+            role="img"
+            aria-label="Asraab catalog structure: one repository per app, starting with Tayyar"
+            data-i18n-aria-label="home.repoAria"
+          >
+            <div class="repo-bar">
+              <span class="repo-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="mono">asraab / README.md</span>
+              <span class="repo-branch mono">main</span>
             </div>
-            <div class="float-chip chip-b">
-              <svg class="icon" aria-hidden="true"><use href="#i-archive"></use></svg>
-              <span data-i18n="hero.chipExtract">Extract while downloading</span>
-            </div>
-
-            <div class="app-window" dir="ltr" aria-hidden="true">
-              <div class="app-titlebar">
-                <img
-                  class="app-mark"
-                  src="./assets/img/tayyar-icon.png"
-                  width="14"
-                  height="14"
-                  alt=""
-                />
-                <span class="app-name">TAYYAR</span>
-                <span class="app-version">v<span data-config="versionPlain">1.2.0</span></span>
-                <span class="app-turbo">TURBO</span>
-                <span class="app-window-controls">
-                  <span>−</span><span>□</span><span>×</span>
-                </span>
-              </div>
-
-              <div class="app-toolbar">
-                <span class="app-back">
-                  <svg viewBox="0 0 24 24"><use href="#i-chevron-left"></use></svg>
-                  Downloads
-                </span>
-                <span class="app-toolbar-spacer"></span>
-                <span class="app-mini-btn primary">Show in folder</span>
-                <span class="app-mini-btn danger">Cancel</span>
-              </div>
-
-              <div class="app-hero">
-                <div class="app-diagram">
-                  <svg
-                    viewBox="0 0 220 78"
-                    role="img"
-                    aria-label="Three networks feeding one download"
-                  >
-                    <g fill="none" stroke-width="2.2" stroke-linecap="round">
-                      <path
-                        d="M70 14 C101 14 126 39 151 39"
-                        stroke="#4ea89a"
-                        stroke-dasharray="4 5"
-                        opacity="0.9"
-                      ></path>
-                      <path
-                        d="M70 39 C101 39 126 39 151 39"
-                        stroke="#d8a44c"
-                        stroke-dasharray="4 5"
-                        opacity="0.9"
-                      ></path>
-                      <path
-                        d="M70 64 C101 64 126 39 151 39"
-                        stroke="#7e93bd"
-                        stroke-dasharray="4 5"
-                        opacity="0.8"
-                      ></path>
-                    </g>
-                    <circle
-                      cx="151"
-                      cy="39"
-                      r="8.5"
-                      fill="none"
-                      stroke="#8b6cff"
-                      stroke-opacity="0.35"
-                    ></circle>
-                    <circle cx="151" cy="39" r="3.2" fill="#8b6cff"></circle>
-                    <path
-                      d="M160 39h32"
-                      stroke="#c9c0ff"
-                      stroke-width="5"
-                      stroke-linecap="round"
-                    ></path>
-                    <path d="m188 34 6 5-6 5" fill="#c9c0ff"></path>
-                    <g font-family="Roboto Mono, monospace" font-size="6.2" letter-spacing="0.7">
-                      <text x="64" y="12" text-anchor="end" fill="#8d93a6">WI-FI</text>
-                      <text x="64" y="37" text-anchor="end" fill="#8d93a6">USB</text>
-                      <text x="64" y="62" text-anchor="end" fill="#8d93a6">ETHERNET</text>
-                    </g>
-                    <g font-family="Roboto Mono, monospace" font-size="5.8" fill="#6f7587">
-                      <text x="160" y="28" text-anchor="end">COMBINED</text>
-                    </g>
-                    <circle cx="65" cy="14" r="2.8" fill="#4ea89a"></circle>
-                    <circle cx="65" cy="39" r="2.8" fill="#d8a44c"></circle>
-                    <circle cx="65" cy="64" r="2.8" fill="#7e93bd"></circle>
-                  </svg>
-                </div>
-
-                <div class="app-total">
-                  <span class="app-label">TOTAL SPEED</span>
-                  <div class="app-speed">
-                    <strong id="mockSpeed">42.8</strong><small>MB/s</small>
-                  </div>
-                  <div class="app-speed-sub">AVG 39.4 MB/s · PEAK 48.1 MB/s</div>
-                </div>
-
-                <div class="app-chart">
-                  <span class="app-label">THROUGHPUT · LAST 60S</span>
-                  <svg
-                    viewBox="0 0 300 80"
-                    preserveAspectRatio="none"
-                    role="img"
-                    aria-label="Combined throughput chart"
-                  >
-                    <g stroke="#8d93a6" stroke-opacity="0.18" stroke-width="1">
-                      <line x1="0" y1="20" x2="300" y2="20"></line>
-                      <line x1="0" y1="40" x2="300" y2="40"></line>
-                      <line x1="0" y1="60" x2="300" y2="60"></line>
-                    </g>
-                    <polygon
-                      points="0,80 0,43 24,37 48,44 72,30 96,34 120,23 144,27 168,18 192,25 216,16 240,22 264,12 288,18 300,14 300,80"
-                      fill="#4ea89a"
-                      fill-opacity="0.28"
-                    ></polygon>
-                    <polygon
-                      points="0,80 0,53 24,48 48,55 72,45 96,50 120,39 144,43 168,34 192,40 216,32 240,37 264,28 288,33 300,29 300,80"
-                      fill="#d8a44c"
-                      fill-opacity="0.2"
-                    ></polygon>
-                    <polygon
-                      points="0,80 0,62 24,58 48,63 72,55 96,60 120,50 144,54 168,46 192,51 216,44 240,48 264,40 288,45 300,41 300,80"
-                      fill="#7e93bd"
-                      fill-opacity="0.21"
-                    ></polygon>
-                    <polyline
-                      points="0,43 24,37 48,44 72,30 96,34 120,23 144,27 168,18 192,25 216,16 240,22 264,12 288,18 300,14"
-                      fill="none"
-                      stroke="#c9c0ff"
-                      stroke-width="1.7"
-                      stroke-opacity="0.9"
-                    ></polyline>
-                    <g class="chart-scan">
-                      <line
-                        x1="150"
-                        y1="0"
-                        x2="150"
-                        y2="80"
-                        stroke="#22d3ee"
-                        stroke-width="1"
-                        stroke-opacity="0.35"
-                      ></line>
-                      <circle cx="150" cy="22" r="2.5" fill="#22d3ee"></circle>
-                    </g>
-                  </svg>
-                </div>
-              </div>
-
-              <div class="app-file">
-                <span class="app-file-icon">ZIP</span>
-                <div class="app-file-main">
-                  <div class="app-file-name">project-assets.zip</div>
-                  <div class="app-file-stats">
-                    <span>312.4 MB of 1.8 GB</span>
-                    <span class="dot">·</span>
-                    <strong>17%</strong>
-                    <span class="dot">·</span>
-                    <span>1m 12s left</span>
-                  </div>
-                </div>
-                <span class="app-file-path">~/Downloads</span>
-              </div>
-
-              <div class="app-grid" aria-hidden="true">
-                <i class="app-cell done"></i><i class="app-cell done"></i
-                ><i class="app-cell done"></i><i class="app-cell done"></i
-                ><i class="app-cell done"></i><i class="app-cell done"></i
-                ><i class="app-cell done"></i><i class="app-cell done"></i>
-                <i class="app-cell done"></i><i class="app-cell done"></i
-                ><i class="app-cell done"></i><i class="app-cell done"></i
-                ><i class="app-cell live"></i><i class="app-cell"></i><i class="app-cell"></i
-                ><i class="app-cell"></i> <i class="app-cell"></i><i class="app-cell"></i
-                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
-                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i>
-                <i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
-                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
-                ><i class="app-cell"></i><i class="app-cell"></i> <i class="app-cell"></i
-                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
-                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
-                ><i class="app-cell"></i> <i class="app-cell"></i><i class="app-cell"></i
-                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
-                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i>
-                <i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
-                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
-                ><i class="app-cell"></i><i class="app-cell"></i> <i class="app-cell"></i
-                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
-                ><i class="app-cell"></i><i class="app-cell"></i><i class="app-cell"></i
-                ><i class="app-cell"></i>
-              </div>
-
-              <div class="app-networks">
-                <div class="app-net-head">
-                  <span>NETWORK</span><span>PROGRESS</span><span>SHARE</span><span>SPEED</span>
-                </div>
-                <div class="app-net-row" style="--net-color: #4ea89a">
-                  <span class="app-net-name"><span class="status-dot"></span>Wi-Fi</span>
-                  <span class="app-net-progress"><span style="width: 46%"></span></span>
-                  <span class="app-net-share">46%</span>
-                  <span class="app-net-speed">20.1 MB/s</span>
-                </div>
-                <div class="app-net-row" style="--net-color: #d8a44c">
-                  <span class="app-net-name"><span class="status-dot"></span>USB tethering</span>
-                  <span class="app-net-progress"><span style="width: 31%"></span></span>
-                  <span class="app-net-share">31%</span>
-                  <span class="app-net-speed">12.4 MB/s</span>
-                </div>
-                <div class="app-net-row" style="--net-color: #7e93bd">
-                  <span class="app-net-name"><span class="status-dot"></span>Ethernet</span>
-                  <span class="app-net-progress"><span style="width: 23%"></span></span>
-                  <span class="app-net-share">23%</span>
-                  <span class="app-net-speed">10.3 MB/s</span>
-                </div>
-              </div>
-
-              <div class="app-statusbar">
-                <span>24.7 GB free · 0 waiting</span>
-                <span class="status-spacer"></span>
-                <span class="status-toggle">Slow mode <span class="app-toggle"></span></span>
-                <span>MB/s</span>
-                <span>☾</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div
-          class="wrap hero-stats"
-          aria-label="Tayyar at a glance"
-          data-i18n-aria-label="hero.statsAria"
-        >
-          <div class="hero-stat">
-            <div class="hero-stat-value" dir="ltr">2–64</div>
-            <div class="hero-stat-label" data-i18n="hero.stats.streamsLabel">
-              streams per network
-            </div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-value" dir="ltr">3</div>
-            <div class="hero-stat-label" data-i18n="hero.stats.networksLabel">network types</div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-value is-formats" dir="ltr">ZIP · RAR · TAR</div>
-            <div class="hero-stat-label" data-i18n="hero.stats.extractLabel">
-              extract while downloading
-            </div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-value" dir="ltr">0</div>
-            <div class="hero-stat-label" data-i18n="hero.stats.accountsLabel">
-              accounts required
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section features" id="features" aria-labelledby="features-title">
-        <div class="wrap">
-          <div class="section-head reveal">
-            <div>
-              <p class="eyebrow">
-                <span class="eyebrow-dot" aria-hidden="true"></span
-                ><span data-i18n="features.eyebrow">Built for big files</span>
+            <div class="repo-body">
+              <p class="repo-prompt"><span>~</span> cat principles.txt</p>
+              <p class="repo-out"><span class="repo-key">01</span> Use it or don't ship it.</p>
+              <p class="repo-out"><span class="repo-key">02</span> Respect the person clicking.</p>
+              <p class="repo-out"><span class="repo-key">03</span> Say what it cannot do.</p>
+              <p class="repo-prompt repo-gap"><span>~</span> ls apps/</p>
+              <p class="repo-out">
+                <span class="repo-dir">tayyar/</span>
+                <span class="repo-comment"># live · MIT</span>
               </p>
-              <h2 class="section-title" id="features-title" data-i18n="features.title">
-                Speed when there’s headroom.
-              </h2>
+              <p class="repo-out">
+                <span class="repo-dir">next-app/</span>
+                <span class="repo-comment"># landing soon</span>
+              </p>
+              <p class="repo-prompt repo-gap"><span>~</span> <span class="repo-blink">_</span></p>
             </div>
-            <p class="section-lede" data-i18n="features.lede">
-              Tayyar does the unglamorous work: splits files, keeps every connection busy, verifies
-              what arrives, and lets you close the window.
-            </p>
-          </div>
-
-          <div class="feature-grid">
-            <article class="feature-card reveal" style="--reveal-delay: 0ms">
-              <div class="feature-card-top">
-                <span class="feature-icon"
-                  ><svg class="icon" aria-hidden="true"><use href="#i-network"></use></svg
-                ></span>
-                <span class="feature-tag" data-i18n="features.f1Tag">MULTI-NET</span>
-              </div>
-              <h3 data-i18n="features.f1Title">Every connection, together</h3>
-              <p data-i18n="features.f1Body">
-                Wi-Fi, Ethernet, USB tethering and mobile data can all carry the same file at once.
-                Tayyar keeps each stream on the network you chose.
-              </p>
-            </article>
-
-            <article class="feature-card reveal" style="--reveal-delay: 55ms">
-              <div class="feature-card-top">
-                <span class="feature-icon"
-                  ><svg class="icon" aria-hidden="true"><use href="#i-streams"></use></svg
-                ></span>
-                <span class="feature-tag" data-i18n="features.f2Tag">STREAMS</span>
-              </div>
-              <h3 data-i18n="features.f2Title">2 to 64 connections</h3>
-              <p data-i18n="features.f2Body">
-                Pick 2, 4, 8, 16 or 32 parallel connections. Turbo mode can scale to 64 per network
-                when the server allows it.
-              </p>
-            </article>
-
-            <article class="feature-card reveal" style="--reveal-delay: 110ms">
-              <div class="feature-card-top">
-                <span class="feature-icon"
-                  ><svg class="icon" aria-hidden="true"><use href="#i-archive"></use></svg
-                ></span>
-                <span class="feature-tag" data-i18n="features.f3Tag">EXTRACT</span>
-              </div>
-              <h3 data-i18n="features.f3Title">Download + extract</h3>
-              <p data-i18n="features.f3Body">
-                ZIP, RAR and TAR archives — including .tar.gz, .tar.bz2 and .tar.xz — unpack as they
-                download. No second pass.
-              </p>
-              <div class="feature-formats" aria-hidden="true">
-                <span class="format-chip">ZIP</span><span class="format-chip">RAR</span
-                ><span class="format-chip">TAR</span><span class="format-chip">.TAR.GZ</span>
-              </div>
-            </article>
-
-            <article class="feature-card reveal" style="--reveal-delay: 0ms">
-              <div class="feature-card-top">
-                <span class="feature-icon"
-                  ><svg class="icon" aria-hidden="true"><use href="#i-link"></use></svg
-                ></span>
-                <span class="feature-tag" data-i18n="features.f4Tag">DIRECT</span>
-              </div>
-              <h3 data-i18n="features.f4Title">Direct links stay direct</h3>
-              <p data-i18n="features.f4Body">
-                Paste a file URL and go. No in-between page, no forced account. Signed-in downloads
-                work through the extension.
-              </p>
-            </article>
-
-            <article class="feature-card reveal" style="--reveal-delay: 55ms">
-              <div class="feature-card-top">
-                <span class="feature-icon"
-                  ><svg class="icon" aria-hidden="true"><use href="#i-browser"></use></svg
-                ></span>
-                <span class="feature-tag" data-i18n="features.f5Tag">BROWSER</span>
-              </div>
-              <h3 data-i18n="features.f5Title">From browser to Tayyar</h3>
-              <p data-i18n="features.f5Body">
-                The Chromium extension hands downloads to the app with the browser’s cookies, then
-                gets out of the way.
-              </p>
-            </article>
-
-            <article class="feature-card reveal" style="--reveal-delay: 110ms">
-              <div class="feature-card-top">
-                <span class="feature-icon"
-                  ><svg class="icon" aria-hidden="true"><use href="#i-tray"></use></svg
-                ></span>
-                <span class="feature-tag" data-i18n="features.f6Tag">TRAY</span>
-              </div>
-              <h3 data-i18n="features.f6Title">Closes to the tray</h3>
-              <p data-i18n="features.f6Body">
-                Keep downloading after you close the window. Start Tayyar with Windows so it’s ready
-                in the background.
-              </p>
-            </article>
-          </div>
-
-          <div class="feature-also reveal">
-            <span class="feature-also-label">
-              <svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg>
-              <span data-i18n="features.also">Also inside</span>
-            </span>
-            <p data-i18n="features.alsoBody">
-              Resume after restarts · queues and limits · scheduling · categories · torrent files ·
-              optional Windows Defender scans
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section how" id="how" aria-labelledby="how-title">
-        <div class="wrap">
-          <div class="section-head reveal">
-            <div>
-              <p class="eyebrow">
-                <span class="eyebrow-dot" aria-hidden="true"></span
-                ><span data-i18n="how.eyebrow">Three steps</span>
-              </p>
-              <h2 class="section-title" id="how-title" data-i18n="how.title">
-                From link to finished file.
-              </h2>
+            <div class="repo-foot">
+              <span class="mono">github.com/bouadjadjatamer2-hub</span>
+              <span class="mono">PUBLIC</span>
             </div>
-            <p class="section-lede" data-i18n="how.lede">
-              No setup maze. Install, paste, and let it run.
-            </p>
-          </div>
-
-          <div class="how-grid">
-            <article class="how-step reveal" style="--reveal-delay: 0ms">
-              <div class="how-step-top">
-                <span class="step-number" aria-hidden="true">01</span>
-                <span class="step-icon"
-                  ><svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg
-                ></span>
-              </div>
-              <div class="step-tag" data-i18n="how.step1Tag">01 / INSTALL</div>
-              <h3 data-i18n="how.step1Title">Install Tayyar</h3>
-              <p data-i18n="how.step1Body">
-                Download the Windows installer and run it. It’s unsigned, so SmartScreen may ask you
-                to confirm — we explain that below.
-              </p>
-            </article>
-
-            <article class="how-step reveal" style="--reveal-delay: 70ms">
-              <div class="how-step-top">
-                <span class="step-number" aria-hidden="true">02</span>
-                <span class="step-icon"
-                  ><svg class="icon" aria-hidden="true"><use href="#i-link"></use></svg
-                ></span>
-              </div>
-              <div class="step-tag" data-i18n="how.step2Tag">02 / ADD</div>
-              <h3 data-i18n="how.step2Title">Add what you want</h3>
-              <p data-i18n="how.step2Body">
-                Paste a direct link, open a .torrent, or send a download from the browser extension.
-              </p>
-            </article>
-
-            <article class="how-step reveal" style="--reveal-delay: 140ms">
-              <div class="how-step-top">
-                <span class="step-number" aria-hidden="true">03</span>
-                <span class="step-icon"
-                  ><svg class="icon" aria-hidden="true"><use href="#i-zap"></use></svg
-                ></span>
-              </div>
-              <div class="step-tag" data-i18n="how.step3Tag">03 / RUN</div>
-              <h3 data-i18n="how.step3Title">Let Tayyar work</h3>
-              <p data-i18n="how.step3Body">
-                Blocks are spread across your networks, checked as they arrive, and extracted when
-                the format allows.
-              </p>
-            </article>
-          </div>
-
-          <p class="how-note reveal">
-            <svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg>
-            <span data-i18n="how.note"
-              >You can pause, resume, reorder or schedule from the queue.</span
-            >
-          </p>
-        </div>
-      </section>
-
-      <section class="section connections" id="connections" aria-labelledby="connections-title">
-        <div class="wrap">
-          <div class="section-head reveal">
-            <div>
-              <p class="eyebrow">
-                <span class="eyebrow-dot" aria-hidden="true"></span
-                ><span data-i18n="connections.eyebrow">Parallel by design</span>
-              </p>
-              <h2 class="section-title" id="connections-title" data-i18n="connections.title">
-                More streams. Less waiting.
-              </h2>
-            </div>
-            <p class="section-lede" data-i18n="connections.lede">
-              Choose how many connections Tayyar may open per network. More streams help when the
-              server has headroom; they can’t create bandwidth that isn’t there.
-            </p>
-          </div>
-
-          <div class="connections-panel reveal">
-            <div class="connections-copy">
-              <p class="section-lede" data-i18n="connections.panelLede">
-                Set a ceiling per network. Tayyar handles the rest of the queue.
-              </p>
-              <div class="connections-points">
-                <div class="connections-point">
-                  <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>
-                  <span data-i18n="connections.point1"
-                    >2–32 presets; Turbo takes it to 64 per network.</span
-                  >
-                </div>
-                <div class="connections-point">
-                  <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>
-                  <span data-i18n="connections.point2"
-                    >Every stream stays bound to the network you chose.</span
-                  >
-                </div>
-                <div class="connections-point">
-                  <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>
-                  <span data-i18n="connections.point3"
-                    >Blocks move to whichever connection is free.</span
-                  >
-                </div>
-              </div>
-              <div class="connections-footnote">
-                <svg class="icon" aria-hidden="true"><use href="#i-zap"></use></svg>
-                <p data-i18n="connections.footnote">
-                  Turbo is off by default. It reaches 64 streams per network, and only when the
-                  server and disk can keep up.
-                </p>
-              </div>
-            </div>
-
-            <div class="connections-console">
-              <div class="console-label">
-                <span data-i18n="connections.consoleLabel">Stream lab</span>
-                <span class="console-live">Live</span>
-              </div>
-              <div class="console-count-row">
-                <span class="console-count" data-stream-count>08</span>
-                <span class="console-count-copy" data-i18n="connections.perNetwork"
-                  >streams / network</span
-                >
-              </div>
-
-              <div
-                class="preset-row"
-                role="group"
-                aria-label="Connections per network"
-                data-i18n-aria-label="connections.presets"
-              >
-                <button class="preset" type="button" data-streams="2" aria-pressed="false">
-                  2
-                </button>
-                <button class="preset" type="button" data-streams="4" aria-pressed="false">
-                  4
-                </button>
-                <button class="preset" type="button" data-streams="8" aria-pressed="true">8</button>
-                <button class="preset" type="button" data-streams="16" aria-pressed="false">
-                  16
-                </button>
-                <button class="preset" type="button" data-streams="32" aria-pressed="false">
-                  32
-                </button>
-                <button class="preset" type="button" data-streams="64" aria-pressed="false">
-                  64 <span class="preset-turbo" data-i18n="connections.turbo">TURBO</span>
-                </button>
-              </div>
-
-              <div class="stream-map" aria-hidden="true">
-                <i class="stream-cell is-on"></i><i class="stream-cell is-on"></i
-                ><i class="stream-cell is-on"></i><i class="stream-cell is-on"></i
-                ><i class="stream-cell is-on"></i><i class="stream-cell is-on"></i
-                ><i class="stream-cell is-on"></i><i class="stream-cell is-on"></i>
-                <i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
-                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
-                ><i class="stream-cell"></i><i class="stream-cell"></i> <i class="stream-cell"></i
-                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
-                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
-                ><i class="stream-cell"></i> <i class="stream-cell"></i><i class="stream-cell"></i
-                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
-                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i>
-                <i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
-                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
-                ><i class="stream-cell"></i><i class="stream-cell"></i> <i class="stream-cell"></i
-                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
-                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
-                ><i class="stream-cell"></i> <i class="stream-cell"></i><i class="stream-cell"></i
-                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
-                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i>
-                <i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
-                ><i class="stream-cell"></i><i class="stream-cell"></i><i class="stream-cell"></i
-                ><i class="stream-cell"></i><i class="stream-cell"></i>
-              </div>
-
-              <p class="console-summary" data-connections-summary aria-live="polite">
-                3 networks × 8 streams = 24 active streams
-              </p>
-              <div
-                class="console-networks"
-                aria-label="Active networks"
-                data-i18n-aria-label="connections.activeNetworks"
-              >
-                <span class="console-network" style="--network-color: var(--wifi)"
-                  ><span class="dot"></span>Wi-Fi</span
-                >
-                <span class="console-network" style="--network-color: var(--eth)"
-                  ><span class="dot"></span>Ethernet</span
-                >
-                <span class="console-network" style="--network-color: var(--usb)"
-                  ><span class="dot"></span>USB</span
-                >
-              </div>
-              <p class="console-disclaimer" data-i18n="connections.disclaimer">
-                Illustrative only — actual throughput depends on the server, your ISP and your
-                hardware.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section download" id="download" aria-labelledby="download-title">
-        <div class="wrap">
-          <div class="download-card reveal">
-            <div class="download-copy">
-              <p class="eyebrow">
-                <span class="eyebrow-dot" aria-hidden="true"></span
-                ><span data-i18n="download.eyebrow">Windows 10 &amp; 11 · 64-bit</span>
-              </p>
-              <div class="app-icon-wrap">
-                <img
-                  class="app-icon"
-                  src="./assets/img/tayyar-icon.png"
-                  width="70"
-                  height="70"
-                  alt="Tayyar app icon"
-                  data-i18n-alt="download.appIconAlt"
-                />
-              </div>
-              <h2 class="download-title" id="download-title" data-i18n="download.title">
-                Ready when you are.
-              </h2>
-              <p class="download-lede" data-i18n="download.lede">
-                One installer. No account. The latest build and its checksum are below.
-              </p>
-              <div class="download-actions">
-                <a
-                  class="btn btn-primary btn-lg"
-                  href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe"
-                  data-config-href="download"
-                >
-                  <svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg>
-                  <span class="download-button-label">
-                    <span data-i18n="download.button">Download installer</span>
-                    <span class="download-button-version" data-config="version" data-prefix="v"
-                      >v1.2.0</span
-                    >
-                  </span>
-                </a>
-                <a
-                  class="btn btn-secondary btn-lg"
-                  href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.0"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-config-href="releaseTag"
-                >
-                  <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
-                  <span data-i18n="download.releaseNotes">Release notes</span>
-                </a>
-              </div>
-            </div>
-
-            <div class="release-card">
-              <div class="release-card-head">
-                <span class="release-card-title">
-                  <svg class="icon" aria-hidden="true"><use href="#i-code"></use></svg>
-                  <span data-i18n="download.releaseChannel">Release channel</span>
-                </span>
-                <span class="release-status" data-i18n="download.latest">Latest</span>
-              </div>
-              <div class="release-rows">
-                <div class="release-row">
-                  <span class="label" data-i18n="download.releaseLabel">Version</span>
-                  <span class="value" data-config="version" data-prefix="v">v1.2.0</span>
-                </div>
-                <div class="release-row">
-                  <span class="label" data-i18n="download.installerLabel">Installer</span>
-                  <span class="value" data-config="installerName">Tayyar-1.2.0-Setup.exe</span>
-                </div>
-                <div class="release-row">
-                  <span class="label" data-i18n="download.sizeLabel">Size</span>
-                  <span class="value" data-config="installerSize">125.2 MB</span>
-                </div>
-                <div class="release-row">
-                  <span class="label" data-i18n="download.platformLabel">Platform</span>
-                  <span class="value" data-i18n="download.platformValue">Windows 10 / 11</span>
-                </div>
-                <div class="release-row">
-                  <span class="label" data-i18n="download.archLabel">Architecture</span>
-                  <span class="value" data-i18n="download.archValue">64-bit</span>
-                </div>
-                <div class="release-row">
-                  <span class="label" data-i18n="download.licenseLabel">License</span>
-                  <span class="value" data-i18n="download.licenseValue">MIT</span>
-                </div>
-              </div>
-              <div class="release-checksum">
-                <div class="checksum-head">
-                  <span class="label" data-i18n="download.checksumLabel">SHA-256</span>
-                  <button
-                    class="copy-btn"
-                    id="copyChecksum"
-                    type="button"
-                    aria-label="Copy SHA-256 checksum"
-                    data-i18n-aria-label="download.copyChecksum"
-                  >
-                    <svg class="icon" aria-hidden="true"><use href="#i-copy"></use></svg>
-                    <span data-copy-label data-i18n="common.copy">Copy</span>
-                  </button>
-                </div>
-                <code class="checksum" data-config="sha256"
-                  >643DD40A89A86019B75A8BFE84FCDE6DF4C506371031313019EC49E4AABE2C6B</code
-                >
-              </div>
-            </div>
-          </div>
-
-          <div class="download-whats-new reveal">
-            <p class="whats-new-label" data-i18n="download.whatsNew">What's new in {version}</p>
-            <ul class="whats-new-list">
-              <li>
-                <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg
-                ><span data-i18n="download.whatsNew1"
-                  >Better recovery from slow first-byte responses</span
-                >
-              </li>
-              <li>
-                <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg
-                ><span data-i18n="download.whatsNew2">Extract archives while downloading</span>
-              </li>
-              <li>
-                <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg
-                ><span data-i18n="download.whatsNew3">Start with Windows and stay in the tray</span>
-              </li>
-            </ul>
-          </div>
-
-          <div class="download-warning reveal">
-            <svg class="icon" aria-hidden="true"><use href="#i-warning"></use></svg>
-            <div>
-              <strong data-i18n="download.unsignedTitle">About the SmartScreen warning</strong
-              ><br />
-              <span data-i18n="download.unsignedBody">
-                The installer is not code-signed, so Windows may show a SmartScreen warning. Choose
-                More info → Run anyway, or build from source. The project does not have a
-                code-signing certificate yet.
-              </span>
-            </div>
-          </div>
-
-          <div class="download-links reveal">
-            <a
-              href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/blob/main/LICENSE"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-config-href="license"
-            >
-              <svg class="icon" aria-hidden="true"><use href="#i-code"></use></svg>
-              <span data-i18n="download.source">Source code (MIT)</span>
-            </a>
-            <a
-              href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-config-href="issues"
-            >
-              <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
-              <span data-i18n="footer.issues">Issues &amp; ideas</span>
-            </a>
-            <span style="color: var(--dim)" data-i18n="download.extensionNote">
-              The browser extension is a separate download, not inside the installer.
-            </span>
-          </div>
-        </div>
-      </section>
-
-      <section class="section extension" id="extension" aria-labelledby="extension-title">
-        <div class="wrap extension-grid">
-          <div class="extension-copy">
-            <p class="eyebrow">
-              <span class="eyebrow-dot" aria-hidden="true"></span
-              ><span data-i18n="extension.eyebrow">Chromium extension</span>
-            </p>
-            <h2 class="section-title" id="extension-title" data-i18n="extension.title">
-              Browsers can hand it over.
-            </h2>
-            <p class="section-lede" data-i18n="extension.lede">
-              Install the extension, and downloads open in Tayyar instead of your browser’s download
-              shelf — cookies included.
-            </p>
-            <div
-              class="extension-browsers"
-              aria-label="Supported browsers"
-              data-i18n-aria-label="extension.supported"
-            >
-              <span class="browser-chip">Chrome</span><span class="browser-chip">Edge</span
-              ><span class="browser-chip">Brave</span><span class="browser-chip">Opera</span>
-            </div>
-            <div class="extension-actions">
-              <a
-                class="btn btn-primary"
-                href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-Browser-Extension.zip"
-                data-config-href="extension"
-              >
-                <svg class="icon" aria-hidden="true"><use href="#i-puzzle"></use></svg>
-                <span data-i18n="extension.button">Download extension (.zip)</span>
-              </a>
-              <a
-                class="btn btn-quiet"
-                href="./extension/privacy/"
-                data-config-href="privacy"
-                data-i18n="extension.privacyLink"
-                >Read the privacy policy</a
-              >
-            </div>
-
-            <ol class="extension-steps">
-              <li class="extension-step">
-                <h3 data-i18n="extension.step1Title">Download and unzip</h3>
-                <p data-i18n="extension.step1Body">
-                  Download the zip and extract it somewhere you’ll remember.
-                </p>
-              </li>
-              <li class="extension-step">
-                <h3 data-i18n="extension.step2Title">Open extensions</h3>
-                <p data-i18n="extension.step2Body">
-                  In Chrome, Edge, Brave or Opera, open chrome://extensions and turn on Developer
-                  mode.
-                </p>
-              </li>
-              <li class="extension-step">
-                <h3 data-i18n="extension.step3Title">Load unpacked</h3>
-                <p data-i18n="extension.step3Body">
-                  Choose Load unpacked and select the folder you extracted. manifest.json sits at
-                  its root.
-                </p>
-              </li>
-              <li class="extension-step">
-                <h3 data-i18n="extension.step4Title">Send a download</h3>
-                <p data-i18n="extension.step4Body">
-                  Use the toolbar button or the right-click menu. Tayyar must be running.
-                </p>
-              </li>
-            </ol>
-
-            <div class="extension-manual">
-              <strong
-                ><svg class="icon" aria-hidden="true"><use href="#i-warning"></use></svg
-                ><span data-i18n="extension.manualTitle">Manual install</span></strong
-              >
-              <span data-i18n="extension.manualBody">
-                This isn’t on the Chrome Web Store yet, so the browser won’t update it for you.
-                Re-download the zip when a new release lands.
-              </span>
-            </div>
-            <p class="extension-local">
-              <svg class="icon" aria-hidden="true"><use href="#i-lock"></use></svg>
-              <span data-i18n="extension.localNote"
-                >The extension only talks to Tayyar on 127.0.0.1 — no developer servers.</span
-              >
-            </p>
-          </div>
-
-          <div class="browser-mock-wrap reveal">
-            <div class="browser-mock" aria-hidden="true" dir="ltr">
-              <div class="browser-chrome">
-                <span class="browser-dots"><span></span><span></span><span></span></span>
-                <span class="browser-address">
-                  <svg viewBox="0 0 24 24"><use href="#i-lock"></use></svg>
-                  example.com/file.zip
-                </span>
-              </div>
-              <div class="browser-body">
-                <div class="extension-popup">
-                  <div class="extension-popup-head">
-                    <span class="extension-popup-logo">
-                      <img src="./assets/img/tayyar-icon.png" width="19" height="19" alt="" />
-                    </span>
-                    <span class="extension-popup-title">
-                      <strong>Download with Tayyar</strong>
-                      <span data-i18n="extension.connected">Connected to Tayyar</span>
-                    </span>
-                    <svg
-                      class="icon"
-                      style="width: 12px; height: 12px; color: #6f7587"
-                      aria-hidden="true"
-                    >
-                      <use href="#i-puzzle"></use>
-                    </svg>
-                  </div>
-                  <div class="extension-popup-file">
-                    <span class="file-icon">ZIP</span>
-                    <div>
-                      <strong>design-pack.zip</strong>
-                      <span>148 MB · Files</span>
-                    </div>
-                  </div>
-                  <div class="extension-popup-meta">
-                    <span>Cookies included</span>
-                    <span>1 download</span>
-                  </div>
-                  <div class="extension-send">
-                    <svg viewBox="0 0 24 24"><use href="#i-download"></use></svg>
-                    <span data-i18n="extension.send">Send to Tayyar</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section faq" id="faq" aria-labelledby="faq-title">
-        <div class="wrap faq-grid">
-          <div class="faq-intro">
-            <p class="eyebrow">
-              <span class="eyebrow-dot" aria-hidden="true"></span
-              ><span data-i18n="faq.eyebrow">Questions, answered</span>
-            </p>
-            <h2 class="section-title" id="faq-title" data-i18n="faq.title">
-              The honest version, rough edges included.
-            </h2>
-            <p class="section-lede" data-i18n="faq.lede">
-              If you can’t find your answer, open an issue on GitHub.
-            </p>
-            <a
-              class="faq-cta"
-              href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-config-href="issues"
-            >
-              <span data-i18n="faq.ask">Open an issue</span>
-              <svg class="icon flip-rtl" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-            </a>
-          </div>
-
-          <div class="faq-list">
-            <details class="faq-item" open>
-              <summary>
-                <span class="faq-question" data-i18n="faq.q1"
-                  >Does Tayyar really combine my connections?</span
-                ><span class="faq-plus" aria-hidden="true"></span>
-              </summary>
-              <div class="faq-answer" data-i18n="faq.a1">
-                Yes — when more than one network is active and the server supports range requests.
-                It splits the file into blocks and binds streams to different interfaces. A server
-                that limits one connection, or an ISP that caps your line, still sets the ceiling.
-              </div>
-            </details>
-            <details class="faq-item">
-              <summary>
-                <span class="faq-question" data-i18n="faq.q2"
-                  >Which versions of Windows are supported?</span
-                ><span class="faq-plus" aria-hidden="true"></span>
-              </summary>
-              <div class="faq-answer" data-i18n="faq.a2">
-                Windows 10 and 11, 64-bit. The current installer is built for x64.
-              </div>
-            </details>
-            <details class="faq-item">
-              <summary>
-                <span class="faq-question" data-i18n="faq.q3">Is it free?</span
-                ><span class="faq-plus" aria-hidden="true"></span>
-              </summary>
-              <div class="faq-answer" data-i18n="faq.a3">
-                Yes. Tayyar is free and open source under the MIT license, based on Plexo. There is
-                no account, subscription or ad.
-              </div>
-            </details>
-            <details class="faq-item">
-              <summary>
-                <span class="faq-question" data-i18n="faq.q4">Why does Windows warn me?</span
-                ><span class="faq-plus" aria-hidden="true"></span>
-              </summary>
-              <div class="faq-answer" data-i18n="faq.a4">
-                The installer is unsigned, so SmartScreen can’t verify its publisher. Choose More
-                info → Run anyway, or build from source. Signing requires a paid certificate, which
-                the project does not have yet.
-              </div>
-            </details>
-            <details class="faq-item">
-              <summary>
-                <span class="faq-question" data-i18n="faq.q5">Where is the browser extension?</span
-                ><span class="faq-plus" aria-hidden="true"></span>
-              </summary>
-              <div class="faq-answer" data-i18n="faq.a5">
-                It’s a separate zip download, not inside the installer and not on the Chrome Web
-                Store. Install it manually with Developer mode; steps are above.
-              </div>
-            </details>
-            <details class="faq-item">
-              <summary>
-                <span class="faq-question" data-i18n="faq.q6"
-                  >Which archives extract while downloading?</span
-                ><span class="faq-plus" aria-hidden="true"></span>
-              </summary>
-              <div class="faq-answer" data-i18n="faq.a6">
-                ZIP, RAR and TAR archives, including .tar.gz, .tar.bz2 and .tar.xz. .7z and
-                multipart archives can’t be stream-extracted; download them fully, then extract with
-                your usual tool.
-              </div>
-            </details>
-            <details class="faq-item">
-              <summary>
-                <span class="faq-question" data-i18n="faq.q7"
-                  >Will it make every download faster?</span
-                ><span class="faq-plus" aria-hidden="true"></span>
-              </summary>
-              <div class="faq-answer" data-i18n="faq.a7">
-                No. Tayyar makes the most of the connections and server capacity you have. If the
-                server limits you to one slow stream, more connections won’t help. Turbo mode can
-                even hurt on weak hardware or strict servers.
-              </div>
-            </details>
-            <details class="faq-item">
-              <summary>
-                <span class="faq-question" data-i18n="faq.q8">Does it collect my data?</span
-                ><span class="faq-plus" aria-hidden="true"></span>
-              </summary>
-              <div class="faq-answer" data-i18n="faq.a8">
-                Tayyar keeps settings and download history on your PC. The browser extension only
-                talks to Tayyar on 127.0.0.1 — not to developer servers. See the extension privacy
-                policy for details.
-              </div>
-            </details>
-            <details class="faq-item">
-              <summary>
-                <span class="faq-question" data-i18n="faq.q9">Can I use it for torrents?</span
-                ><span class="faq-plus" aria-hidden="true"></span>
-              </summary>
-              <div class="faq-answer" data-i18n="faq.a9">
-                Yes, .torrent files and magnet links can be opened with Tayyar. The installer
-                doesn’t take over your torrent associations.
-              </div>
-            </details>
           </div>
         </div>
       </section>
@@ -1468,88 +894,78 @@
       <div class="wrap">
         <div class="footer-grid">
           <div class="footer-brand">
-            <a class="brand" href="#top" aria-label="Tayyar home" data-i18n-aria-label="a11y.home">
+            <a
+              class="brand brand-site"
+              href="#top"
+              aria-label="Asraab home"
+              data-i18n-aria-label="site.a11yHome"
+            >
               <img
                 class="brand-mark"
-                src="./assets/img/tayyar-icon.png"
+                src="./assets/img/asraab-mark.svg"
                 width="24"
                 height="24"
                 alt=""
                 aria-hidden="true"
               />
-              <span class="brand-word">TAYYAR</span>
+              <span class="brand-word">ASRAAB</span>
             </a>
-            <p class="footer-tagline" data-i18n="footer.tagline">
-              A download manager that uses every connection you have.
+            <p class="footer-tagline" data-i18n="site.footerTagline">
+              A small catalog of independent apps worth keeping.
             </p>
             <p class="footer-status">
-              Windows 10 / 11 · v<span data-config="versionPlain">1.2.0</span> · MIT
+              <span data-catalog-count>1 app live</span>
+              <span class="sep" aria-hidden="true">·</span>
+              <span data-i18n="site.footerStatus">Windows · open source</span>
             </p>
           </div>
 
           <div class="footer-col">
-            <h2 data-i18n="footer.product">Product</h2>
-            <a href="#features" data-i18n="footer.features">Features</a>
-            <a href="#download" data-i18n="footer.download">Download</a>
-            <a href="#extension" data-i18n="footer.extension">Browser extension</a>
-            <a
-              href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.0"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-config-href="releaseTag"
-            >
-              <span data-i18n="footer.release">Latest release</span>
-              <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
-            </a>
+            <h2 data-i18n="site.footerCatalog">Catalog</h2>
+            <a href="./apps/tayyar/">Tayyar</a>
+            <a href="#apps" data-i18n="site.nav.apps">Apps</a>
+            <a href="#standards" data-i18n="site.nav.standards">Standards</a>
+            <a href="#about" data-i18n="site.nav.about">About</a>
           </div>
 
           <div class="footer-col">
             <h2 data-i18n="footer.project">Project</h2>
             <a
+              href="https://github.com/bouadjadjatamer2-hub"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span data-i18n="site.githubProfile">Asraab on GitHub</span>
+              <svg class="icon fill" aria-hidden="true"><use href="#i-github"></use></svg>
+            </a>
+            <a
               href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-"
               target="_blank"
               rel="noopener noreferrer"
-              data-config-href="github"
             >
-              <span data-i18n="footer.github">GitHub</span>
-              <svg class="icon fill" aria-hidden="true"><use href="#i-github"></use></svg>
+              <span data-i18n="site.tayyarRepo">Tayyar repository</span>
+              <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
             </a>
             <a
               href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/issues"
               target="_blank"
               rel="noopener noreferrer"
-              data-config-href="issues"
             >
               <span data-i18n="footer.issues">Issues &amp; ideas</span>
-              <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
-            </a>
-            <a
-              href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/blob/main/LICENSE"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-config-href="license"
-            >
-              <span data-i18n="footer.license">MIT license</span>
-              <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
-            </a>
-            <a
-              href="https://github.com/anmolkapil/plexo"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-config-href="plexo"
-            >
-              <span data-i18n="footer.basedOn">Based on Plexo</span>
               <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
             </a>
           </div>
 
           <div class="footer-col">
-            <h2 data-i18n="footer.help">Help</h2>
-            <a href="#faq" data-i18n="footer.faq">FAQ</a>
-            <a href="./extension/privacy/" data-config-href="privacy" data-i18n="footer.privacy"
-              >Privacy</a
+            <h2 data-i18n="footer.asraab">Asraab</h2>
+            <a href="./extension/privacy/" data-i18n="site.extensionPrivacy">Extension privacy</a>
+            <a
+              href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-i18n="site.siteSource"
+              >Site source</a
             >
-            <a href="#top" data-i18n="footer.backTop">Back to top</a>
             <button class="footer-lang" type="button" data-lang-toggle>
               <svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg>
               <span data-lang-label>العربية</span>
@@ -1559,16 +975,16 @@
 
         <div class="footer-bottom">
           <div class="footer-bottom-left">
-            <span data-i18n="footer.rights">© {year} Tayyar contributors.</span>
+            <span data-i18n="site.footerRights">© {year} Asraab contributors.</span>
             <span class="sep" aria-hidden="true">·</span>
-            <span data-i18n="footer.disclaimer"
-              >Not affiliated with Internet Download Manager or Tonec Inc.</span
+            <span data-i18n="site.footerDisclaimer"
+              >Tayyar is not affiliated with Internet Download Manager or Tonec Inc.</span
             >
           </div>
           <div class="footer-bottom-right">
             <span data-i18n="footer.made">Made for Windows</span>
             <span class="sep" aria-hidden="true">·</span>
-            <span>MIT</span>
+            <span data-i18n="site.mitWhere">MIT where it counts</span>
             <a class="footer-back-top" href="#top">
               <span data-i18n="footer.backTop">Back to top</span>
               <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"></use></svg>

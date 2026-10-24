@@ -1,4 +1,4 @@
-/* Tayyar website configuration.
+/* Tayyar app configuration, used by its Asraab app page.
  *
  * Every public link, the release version, installer details and the checksum live here.
  * Change a value once and the page, release panel and download buttons follow.
@@ -18,7 +18,7 @@ window.TAYYAR_CONFIG = {
   issuesUrl: 'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/issues',
   licenseUrl: 'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/blob/main/LICENSE',
   plexoUrl: 'https://github.com/anmolkapil/plexo',
-  privacyUrl: './extension/privacy/',
+  privacyUrl: 'https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/extension/privacy/',
   siteUrl: 'https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/',
   installerName: 'Tayyar-1.2.0-Setup.exe',
   installerSize: '125.2 MB',

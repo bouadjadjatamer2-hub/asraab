@@ -1,4 +1,4 @@
-/* Tayyar website behaviour.
+/* Asraab website behaviour.
  *
  * No framework, no tracking, no third-party requests. Everything here is either
  * progressive enhancement (links already work without it) or a small, local demo.
@@ -20,7 +20,8 @@
     licenseUrl:
       'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/blob/main/LICENSE',
     plexoUrl: 'https://github.com/anmolkapil/plexo',
-    privacyUrl: './extension/privacy/',
+    privacyUrl:
+      'https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/extension/privacy/',
     installerName: 'Tayyar-1.2.0-Setup.exe',
     installerSize: '125.2 MB',
     sha256: '643DD40A89A86019B75A8BFE84FCDE6DF4C506371031313019EC49E4AABE2C6B',
@@ -28,7 +29,7 @@
   }
 
   const config = Object.assign({}, defaults, window.TAYYAR_CONFIG || {})
-  const messages = window.TAYYAR_I18N || { ar: {}, en: {} }
+  const messages = window.ASRAAB_I18N || window.TAYYAR_I18N || { ar: {}, en: {} }
   const root = document.documentElement
   const motionQuery =
     typeof window.matchMedia === 'function'
@@ -53,6 +54,8 @@
   const englishTitle = document.title
   const descriptionMeta = document.querySelector('meta[name="description"]')
   const englishDescription = descriptionMeta ? descriptionMeta.getAttribute('content') || '' : ''
+  const titleKey = root.dataset.metaTitle || 'meta.title'
+  const descriptionKey = root.dataset.metaDescription || 'meta.description'
 
   const $ = (selector, context = document) => context.querySelector(selector)
   const $$ = (selector, context = document) => Array.from(context.querySelectorAll(selector))
@@ -71,6 +74,10 @@
     } catch {
       /* Storage can be disabled; the current view still works. */
     }
+  }
+
+  function storedPreference(key) {
+    return storageGet(`asraab-${key}`) || storageGet(`tayyar-${key}`)
   }
 
   function baseVars(extra = {}) {
@@ -191,7 +198,7 @@
       themeColorMeta.setAttribute('content', state.theme === 'light' ? '#F5F6FB' : '#0A0B10')
     }
 
-    if (persist) storageSet('tayyar-theme', state.theme)
+    if (persist) storageSet('asraab-theme', state.theme)
     updateThemeLabel()
   }
 
@@ -296,7 +303,7 @@
     state.lang = lang === 'ar' ? 'ar' : 'en'
     root.lang = state.lang
     root.dir = state.lang === 'ar' ? 'rtl' : 'ltr'
-    if (persist) storageSet('tayyar-lang', state.lang)
+    if (persist) storageSet('asraab-lang', state.lang)
 
     $$('[data-i18n]').forEach((element) => {
       const saved = originals.get(element)
@@ -365,11 +372,11 @@
     })
 
     if (state.lang === 'ar') {
-      document.title = translate('meta.title', 'ar') || englishTitle
+      document.title = translate(titleKey, 'ar') || englishTitle
       if (descriptionMeta) {
         descriptionMeta.setAttribute(
           'content',
-          translate('meta.description', 'ar') || englishDescription
+          translate(descriptionKey, 'ar') || englishDescription
         )
       }
     } else {
@@ -387,10 +394,129 @@
     updateMenuLabel()
     syncCopyLabel()
     updateConnectionsSummary()
+    renderCatalog()
   }
 
   function toggleLanguage() {
     applyLanguage(state.lang === 'ar' ? 'en' : 'ar', true)
+  }
+
+  /* -----------------------------------------------------------------------
+     Catalog
+     ----------------------------------------------------------------------- */
+
+  function appText(app, key) {
+    const value = app[key]
+    if (value && typeof value === 'object') {
+      return value[state.lang] || value.en || value.ar || ''
+    }
+    return value == null ? '' : String(value)
+  }
+
+  function catalogCountText(count, short) {
+    const key = short
+      ? count === 0
+        ? 'home.appCountShortNone'
+        : count === 1
+          ? 'home.appCountShortOne'
+          : 'home.appCountShortMany'
+      : count === 0
+        ? 'home.appCountNone'
+        : count === 1
+          ? 'home.appCountOne'
+          : 'home.appCountMany'
+
+    const fallback = short
+      ? `${count} app${count === 1 ? '' : 's'}`
+      : `${count} app${count === 1 ? '' : 's'} live`
+
+    return translate(key, state.lang, { count }) || fallback
+  }
+
+  function renderCatalog() {
+    const grid = $('[data-catalog-grid]')
+    if (!grid) return
+
+    const apps = Array.isArray(window.ASRAAB_APPS) ? window.ASRAAB_APPS : []
+    const liveCount = apps.length
+
+    $$('[data-catalog-count]').forEach((element) => {
+      element.textContent = catalogCountText(liveCount, false)
+    })
+
+    $$('[data-catalog-count-short]').forEach((element) => {
+      element.textContent = catalogCountText(liveCount, true)
+    })
+
+    const fallback = $('.app-card-fallback', grid)
+    if (fallback) fallback.hidden = liveCount > 0
+
+    const template = $('#appCardTemplate')
+    if (!template) return
+
+    $$('[data-app-card]', grid).forEach((card) => card.remove())
+    const ghost = $('[data-catalog-ghost]', grid)
+
+    apps.forEach((app, index) => {
+      const card = template.content.firstElementChild.cloneNode(true)
+      const slug = String(app.slug || 'app')
+        .toLowerCase()
+        .replace(/[^a-z0-9-]/g, '')
+      const titleId = `app-name-${slug || 'entry'}`
+      const name = appText(app, 'name')
+      const actionLabel = appText(app, 'actionLabel') || name
+
+      card.dataset.appCard = slug || 'entry'
+      card.dataset.status = app.status || 'live'
+      card.style.setProperty('--app-index', String(index))
+
+      const title = $('.app-card-name', card)
+      if (title) {
+        title.id = titleId
+        title.textContent = name
+      }
+      card.setAttribute('aria-labelledby', titleId)
+
+      const icon = $('.app-card-icon img', card)
+      if (icon && app.icon) {
+        icon.src = app.icon
+        icon.alt = ''
+      }
+
+      const category = $('.app-card-category', card)
+      if (category) category.textContent = appText(app, 'category')
+
+      const tagline = $('.app-card-tagline', card)
+      if (tagline) tagline.textContent = appText(app, 'tagline')
+
+      const description = $('.app-card-desc', card)
+      if (description) description.textContent = appText(app, 'description')
+
+      const status = $('.app-card-status span', card)
+      if (status) status.textContent = appText(app, 'statusLabel') || app.status || ''
+
+      const fields = {
+        platform: appText(app, 'platform'),
+        license: appText(app, 'license'),
+        size: appText(app, 'size'),
+        version: app.version ? `v${app.version}` : '',
+        actionLabel
+      }
+
+      Object.keys(fields).forEach((field) => {
+        const element = $(`[data-app-field="${field}"]`, card)
+        if (element) element.textContent = fields[field]
+      })
+
+      const link = $('.app-card-link', card)
+      if (link) {
+        link.href = app.href || '#'
+        link.setAttribute('aria-label', actionLabel)
+      }
+
+      if (ghost) grid.insertBefore(card, ghost)
+      else grid.appendChild(card)
+    })
   }
 
   /* -----------------------------------------------------------------------
@@ -435,7 +561,9 @@
       })
 
       if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
-        current = 'faq'
+        const navIds = new Set(navLinks.map((link) => link.dataset.nav).filter(Boolean))
+        const lastNavSection = sections.filter((section) => navIds.has(section.id)).pop()
+        if (lastNavSection) current = lastNavSection.id
       }
 
       setActive(current)
@@ -739,14 +867,14 @@
     const query = new URLSearchParams(window.location.search).get('lang')
     if (query === 'ar' || query === 'en') return query
 
-    const stored = storageGet('tayyar-lang')
+    const stored = storedPreference('lang')
     if (stored === 'ar' || stored === 'en') return stored
 
     return state.lang
   }
 
   function initialTheme() {
-    const stored = storageGet('tayyar-theme')
+    const stored = storedPreference('theme')
     if (stored === 'light' || stored === 'dark') return stored
     return state.theme
   }
@@ -756,6 +884,7 @@
   captureOriginals()
   applyLanguage(initialLanguage(), false)
 
+  renderCatalog()
   initNav()
   initMenu()
   initReveals()

@@ -10,13 +10,18 @@
 </p>
 
 <p align="center">
+  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/"><img src="docs/assets/img/asraab-mark.svg" width="14" alt="" /> Part of <strong>Asraab</strong></a> — a small, hand-picked catalog of independent Windows apps.
+</p>
+
+<p align="center">
   <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe"><img src="https://img.shields.io/badge/Download_for_Windows-v1.2.0-7C5CFF?style=for-the-badge&amp;logo=windows&amp;logoColor=white" alt="Download Tayyar 1.2.0 for Windows" /></a>
-  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/"><img src="https://img.shields.io/badge/Website-live-22C7B8?style=for-the-badge" alt="Open the live Tayyar website" /></a>
+  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/"><img src="https://img.shields.io/badge/Asraab-website-22C7B8?style=for-the-badge" alt="Open the Asraab website" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-4CC38A?style=for-the-badge" alt="MIT License" /></a>
 </p>
 
 <p align="center">
-  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/">Website</a> ·
+  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/">Asraab</a> ·
+  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/tayyar/">Tayyar page</a> ·
   <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe">Download</a> ·
   <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-Browser-Extension.zip">Browser extension</a> ·
   <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.0">Release notes</a> ·
@@ -32,23 +37,25 @@ Tayyar is a fork of [Plexo](https://github.com/anmolkapil/plexo) (MIT), rebuilt 
 > [!NOTE]
 > “Every connection” means every network interface Windows exposes. Tayyar cannot create bandwidth that is not there: two connections behind the same router often share one uplink, and servers without byte-range support fall back to a single stream.
 
+Asraab is a curated, owner-maintained catalog. There is no public submission form, account system or web admin panel. Adding an app is a maintainer-only change to [`docs/assets/apps.js`](docs/assets/apps.js) plus a page under `docs/apps/<slug>/`. The homepage’s “coming soon” card is editorial, not an invitation to submit an app.
+
 ---
 
 ## Screenshots
 
 ### The website
 
-The [Tayyar website](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/) is bilingual, theme-aware, and sends the installer and extension ZIP straight to your downloads — no release-page detour.
+The [Asraab catalog](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/) is bilingual and theme-aware. The [Tayyar page](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/tayyar/) keeps the installer, extension ZIP and checksum together, and sends both downloads straight to your browser — no release-page detour.
 
-[![Tayyar website — dark desktop view](docs/screenshots/website-desktop.png)](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/)
+[![Asraab catalog — dark desktop view](docs/screenshots/website-desktop.png)](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/)
 
 <table>
   <tr>
     <td width="50%" valign="top">
-      <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/"><img src="docs/screenshots/website-arabic.png" alt="Tayyar website in Arabic with the light theme" /></a>
+      <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/tayyar/"><img src="docs/screenshots/website-arabic.png" alt="Tayyar page in Arabic with the light theme" /></a>
     </td>
     <td width="50%" valign="top">
-      <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/#download"><img src="docs/screenshots/website-download.png" alt="Tayyar download page with the installer, release details and SHA-256 checksum" /></a>
+      <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/tayyar/#download"><img src="docs/screenshots/website-download.png" alt="Tayyar download page with the installer, release details and SHA-256 checksum" /></a>
     </td>
   </tr>
   <tr>
@@ -58,7 +65,7 @@ The [Tayyar website](https://bouadjadjatamer2-hub.github.io/tayyar-download-mana
 </table>
 
 <p align="center">
-  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/"><img src="docs/screenshots/website-mobile.png" width="300" alt="Tayyar website on a phone" /></a><br />
+  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/"><img src="docs/screenshots/website-mobile.png" width="300" alt="Asraab catalog on a phone" /></a><br />
   <sub>Mobile</sub>
 </p>
 
@@ -230,9 +237,10 @@ Bundled tools and their licenses — including UnRAR and `unzipper` — are also
 </p>
 
 <p dir="rtl" align="right">
-  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/">الموقع الرسمي</a> ·
+  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/">موقع أسراب</a> ·
+  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/tayyar/">صفحة تيار</a> ·
   <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe">تحميل الإصدار 1.2.0</a> ·
   <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-Browser-Extension.zip">إضافة المتصفح</a>
 </p>
 
-<p dir="rtl" align="right">الموقع متوفر بالعربية والإنجليزية.</p>
+<p dir="rtl" align="right">تيار هو أول تطبيق في كتالوج أسراب، والمزيد في الطريق. الموقع متوفر بالعربية والإنجليزية.</p>

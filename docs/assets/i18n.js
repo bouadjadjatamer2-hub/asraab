@@ -1,17 +1,37 @@
-/* Arabic copy for the Tayyar website.
+/* Arabic copy for the Asraab website and the Tayyar app page.
  *
  * English lives in index.html so the page is complete without JavaScript. When the visitor
  * chooses Arabic we swap the copy here and mirror the layout to RTL. Adding a key to `ar` and
  * marking the matching element with data-i18n="key" is all a new string needs.
  */
-window.TAYYAR_I18N = {
+window.ASRAAB_I18N = {
   ar: {
-    'meta.title': 'تيار — كل اتصالاتك. تحميل واحد.',
+    'meta.title': 'تيار — كل اتصالاتك. تحميل واحد. · أسراب',
     'meta.description':
       'تيار مدير تحميل مجاني ومفتوح المصدر لويندوز. يقسّم الملفات بين Wi-Fi والإيثرنت وUSB، ويدعم حتى 64 اتصالاً، وفكّ الضغط أثناء التنزيل، وإضافة للمتصفح.',
 
     'a11y.skip': 'تجاوز إلى المحتوى',
     'a11y.home': 'الصفحة الرئيسية لتيار',
+    'a11y.breadcrumb': 'مسار التنقل',
+    'site.a11yHome': 'الصفحة الرئيسية لأسراب',
+    'site.nav.apps': 'التطبيقات',
+    'site.nav.standards': 'المعايير',
+    'site.nav.about': 'عن أسراب',
+    'site.github': 'أسراب على GitHub',
+    'site.githubProfile': 'أسراب على GitHub',
+    'site.browse': 'تصفّح التطبيقات',
+    'site.tagline': 'تطبيقات تطير معاً.',
+    'site.footerTagline': 'كتالوج صغير لتطبيقات مستقلة تستحق البقاء.',
+    'site.footerStatus': 'ويندوز · مفتوح المصدر',
+    'site.footerCatalog': 'الكتالوج',
+    'site.tayyarRepo': 'مستودع تيار',
+    'site.extensionPrivacy': 'خصوصية الإضافة',
+    'site.siteSource': 'كود الموقع',
+    'site.footerRights': '© {year} مساهمو أسراب.',
+    'site.footerDisclaimer': 'تيار غير مرتبط بـ Internet Download Manager أو Tonec Inc.',
+    'site.mitWhere': 'MIT حيث يهم',
+    'nav.allApps': 'كل التطبيقات',
+    'nav.catalog': 'الكتالوج',
     'nav.features': 'المزايا',
     'nav.how': 'كيف يعمل',
     'nav.connections': 'الاتصالات',
@@ -48,6 +68,80 @@ window.TAYYAR_I18N = {
     'hero.stats.extractLabel': 'فكّ ضغط أثناء التنزيل',
     'hero.stats.accountsLabel': 'حسابات مطلوبة',
     'hero.scroll': 'اسحب للأسفل',
+
+    'home.metaTitle': 'أسراب — تطبيقات أقل. أفضل منها.',
+    'home.metaDescription':
+      'أسراب كتالوج صغير ومختار بعناية لبرامج ويندوز المستقلة. تطبيق واحد حتى الآن والمزيد في الطريق: تيار، مدير تحميل مجاني ومفتوح المصدر.',
+    'home.eyebrow': 'برامج ويندوز مستقلة',
+    'home.title1': 'تطبيقات أقل.',
+    'home.title2': 'أفضل منها.',
+    'home.lede':
+      'أسراب كتالوج صغير ومختار بعناية لبرامج ويندوز المستقلة. تطبيق واحد حتى الآن، والمزيد في الطريق — بلا حسابات إجبارية، بلا برامج مرفقة، وبلا حيل.',
+    'home.meetTayyar': 'تعرّف على تيار',
+    'home.metaAccounts': 'بدون حسابات',
+    'home.metaDirect': 'تحميل مباشر',
+    'home.note': 'مجاني حيث أمكن. مفتوح المصدر حيث يهم. وصادق في كل الحالات.',
+    'home.chipCurated': 'مختار يدوياً، لا مجمّع آلياً',
+    'home.chipDirect': 'مباشر من صفحة التطبيق',
+    'home.rail': 'صغير عن قصد. مفيد بالتصميم.',
+    'home.catalogEyebrow': 'الكتالوج',
+    'home.catalogTitle': 'تطبيق واحد جيد، للبداية.',
+    'home.catalogLede':
+      'كل تطبيق له صفحته ومستودعه وتحميله المباشر. بلا حسابات، وبلا المرور عبر صفحة إصدارات.',
+    'home.comingKicker': 'قريباً',
+    'home.comingTitle': 'تطبيقات رائعة في الطريق.',
+    'home.comingBody':
+      'نختبر الآن تطبيقات قليلة قد تستحق المكان. القادم ينزل فقط عندما يكون جاهزاً — ويستحق الانتظار.',
+    'home.comingLink': 'اقرأ معاييرنا',
+    'home.catalogNote': 'تطبيق واحد اليوم، والمزيد في الطريق. القادم ينزل عندما يستحق.',
+    'home.mockLive': 'متاح',
+    'home.mockApps': '01 — التطبيقات',
+    'home.mockUpdated': 'تحديث 2026',
+    'home.mockCategory': 'مدير تحميل ويندوز',
+    'home.mockTagline': 'كل اتصالاتك. تحميل واحد.',
+    'home.mockCopy': 'يقسّم الملفات بين Wi-Fi والإيثرنت وUSB في الوقت نفسه.',
+    'home.mockNetworks': '3 شبكات · 24 اتصالاً',
+    'home.mockNext': 'القادم',
+    'home.mockNextBody': 'تطبيقات رائعة في الطريق',
+    'home.mockSoon': 'قريباً',
+    'home.mockCurated': 'مختار، لا مجمّع',
+    'home.appCountOne': 'تطبيق واحد متاح',
+    'home.appCountMany': '{count} تطبيقات متاحة',
+    'home.appCountNone': 'لا تطبيقات متاحة بعد',
+    'home.appCountShortOne': 'تطبيق واحد',
+    'home.appCountShortMany': '{count} تطبيقات',
+    'home.appCountShortNone': 'لا تطبيقات',
+    'home.standardsEyebrow': 'الفلتر',
+    'home.standardsTitle': 'كيف نختار.',
+    'home.standardsLede':
+      'الكتالوج لا يكون مفيداً إلا إذا استبعد أشياء. هذه الاختبارات الثلاثة التي يمر بها كل تطبيق.',
+    'home.standard1Title': 'لازم يحل شيئاً حقيقياً.',
+    'home.standard1Body':
+      'ليس غلافاً آخر حول نفس الواجهة. وليس عرضاً تجريبياً بزر تحميل. لازم يكون الأداة التي تفتحها مرتين.',
+    'home.standard1Foot': 'مفيد قبل أن يكون ذكياً',
+    'home.standard2Title': 'لا ضريبة حسابات.',
+    'home.standard2Body':
+      'لا جدار تسجيل بينك وبين التحميل. لا برامج مرفقة، لا إضافات صامتة، ولا تثبيتات «مقترحة». التطبيق يؤدي عمله ثم يبتعد.',
+    'home.standard2Foot': 'بلا حسابات، بلا حيل',
+    'home.standard3Title': 'الحدود مكتوبة.',
+    'home.standard3Body':
+      'التحميل يبدأ مباشرة من صفحة التطبيق. التحذيرات تُشرح قبل الضغط، والنص لا يعد بأكثر مما يستطيعه البرنامج.',
+    'home.standard3Foot': 'أدلة قبل الشعارات',
+    'home.quote': '«صغير عن قصد. كل تطبيق يجب أن يستحق مكانه.»',
+    'home.quoteBy': 'أسراب / قاعدة التحرير 01',
+    'home.aboutEyebrow': 'مبني في العلن',
+    'home.aboutTitle': 'كتالوج، وليس مزرعة محتوى.',
+    'home.aboutLede':
+      'كل تطبيق يحتفظ بمستوده وملاحظات إصداره ورخصته وصفحة تحميله. أسراب هو الفهرس — وليس وسيطاً.',
+    'home.aboutPoint1Title': 'تطبيق واحد، مستودع واحد.',
+    'home.aboutPoint1Body':
+      'التحديثات والمشكلات تعيش مع التطبيق الذي يطلقها. لا حزمة إصدارات مركزية لفكّها.',
+    'home.aboutPoint2Title': 'بلا تتبع، بلا حساب.',
+    'home.aboutPoint2Body': 'الموقع ثابت، ولا يجري طلبات لطرف ثالث، ويحفظ فقط تفضيل الوضع واللغة.',
+    'home.aboutPoint3Title': 'التطبيقات يمكن أن تغادر.',
+    'home.aboutPoint3Body':
+      'إذا توقف تطبيق عن تلبية المعايير، يخرج من الكتالوج. الصغر هو القصد، وليس مرحلة.',
+    'home.repoAria': 'هيكل كتالوج أسراب: مستودع لكل تطبيق، بدءاً بتيار',
 
     'features.eyebrow': 'مصمّم للملفات الكبيرة',
     'features.title': 'سرعة عندما تكون هناك سعة.',
@@ -212,6 +306,17 @@ window.TAYYAR_I18N = {
     'faq.more': 'لديك سؤال آخر؟',
     'faq.ask': 'افتح تذكرة على GitHub',
 
+    'app.shortName': 'تيار',
+    'app.windowsShort': 'ويندوز 10/11',
+    'app.mobileTagline': 'كل اتصالاتك. تحميل واحد.',
+    'app.crossEyebrow': 'جزء من أسراب',
+    'app.crossTitle': 'أول تطبيق. والمزيد في الطريق.',
+    'app.crossLede':
+      'أسراب كتالوج صغير لبرامج ويندوز المستقلة. تيار استحق المكان الأول؛ والتطبيق الرائع القادم قيد الاختبار الآن.',
+
+    'footer.tayyar': 'تيار',
+    'footer.asraab': 'أسراب',
+    'footer.standards': 'كيف نختار',
     'footer.tagline': 'مدير تحميل يستخدم كل اتصال لديك.',
     'footer.product': 'المنتج',
     'footer.project': 'المشروع',
@@ -243,6 +348,29 @@ window.TAYYAR_I18N = {
   },
 
   en: {
+    'home.appCountOne': '1 app live',
+    'home.appCountMany': '{count} apps live',
+    'home.appCountNone': 'No apps live yet',
+    'home.appCountShortOne': '1 app',
+    'home.appCountShortMany': '{count} apps',
+    'home.appCountShortNone': 'No apps',
+    'home.comingKicker': 'Coming soon',
+    'home.comingTitle': 'More great apps are on the way.',
+    'home.comingBody':
+      'We’re testing a few that might make the cut. The next one lands only when it’s ready — and it will be worth the wait.',
+    'home.comingLink': 'See what we look for',
+    'home.catalogNote': 'One app today, with more on the way. The next one lands when it’s ready.',
+    'home.mockLive': 'LIVE',
+    'home.mockApps': '01 — APPS',
+    'home.mockUpdated': 'UPDATED 2026',
+    'home.mockCategory': 'WINDOWS DOWNLOAD MANAGER',
+    'home.mockTagline': 'Every connection. One download.',
+    'home.mockCopy': 'Splits files across Wi-Fi, Ethernet and USB at the same time.',
+    'home.mockNetworks': '3 NETWORKS · 24 STREAMS',
+    'home.mockNext': 'What’s next',
+    'home.mockNextBody': 'Great apps are on the way',
+    'home.mockSoon': 'SOON',
+    'home.mockCurated': 'CURATED, NOT SCRAPED',
     'connections.summary': '{networks} networks × {streams} streams = {total} active streams',
     'common.copy': 'Copy',
     'common.copied': 'Copied',
@@ -258,3 +386,6 @@ window.TAYYAR_I18N = {
     'lang.english': 'English'
   }
 }
+
+/* Keep the old global available for any cached page or test harness. */
+window.TAYYAR_I18N = window.ASRAAB_I18N
