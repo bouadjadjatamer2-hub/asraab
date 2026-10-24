@@ -21,9 +21,9 @@ window.TAYYAR_CONFIG = {
   privacyUrl: 'https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/extension/privacy/',
   siteUrl: 'https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/',
   installerName: 'Tayyar-1.2.0-Setup.exe',
-  installerSize: '125.2 MB',
-  installerBytes: 131245459,
-  sha256: '643DD40A89A86019B75A8BFE84FCDE6DF4C506371031313019EC49E4AABE2C6B',
+  installerSize: '125.8 MB',
+  installerBytes: 131948608,
+  sha256: 'C0E5D52718B1728C5250D95135140078A80CFE706D359D74574D14EDC354FA63',
   license: 'MIT',
   year: 2026
 }

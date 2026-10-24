@@ -1,5 +1,6 @@
 import { ChevronLeft } from 'lucide-react'
 import { useState } from 'react'
+import { t } from '../i18n'
 import { useAppStore } from '../store/useAppStore'
 import {
   headerActions,
@@ -58,10 +59,10 @@ export function DetailHeader({ download }: { download: DownloadItem }): React.JS
       <button
         type="button"
         onClick={() => setView({ name: 'list' })}
-        className="-ml-2 flex items-center gap-1 rounded-md px-1.5 py-1 font-sans text-[15px] leading-none font-medium text-[var(--text-secondary)] hover:text-foreground"
+        className="-ms-2 flex items-center gap-1 rounded-md px-1.5 py-1 font-sans text-[15px] leading-none font-medium text-[var(--text-secondary)] hover:text-foreground"
       >
-        <ChevronLeft className="size-4.5" />
-        Downloads
+        <ChevronLeft className="flip-rtl size-4.5" />
+        {t('Downloads')}
       </button>
       <div className="flex-1" />
       {manage.map((id) => button(id, ACTION_META[id].destructive ? 'destructive' : 'secondary'))}

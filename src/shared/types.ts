@@ -11,6 +11,10 @@ export interface NetworkAddress {
 
 export type ThemeSource = 'light' | 'dark'
 
+/** The language the app's interface is drawn in. Saved independently of the OS language, so a
+ * restart always returns to the same one. */
+export type Locale = 'en' | 'ar'
+
 export interface NetworkInterfaceInfo {
   /** Stable identifier for this interface (currently the OS device name, e.g. "en0"). */
   id: string
@@ -347,6 +351,8 @@ export interface DownloadSchedule {
 export interface AppSettings {
   downloadSchedule?: DownloadSchedule
   themeSource?: ThemeSource
+  /** Interface language; applied when the app next starts. */
+  locale?: Locale
   /** Only ever saved as false: updates download on their own unless turned off. */
   autoUpdate?: boolean
   /** The last destination folder picked. */
@@ -395,6 +401,7 @@ export interface InitialState {
   homeDir: string
   downloadsDir: string
   themeSource: ThemeSource
+  locale: Locale
   networkPreferences: NetworkPreferences
   downloadsAtOnce: number
   speedLimit?: number

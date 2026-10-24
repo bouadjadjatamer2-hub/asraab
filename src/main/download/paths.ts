@@ -1,7 +1,6 @@
 import { app } from 'electron'
 import { lstat, mkdir, open, rm, stat } from 'node:fs/promises'
 import { basename, extname, join } from 'node:path'
-import { markSparse } from './sparseFile'
 
 export function getDefaultDownloadsDir(): string {
   return app.getPath('downloads')
@@ -99,12 +98,11 @@ export async function reserveDestinationPath(directory: string, fileName: string
     fileName,
     { suffix: '.plexo', extension: true },
     async (candidate) => {
+      // The size isn't known yet. DownloadFile.reserve() gives it the final size when the
+      // download actually starts, so a queued download doesn't hold disk space it isn't using.
       const handle = await open(`${candidate}.plexo`, 'wx+')
       await handle.close()
-      if (!(await pathExists(candidate))) {
-        await markSparse(`${candidate}.plexo`)
-        return true
-      }
+      if (!(await pathExists(candidate))) return true
       await rm(`${candidate}.plexo`)
       return false
     }

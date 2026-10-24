@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useFormatSpeed } from '../hooks/useFormatSpeed'
 import { useAppStore } from '../store/useAppStore'
 import { speedTicks } from '../utils/format'
+import { t } from '../i18n'
 
 const WIDTH = 560
 const HEIGHT = 130
@@ -78,13 +79,23 @@ export function ThroughputChart({
   const readout = sample >= 0 && sample < length ? sample : null
   const slotPercent = (slot: number): string => `${(slot / (SPEED_HISTORY_SECONDS - 1)) * 100}%`
   const secondsAgo = SPEED_HISTORY_SECONDS - 1 - (hovered ?? 0)
+  const endName = t(endsAt === 'now' ? 'now' : endsAt === 'pause' ? 'pause' : 'end')
+  const moment = (seconds: number): string => {
+    if (seconds === 0) {
+      return t(endsAt === 'now' ? 'Now' : endsAt === 'pause' ? 'At pause' : 'At completion')
+    }
+    return endsAt === 'now'
+      ? t('{seconds}s ago', { seconds })
+      : t('{seconds}s before the {end}', { seconds, end: endName })
+  }
 
   return (
     // Clear of the heading above: the top label centres on the top gridline, so it rises above it.
-    <div className="mt-4 flex gap-2">
+    // Time-series charts keep time moving left-to-right in both languages.
+    <div className="chart-ltr mt-4 flex gap-2">
       {/* The scale, beside the plot rather than over the fills, where it would be hard to read.
           Each number with its unit, so any one reads on its own. */}
-      <div className="shrink-0 text-right">
+      <div className="shrink-0 text-end">
         <div className="relative h-[104px]">
           {/* The widest label, invisible, gives the column its width. */}
           <span className={`invisible block ${labelClass}`}>{ticks.at(-1)?.label}</span>
@@ -114,7 +125,10 @@ export function ThroughputChart({
             preserveAspectRatio="none"
             className="block h-full w-full"
             role="img"
-            aria-label={`Combined throughput over the last minute. Currently ${formatSpeed(latestTotal)}, fastest ${formatSpeed(peakTotal)}.`}
+            aria-label={t(
+              'Combined throughput over the last minute. Currently {current}, fastest {fastest}.',
+              { current: formatSpeed(latestTotal), fastest: formatSpeed(peakTotal) }
+            )}
           >
             {/* Muted ink at low opacity: quiet but seen in either theme, where --border all but
                 vanished against the dark band. */}
@@ -164,11 +178,7 @@ export function ThroughputChart({
                     : { left: `calc(${slotPercent(hovered)} + 8px)` }
                 }
               >
-                <span className="text-[10px] text-muted-foreground">
-                  {secondsAgo === 0
-                    ? `${endsAt[0].toUpperCase()}${endsAt.slice(1)}`
-                    : `${secondsAgo}s ${endsAt === 'now' ? 'ago' : `before the ${endsAt}`}`}
-                </span>
+                <span className="text-[10px] text-muted-foreground">{moment(secondsAgo)}</span>
                 {order.map((entry) => (
                   <span key={entry.interfaceId} className="flex items-center gap-2">
                     <span className="size-2 rounded-full" style={{ background: entry.solid }} />
@@ -178,7 +188,7 @@ export function ThroughputChart({
                 ))}
                 {order.length > 1 && (
                   <span className="flex items-center gap-2 border-t-[0.5px] border-border pt-1">
-                    <span className="flex-1 font-sans text-[11.5px]">Total</span>
+                    <span className="flex-1 font-sans text-[11.5px]">{t('Total')}</span>
                     {formatSpeed(totals[readout])}
                   </span>
                 )}
@@ -187,10 +197,8 @@ export function ThroughputChart({
           )}
         </div>
         <div className={`mt-1 flex justify-between ${labelClass}`}>
-          <span>
-            {SPEED_HISTORY_SECONDS}s {endsAt === 'now' ? 'ago' : `before the ${endsAt}`}
-          </span>
-          <span>{endsAt}</span>
+          <span>{moment(SPEED_HISTORY_SECONDS)}</span>
+          <span>{endName}</span>
         </div>
       </div>
     </div>

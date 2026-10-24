@@ -1,5 +1,6 @@
 import type { DownloadState } from '@shared/types'
 import { useCallback, useMemo, useState } from 'react'
+import { t } from '../i18n'
 import { useAppStore } from '../store/useAppStore'
 import { describeError } from '../utils/format'
 import type { ActionId, DownloadItem } from '../utils/downloadActions'
@@ -75,7 +76,7 @@ export function DownloadActionsProvider({
               id === 'open'
                 ? await window.plexo.openDownload(item.id)
                 : await window.plexo.revealDownload(item.id)
-            return found || fail('That file is no longer where it was saved.')
+            return found || fail(t('That file is no longer where it was saved.'))
           } catch (cause) {
             return fail(cause)
           }
@@ -135,7 +136,11 @@ export function DownloadActionsProvider({
       if (!clearAll && left.length > 0) {
         setConfirmation({ mode, items: left, clearAll })
         setDialogError(
-          `${left.length} of ${items.length} couldn’t be removed: ${describeError(firstFailure)}`
+          t('{left} of {total} couldn’t be removed: {error}', {
+            left: left.length,
+            total: items.length,
+            error: describeError(firstFailure)
+          })
         )
       } else setConfirmation(null)
     } catch (cause) {

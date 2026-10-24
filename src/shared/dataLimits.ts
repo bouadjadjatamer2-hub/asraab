@@ -1,4 +1,5 @@
-import type { DataLimitPeriod } from './types'
+import type { DataLimitPeriod, Locale } from './types'
+import { translate } from './i18n'
 
 export const DATA_LIMIT_PERIODS: { value: DataLimitPeriod; label: string; usage: string }[] = [
   { value: 'day', label: 'Day', usage: 'today' },
@@ -22,6 +23,7 @@ export function nextDataReset(period: DataLimitPeriod, time: number): Date {
   return date
 }
 
-export function dataUsageLabel(period: DataLimitPeriod): string {
-  return DATA_LIMIT_PERIODS.find((entry) => entry.value === period)!.usage
+export function dataUsageLabel(period: DataLimitPeriod, locale: Locale = 'en'): string {
+  const usage = DATA_LIMIT_PERIODS.find((entry) => entry.value === period)!.usage
+  return translate(locale, usage)
 }

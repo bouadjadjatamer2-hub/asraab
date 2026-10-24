@@ -2,6 +2,7 @@ import type { NetworkInterfaceKind } from '@shared/types'
 import { Pencil } from 'lucide-react'
 import { useState } from 'react'
 import { useNetworkVisuals } from '../hooks/useNetworkVisuals'
+import { t } from '../i18n'
 import { useAppStore } from '../store/useAppStore'
 import { NETWORK_COLOR_SWATCHES, type NetworkColorId } from '../theme'
 import { Button } from './ui/button'
@@ -71,7 +72,7 @@ export function NetworkEditPopover({
                   type="button"
                   variant="ghost"
                   size="icon-xs"
-                  aria-label="Edit network"
+                  aria-label={t('Edit network')}
                   className="shrink-0 text-muted-foreground"
                 >
                   <Pencil className="size-3" />
@@ -80,16 +81,17 @@ export function NetworkEditPopover({
             />
           }
         />
-        <TooltipContent>Edit network</TooltipContent>
+        <TooltipContent>{t('Edit network')}</TooltipContent>
       </Tooltip>
-      <PopoverContent aria-label={`Edit ${visual.name}`} className="gap-3 p-3">
+      <PopoverContent aria-label={t('Edit {name}', { name: visual.name })} className="gap-3 p-3">
         <div className="flex flex-col gap-[6px]">
           <label htmlFor={`network-name-${interfaceId}`} className={fieldLabelClass}>
-            Name
+            {t('Name')}
           </label>
           <input
             id={`network-name-${interfaceId}`}
             type="text"
+            dir="auto"
             value={draftName}
             onChange={(event) => setDraftName(event.target.value)}
             onFocus={(event) => event.target.select()}
@@ -104,7 +106,7 @@ export function NetworkEditPopover({
         </div>
 
         <div className="flex flex-col gap-[6px]">
-          <span className={fieldLabelClass}>Color</span>
+          <span className={fieldLabelClass}>{t('Color')}</span>
           <div className="flex items-center justify-between px-1 py-1">
             {NETWORK_COLOR_SWATCHES.map((swatch) => {
               const isSelected = draftColorId === swatch.id
@@ -117,7 +119,7 @@ export function NetworkEditPopover({
                       <button
                         type="button"
                         onClick={() => setDraftColorId(swatch.id)}
-                        aria-label={swatch.label}
+                        aria-label={t(swatch.label)}
                         aria-pressed={isSelected}
                         className="size-6 shrink-0 rounded-full border-none p-[2px]"
                       >
@@ -134,7 +136,7 @@ export function NetworkEditPopover({
                       </button>
                     }
                   />
-                  <TooltipContent>{swatch.label}</TooltipContent>
+                  <TooltipContent>{t(swatch.label)}</TooltipContent>
                 </Tooltip>
               )
             })}
@@ -143,7 +145,7 @@ export function NetworkEditPopover({
 
         <div className="flex justify-end">
           <Button type="button" size="xs" onClick={close}>
-            Done
+            {t('Done')}
           </Button>
         </div>
       </PopoverContent>

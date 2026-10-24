@@ -90,14 +90,17 @@ The [Asraab catalog](https://bouadjadjatamer2-hub.github.io/tayyar-download-mana
 
 - **Resume across restarts** and sleep/wake, with per-block checkpoints and an expired-link replacement flow that does not throw away downloaded bytes.
 - **Version checks.** ETag and Last-Modified validation stop a file republished mid-download from being stitched together from two versions.
-- **Safe publish.** Data is written to a staging file and only moved to the final name after validation, so a half-finished download never looks complete.
+- **Safe publish.** Data is written to a preallocated staging file and only moved to the final name after validation, so a half-finished download never looks complete.
+- **Any size.** A 1 KB file and a multi-terabyte archive take the same path; there is no minimum or maximum download size.
 - **Extract while downloading.** ZIP, RAR and TAR archives — including `.tar.gz`, `.tar.bz2` and `.tar.xz` — unpack as they arrive, avoiding a second full-size copy on disk.
 - **Optional Windows Defender scan** of each finished file.
+- **Automatic updates.** Packaged builds check GitHub Releases at launch and every few hours, then download a newer version in the background and install it on restart.
 
 ### Stay in control
 
 - Queues, concurrent-download limits, per-network speed caps and daily/weekly/monthly data budgets.
 - Download schedules by time and day, plus automatic categories for Video, Audio, Programs, Documents, Archives and Images.
+- Arabic and English, with a fully right-to-left Arabic layout, Arabic plurals and dates, and a one-click switch that survives a restart.
 - Clipboard capture, tray support, start with Windows, and optional shutdown when the queue finishes.
 - Browser handoff with cookies included, so signed-in downloads work.
 - Torrents from magnet links or `.torrent` files, with the same queue and history.
@@ -109,7 +112,7 @@ The [Asraab catalog](https://bouadjadjatamer2-hub.github.io/tayyar-download-mana
 1. **Probe the link.** Tayyar reads the response headers, filename, size, range support and validators.
 2. **Plan the blocks.** The file becomes a queue of byte ranges sized for the connection and disk.
 3. **Bind and pull.** Each request is bound to a chosen interface. Streams grow when the server and disk keep up, and slow blocks are raced near the end.
-4. **Assemble and publish.** Blocks land in a sparse staging file, get verified, and are renamed only after the download is whole.
+4. **Assemble and publish.** Blocks land in a preallocated staging file, get verified, and are renamed only after the download is whole.
 
 When an archive is being extracted, completed blocks are fed to the extractor as soon as their data is available. The download and extraction share the same progress state, so pause, resume and cancel still behave normally.
 
@@ -117,7 +120,7 @@ When an archive is being extracted, completed blocks are fed to the extractor as
 
 ## Download
 
-**Windows 10 / 11 · 64-bit · v1.2.0 · 125.2 MB**
+**Windows 10 / 11 · 64-bit · v1.2.0 · 125.8 MB**
 
 [**Download Tayyar-1.2.0-Setup.exe**](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.0/Tayyar-1.2.0-Setup.exe) · [Release notes](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.0) · [All releases](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases)
 
@@ -125,7 +128,7 @@ When an archive is being extracted, completed blocks are fed to the extractor as
 | -------------------- | ----------------------------------- |
 | **Version**          | 1.2.0                               |
 | **Platform**         | Windows 10 / 11, 64-bit             |
-| **Installer**        | `Tayyar-1.2.0-Setup.exe` · 125.2 MB |
+| **Installer**        | `Tayyar-1.2.0-Setup.exe` · 125.8 MB |
 | **License**          | MIT                                 |
 | **Account required** | No                                  |
 
@@ -148,7 +151,7 @@ Get-FileHash .\Tayyar-1.2.0-Setup.exe -Algorithm SHA256
 Expected:
 
 ```text
-643DD40A89A86019B75A8BFE84FCDE6DF4C506371031313019EC49E4AABE2C6B
+C0E5D52718B1728C5250D95135140078A80CFE706D359D74574D14EDC354FA63
 ```
 
 </details>

@@ -24,6 +24,7 @@ test.describe('happy paths @smoke', () => {
 
   for (const [label, size] of [
     ['1 byte', 1],
+    ['1 KiB', 1024],
     ['37.5 blocks', Math.floor(BLOCK * 37.5)]
   ] as const) {
     test(`ranged download: ${label}`, async ({ plexo, serve }) => {

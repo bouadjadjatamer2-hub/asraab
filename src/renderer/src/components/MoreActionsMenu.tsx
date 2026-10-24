@@ -1,5 +1,6 @@
 import { Ellipsis } from 'lucide-react'
 import { Fragment } from 'react'
+import { t } from '../i18n'
 import type { AvailableAction } from '../utils/downloadActions'
 import { useDownloadActions } from './downloadActionsContext'
 import { ACTION_META, menuLabel } from './downloadActionMeta'
@@ -36,7 +37,7 @@ export function MoreActionsMenu({
                   type="button"
                   size="icon-sm"
                   variant="secondary"
-                  aria-label="More actions"
+                  aria-label={t('More actions')}
                   disabled={disabled}
                 >
                   <Ellipsis />
@@ -45,7 +46,7 @@ export function MoreActionsMenu({
             />
           }
         />
-        <TooltipContent>More actions</TooltipContent>
+        <TooltipContent>{t('More actions')}</TooltipContent>
       </Tooltip>
       <DropdownMenuContent align="end" className="min-w-52">
         {groups.map((group, index) => (

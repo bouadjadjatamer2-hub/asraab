@@ -145,7 +145,12 @@ test.describe('UI journeys @smoke', () => {
       return { minimum: [width, height], size: window.getSize() }
     }, null)
     expect(minimum.minimum).toEqual([720, 620])
-    expect(minimum.size).toEqual(minimum.minimum)
+    // Windows draws an invisible resize border around the client area, so an exact minimum
+    // request comes back up to a couple of pixels larger. It must never come back smaller.
+    expect(minimum.size[0]).toBeGreaterThanOrEqual(minimum.minimum[0])
+    expect(minimum.size[1]).toBeGreaterThanOrEqual(minimum.minimum[1])
+    expect(minimum.size[0]).toBeLessThanOrEqual(minimum.minimum[0] + 4)
+    expect(minimum.size[1]).toBeLessThanOrEqual(minimum.minimum[1] + 4)
     const origin = await serve({ size: SIZE })
     const reached = origin.hold(0)
     await plexo.start(origin.url(), origin.sha256)
@@ -251,7 +256,7 @@ test.describe('UI journeys @smoke', () => {
     await page.getByRole('button', { name: 'Cancel download', exact: true }).click()
     origin.release()
     // Gone, with what it had downloaded.
-    await expect(page.getByText('No downloads yet')).toBeVisible()
+    await expect(page.getByText('Ready when you are.')).toBeVisible()
 
     link = await plexo.newDownload()
     await link.fill(origin.url())
@@ -369,21 +374,73 @@ test.describe('settings @smoke', () => {
   })
 })
 
+test.describe('language', () => {
+  test('Arabic is saved, right-to-left, translated, and switches back @smoke', async ({
+    plexo,
+    dirs
+  }) => {
+    const page = (): Page => plexo.page
+    await page().getByRole('button', { name: 'Switch to Arabic' }).click()
+    await expect(page().getByRole('alertdialog')).toContainText(
+      'Restart Tayyar to switch to Arabic?'
+    )
+    // Keep this launch in English; the saved choice applies on the next one.
+    await page().getByRole('button', { name: 'Later' }).click()
+    await expect(page().getByRole('button', { name: 'Restart to apply Arabic' })).toBeVisible()
+    expect(
+      JSON.parse(await readFile(join(dirs.userData, 'app-settings.json'), 'utf8')).locale
+    ).toBe('ar')
+
+    await plexo.relaunch()
+    await expect(page().locator('html')).toHaveAttribute('dir', 'rtl')
+    await expect(page().getByRole('heading', { name: 'التنزيلات' })).toBeVisible()
+    await expect(page().getByRole('button', { name: 'التبديل إلى الإنجليزية' })).toBeVisible()
+
+    // The decorative signature is pinned to the physical bottom-right even in RTL, and never
+    // stands between the pointer and the status bar.
+    const signature = page().getByText('TAMER', { exact: true })
+    await expect(signature).toBeVisible()
+    const place = await signature.evaluate((element) => {
+      const box = element.getBoundingClientRect()
+      const decoration = element.parentElement!
+      return {
+        rightGap: window.innerWidth - box.right,
+        bottomGap: window.innerHeight - box.bottom,
+        pointerEvents: getComputedStyle(decoration).pointerEvents,
+        hidden: decoration.getAttribute('aria-hidden')
+      }
+    })
+    expect(place.rightGap).toBeLessThan(40)
+    expect(place.bottomGap).toBeLessThan(30)
+    expect(place.pointerEvents).toBe('none')
+    expect(place.hidden).toBe('true')
+
+    await page().getByRole('button', { name: 'التبديل إلى الإنجليزية' }).click()
+    await expect(page().getByRole('alertdialog')).toContainText(
+      'أعد تشغيل Tayyar للتبديل إلى الإنجليزية؟'
+    )
+    await page().getByRole('button', { name: 'لاحقًا' }).click()
+    await plexo.relaunch()
+    await expect(page().locator('html')).toHaveAttribute('dir', 'ltr')
+    await expect(page().getByRole('button', { name: 'Switch to Arabic' })).toBeVisible()
+  })
+})
+
 test.describe('no networks', () => {
   test.use({ appEnv: { PLEXO_E2E_INTERFACES: '' } })
 
   test('a network appearing makes the list ready for downloads @smoke', async ({ plexo }) => {
-    await expect(plexo.page.getByText('No networks connected')).toBeVisible()
+    await expect(plexo.page.getByText('No network connected')).toBeVisible()
     // A manual scan is safe while the list stays empty. Once an interface appears, the
     // background monitor can remove this button before Playwright finishes clicking it.
     await plexo.page.getByRole('button', { name: 'Scan again' }).click()
-    await expect(plexo.page.getByText('No networks connected')).toBeVisible()
+    await expect(plexo.page.getByText('No network connected')).toBeVisible()
     await plexo.evaluateMain(
       (_electron, value) => {
         process.env['PLEXO_E2E_INTERFACES'] = value
       },
       interfacesEnv({ a: NETWORKS['a'] })
     )
-    await expect(plexo.page.getByText('No downloads yet')).toBeVisible()
+    await expect(plexo.page.getByText('Ready when you are.')).toBeVisible()
   })
 })

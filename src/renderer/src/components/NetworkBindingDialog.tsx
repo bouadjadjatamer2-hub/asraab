@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { t } from '../i18n'
 import { useAppStore } from '../store/useAppStore'
 import {
   AlertDialog,
@@ -30,16 +31,15 @@ export function NetworkBindingDialog(): React.JSX.Element {
     >
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Only your default network can be used</AlertDialogTitle>
+          <AlertDialogTitle>{t('Only your default network can be used')}</AlertDialogTitle>
           <AlertDialogDescription>
-            This system doesn&apos;t let apps send a connection through a specific network, which
-            needs Linux kernel 5.7 or newer. Every connection will go through your default network,
-            so the others will show no ping and won&apos;t add speed. Updating your system fixes
-            this.
+            {t(
+              'This system doesn’t let apps send a connection through a specific network, which needs Linux kernel 5.7 or newer. Every connection will go through your default network, so the others will show no ping and won’t add speed. Updating your system fixes this.'
+            )}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction>Got it</AlertDialogAction>
+          <AlertDialogAction>{t('Got it')}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

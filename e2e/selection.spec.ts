@@ -50,19 +50,24 @@ test('mixed selection applies actions only to eligible downloads and keeps finis
   await plexo.waitForStatus('paused')
 
   const page = plexo.page
-  const beforeSelection = await page
-    .getByRole('button', { name: 'Open paused.bin', exact: true })
-    .boundingBox()
+  // Selecting swaps the header for the shorter toolbar, so measure the row against its group.
+  // That still catches a selection reordering or collapsing the rows themselves.
+  const rowOffsetInGroup = async (): Promise<number | undefined> => {
+    const row = await page
+      .getByRole('button', { name: 'Open paused.bin', exact: true })
+      .boundingBox()
+    const group = await page.getByRole('region', { name: 'Paused', exact: true }).boundingBox()
+    return row && group ? row.y - group.y : undefined
+  }
+  const beforeSelection = await rowOffsetInGroup()
   await page.getByRole('checkbox', { name: 'Select paused.bin', exact: true }).check()
   const toolbar = page.getByRole('toolbar', { name: 'Selected downloads' })
   await expect(page.getByRole('heading', { level: 1 })).toBeHidden()
   await toolbar.getByRole('button', { name: 'Select all', exact: true }).click()
   await expect(toolbar.getByText('3 selected', { exact: true })).toBeVisible()
   await expect(page.locator('[data-selected=true]')).toHaveCount(3)
-  const afterSelection = await page
-    .getByRole('button', { name: 'Open paused.bin', exact: true })
-    .boundingBox()
-  expect(afterSelection?.y).toBe(beforeSelection?.y)
+  const afterSelection = await rowOffsetInGroup()
+  expect(afterSelection).toBe(beforeSelection)
   await expect(page.getByRole('button', { name: 'Resume (1)', exact: true })).toBeVisible()
   await expect(page.getByRole('button', { name: /^Retry/ })).toHaveCount(0)
   await expect(
@@ -78,16 +83,16 @@ test('mixed selection applies actions only to eligible downloads and keeps finis
   ])
   await openMore(page)
   await expect(
-    page.getByRole('menuitem', { name: 'Remove 2 from list', exact: true })
+    page.getByRole('menuitem', { name: 'Remove 2 downloads from list', exact: true })
   ).toBeVisible()
   await page.keyboard.press('Escape')
   // A finished and a failed download leave the list together, after asking.
-  await chooseMore(page, 'Remove 2 from list')
+  await chooseMore(page, 'Remove 2 downloads from list')
   const removal = page.getByRole('alertdialog')
   await expect(removal.getByText(/lose the part they already downloaded/)).toBeVisible()
   await removal.getByRole('button', { name: 'Cancel', exact: true }).click()
   await expect(toolbar.getByText('3 selected', { exact: true })).toBeVisible()
-  await chooseMore(page, 'Remove 2 from list')
+  await chooseMore(page, 'Remove 2 downloads from list')
   await page.getByRole('alertdialog').getByRole('button', { name: 'Remove', exact: true }).click()
   await expect(page.getByRole('button', { name: 'Open finished.bin', exact: true })).toBeHidden()
   expect(existsSync(finished.destinationPath)).toBe(true)
@@ -102,7 +107,7 @@ test('mixed selection applies actions only to eligible downloads and keeps finis
     .getByRole('alertdialog')
     .getByRole('button', { name: 'Cancel download', exact: true })
     .click()
-  await expect(page.getByText('No downloads yet', { exact: true })).toBeVisible()
+  await expect(page.getByText('Ready when you are.', { exact: true })).toBeVisible()
   expect(existsSync(finished.destinationPath)).toBe(true)
 })
 
@@ -126,7 +131,7 @@ test('missing finished files can leave the list but are excluded from file remov
     .getByRole('alertdialog')
     .getByRole('button', { name: 'Remove', exact: true })
     .click()
-  await expect(plexo.page.getByText('No downloads yet', { exact: true })).toBeVisible()
+  await expect(plexo.page.getByText('Ready when you are.', { exact: true })).toBeVisible()
   await rename(`${complete.destinationPath}.moved`, complete.destinationPath)
 })
 
@@ -194,7 +199,7 @@ test('trashing finished torrent files preserves unrelated files in the torrent f
       .getByRole('alertdialog')
       .getByRole('button', { name: 'Delete file', exact: true })
       .click()
-    await expect(plexo.page.getByText('No downloads yet', { exact: true })).toBeVisible()
+    await expect(plexo.page.getByText('Ready when you are.', { exact: true })).toBeVisible()
     expect(await readFile(join(completed.destinationPath, 'personal.txt'), 'utf8')).toBe('keep me')
     for (const file of files)
       expect(existsSync(join(trash, basename((file as { name?: string }).name!)))).toBe(true)

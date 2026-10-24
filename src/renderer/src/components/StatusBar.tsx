@@ -1,10 +1,12 @@
 import type { SpeedUnit } from '@shared/types'
 import { useEffect, useState } from 'react'
+import { locale, t, tn } from '../i18n'
 import { useAppStore } from '../store/useAppStore'
 import { formatBytes } from '../utils/format'
 import { useFormatSpeedLimit } from '../hooks/useFormatSpeed'
 import { useDownloadSchedule } from '../hooks/useDownloadSchedule'
 import { ScreenFooter } from './ScreenFooter'
+import { SignatureMark } from './SignatureMark'
 import { ThemeToggle } from './ThemeToggle'
 import { Switch } from './ui/switch'
 import { ToggleGroup, ToggleGroupItem } from './ui/toggle-group'
@@ -22,7 +24,7 @@ function SpeedUnitToggle(): React.JSX.Element {
       <TooltipTrigger
         render={
           <ToggleGroup
-            aria-label="Speed units"
+            aria-label={t('Speed units')}
             value={[speedUnit]}
             onValueChange={(values) => {
               // Clicking the pressed one would unpress it; one unit is always on.
@@ -44,7 +46,7 @@ function SpeedUnitToggle(): React.JSX.Element {
           </ToggleGroup>
         }
       />
-      <TooltipContent>Speed units</TooltipContent>
+      <TooltipContent>{t('Speed units')}</TooltipContent>
     </Tooltip>
   )
 }
@@ -84,12 +86,17 @@ export function StatusBar(): React.JSX.Element {
 
   // Limits show by the speeds they cap (the Downloading screen, the networks menu), not here.
   const status = [
-    free !== null && `${formatBytes(free)} free`,
-    waiting > 0 && `${waiting} waiting`
+    free !== null && t('{size} free', { size: formatBytes(free) }),
+    waiting > 0 &&
+      (locale === 'en'
+        ? `${waiting} waiting`
+        : t('{downloads} waiting', {
+            downloads: tn(waiting, '{n} download', '{n} downloads')
+          }))
   ].filter(Boolean)
 
   return (
-    <ScreenFooter className="gap-4 font-mono text-[11.5px] text-muted-foreground">
+    <ScreenFooter className="relative gap-4 pr-[72px]! font-mono text-[11.5px] text-muted-foreground">
       <span className="min-w-0 flex-1 truncate tabular-nums">{status.join(' · ')}</span>
       {message && <span className="truncate">{message}</span>}
       {/* Controls, most-flipped first: the edge holds the set-once view preferences. */}
@@ -99,16 +106,19 @@ export function StatusBar(): React.JSX.Element {
           <TooltipTrigger
             render={
               <label className="flex items-center gap-2">
-                Slow mode
+                {t('Slow mode')}
                 <Switch checked={slowMode} onCheckedChange={setSlowMode} />
               </label>
             }
           />
-          <TooltipContent>Limit downloads to {formatSpeedLimit(slowModeSpeed)}</TooltipContent>
+          <TooltipContent>
+            {t('Limit downloads to {value}', { value: formatSpeedLimit(slowModeSpeed) })}
+          </TooltipContent>
         </Tooltip>
         <SpeedUnitToggle />
         <ThemeToggle />
       </div>
+      <SignatureMark />
     </ScreenFooter>
   )
 }

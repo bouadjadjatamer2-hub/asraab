@@ -1,5 +1,6 @@
 import { Clock3 } from 'lucide-react'
 import { useDownloadSchedule } from '../hooks/useDownloadSchedule'
+import { t } from '../i18n'
 import { Button } from './ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
@@ -15,7 +16,7 @@ export function ScheduleIndicator({ onClick }: { onClick: () => void }): React.J
             type="button"
             variant="secondary"
             size="icon"
-            aria-label="Download schedule enabled"
+            aria-label={t('Download schedule enabled')}
             className="text-primary"
             onClick={onClick}
           >
@@ -23,7 +24,7 @@ export function ScheduleIndicator({ onClick }: { onClick: () => void }): React.J
           </Button>
         }
       />
-      <TooltipContent>{message ?? 'Download schedule enabled'}</TooltipContent>
+      <TooltipContent>{message ?? t('Download schedule enabled')}</TooltipContent>
     </Tooltip>
   )
 }

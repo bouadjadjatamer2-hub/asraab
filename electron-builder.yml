@@ -42,7 +42,9 @@ win:
 nsis:
   # No ${arch} on purpose: one installer holds both x64 and ARM64, and docs/downloads.js reads an
   # installer with no architecture in its name as exactly that. Add one here and update it there.
-  artifactName: ${name}-${version}-setup.${ext}
+  # The capitalisation matches the asset URLs on the website and in README, and the updater's
+  # latest.yml points at this exact name.
+  artifactName: ${productName}-${version}-Setup.${ext}
   # Assisted installer instead of one-click, so users can choose the install folder (and drive).
   # One-click always installs to %LOCALAPPDATA%\Programs with no way to change it.
   oneClick: false
@@ -108,4 +110,11 @@ deb:
 rpm:
   artifactName: ${name}-${version}.${arch}.${ext}
 npmRebuild: false
-# This build ships as an installer only: no release feed, so the app never checks for updates.
+# The app checks GitHub Releases at launch and every few hours (src/main/updater.ts). Building
+# writes latest.yml and app-update.yml from this feed; the release must carry latest.yml, the
+# installer and its blockmap for an installed copy to find and install a newer version.
+publish:
+  provider: github
+  owner: bouadjadjatamer2-hub
+  repo: tayyar-download-manager-
+  releaseType: release

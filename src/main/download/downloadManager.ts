@@ -37,6 +37,7 @@ import {
   type TorrentPieceState
 } from '../../shared/types'
 import { Limits } from '../network/limits'
+import { mainLocale, t } from '../i18n'
 import { loadSettings } from '../settings'
 import { addToHistory, findInHistory, removeFromHistory } from './history'
 import { testKnobs } from '../testKnobs'
@@ -745,9 +746,9 @@ export class DownloadManager {
     const result = await scanFile(path)
     const name = basename(path)
     if (result.status === 'clean') {
-      this.notify('Scan complete', `${name}: no threats found.`)
+      this.notify(t('Scan complete'), t('{name}: no threats found.', { name }))
     } else if (result.status === 'threat') {
-      this.notify('Threat found', `${name}: Windows Defender found a threat.`)
+      this.notify(t('Threat found'), t('{name}: Windows Defender found a threat.', { name }))
     }
   }
 
@@ -760,8 +761,11 @@ export class DownloadManager {
     })
     if (busy) return
     this.shutdownStarted = true
-    this.notify('Shutting down', 'Every download finished. Windows will shut down in 60 seconds.')
-    spawn('shutdown', ['/s', '/t', '60', '/c', 'Tayyar: every download finished.'], {
+    this.notify(
+      t('Shutting down'),
+      t('Every download finished. Windows will shut down in 60 seconds.')
+    )
+    spawn('shutdown', ['/s', '/t', '60', '/c', t('Tayyar: every download finished.')], {
       windowsHide: true,
       stdio: 'ignore'
     }).on('error', () => {
@@ -1040,16 +1044,20 @@ export class DownloadManager {
       const streaming = requestPayload.streamExtract
       if (streaming) {
         if (!streaming.format || !['rar', 'zip', 'tar'].includes(streaming.format)) {
-          throw new Error('That archive can’t be unpacked while downloading.')
+          throw new Error(t('That archive can’t be unpacked while downloading.'))
         }
         if (requestPayload.totalBytes <= 0) {
           throw new Error(
-            'This server didn’t report the archive’s size, so it can’t be unpacked while downloading.'
+            t(
+              'This server didn’t report the archive’s size, so it can’t be unpacked while downloading.'
+            )
           )
         }
         if (!requestPayload.supportsRanges) {
           throw new Error(
-            'This server doesn’t support resuming, so the archive can’t be unpacked while downloading.'
+            t(
+              'This server doesn’t support resuming, so the archive can’t be unpacked while downloading.'
+            )
           )
         }
         // Claimed before the first byte: another download can't take the same folder.
@@ -1747,6 +1755,15 @@ export class DownloadManager {
    */
   private async run(runtime: DownloadRuntime): Promise<void> {
     if (runtime.stop.signal.aborted) runtime.stop = new AbortController()
+    // Grow the staging file to its final size before the streams start writing at offsets:
+    // NTFS then allocates it as one run instead of seeking between fragments on a slow HDD. A
+    // queued download reserves nothing until it is actually about to run, and a resumed one
+    // only has the part it already holds to add.
+    if (runtime.kind === 'http' && !runtime.requestPayload.streamExtract) {
+      await runtime.file
+        .reserve(runtime.state.totalBytes)
+        .catch((error) => console.error('[tayyar] failed to reserve the staging file', error))
+    }
     runtime.transfer.reset()
     // Speeds are this run's: nothing carries over from the last one.
     runtime.meters.clear()
@@ -1837,7 +1854,7 @@ export class DownloadManager {
       runtime.state.bytesDownloaded = runtime.state.totalBytes
       await this.persistNow(runtime)
       await runtime.file.discardLeftover().catch(() => {})
-      this.notify('Extraction complete', `${runtime.state.fileName} is ready.`)
+      this.notify(t('Extraction complete'), t('{name} is ready.', { name: runtime.state.fileName }))
       this.pushUpdate(runtime)
       await this.moveToHistory(runtime)
       this.maybeShutdown()
@@ -1879,14 +1896,17 @@ export class DownloadManager {
         runtime.state.bytesDownloaded
       await this.persistNow(runtime)
       await runtime.file.discardLeftover().catch(() => {})
-      this.notify('Download complete', `${runtime.state.fileName} has finished downloading.`)
+      this.notify(
+        t('Download complete'),
+        t('{name} has finished downloading.', { name: runtime.state.fileName })
+      )
       if (this.scanDownloads) void this.scanFinished(finalPath)
     } catch (error) {
       runtime.state.status = 'error'
       runtime.state.error = error instanceof Error ? error.message : String(error)
       this.notify(
-        'Download failed',
-        `${runtime.state.fileName}: ${describeError(runtime.state.error)}`
+        t('Download failed'),
+        `${runtime.state.fileName}: ${describeError(runtime.state.error, mainLocale())}`
       )
     }
     runtime.publishing = false
@@ -1909,7 +1929,10 @@ export class DownloadManager {
     runtime.state.status = 'error'
     runtime.state.error = message
     runtime.state.resumable = !discard
-    this.notify('Download failed', `${runtime.state.fileName}: ${describeError(message)}`)
+    this.notify(
+      t('Download failed'),
+      `${runtime.state.fileName}: ${describeError(message, mainLocale())}`
+    )
     this.stopRun(runtime)
   }
 

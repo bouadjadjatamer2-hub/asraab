@@ -12,13 +12,20 @@ import {
   X,
   type LucideIcon
 } from 'lucide-react'
+import { t, tn } from '../i18n'
 import type { ActionId, DownloadItem } from '../utils/downloadActions'
 
 const MAC = window.plexo.platform === 'darwin'
-export const TRASH_NAME = window.plexo.platform === 'win32' ? 'Recycle Bin' : 'Trash'
-const REVEAL_LABEL = MAC ? 'Show in Finder' : 'Show in folder'
+export const TRASH_NAME = t(window.plexo.platform === 'win32' ? 'Recycle Bin' : 'Trash')
+const REVEAL_LABEL = t(MAC ? 'Show in Finder' : 'Show in folder')
 
-const SOMETHING_WRONG = 'Something went wrong'
+function downloads(count: number): string {
+  return tn(count, '{n} download', '{n} downloads')
+}
+
+function files(count: number): string {
+  return tn(count, '{n} file', '{n} files')
+}
 
 interface ActionMeta {
   /** For one download: menus and a download's own screen. */
@@ -39,83 +46,83 @@ interface ActionMeta {
 
 export const ACTION_META: Record<ActionId, ActionMeta> = {
   pause: {
-    label: 'Pause',
-    many: (n) => `Pause ${n} downloads`,
-    toolbar: 'Pause',
-    working: 'Pausing',
-    failure: 'Couldn’t pause',
+    label: t('Pause'),
+    many: (n) => t('Pause {downloads}', { downloads: downloads(n) }),
+    toolbar: t('Pause'),
+    working: t('Pausing'),
+    failure: t('Couldn’t pause'),
     icon: Pause
   },
   resume: {
-    label: 'Resume',
-    many: (n) => `Resume ${n} downloads`,
-    toolbar: 'Resume',
-    working: 'Resuming',
-    failure: 'Couldn’t resume',
+    label: t('Resume'),
+    many: (n) => t('Resume {downloads}', { downloads: downloads(n) }),
+    toolbar: t('Resume'),
+    working: t('Resuming'),
+    failure: t('Couldn’t resume'),
     icon: Play
   },
   retry: {
-    label: 'Retry',
-    many: (n) => `Retry ${n} downloads`,
-    toolbar: 'Retry',
-    working: 'Retrying',
-    failure: 'Couldn’t retry',
+    label: t('Retry'),
+    many: (n) => t('Retry {downloads}', { downloads: downloads(n) }),
+    toolbar: t('Retry'),
+    working: t('Retrying'),
+    failure: t('Couldn’t retry'),
     icon: RotateCw
   },
   fix: {
-    label: 'Fix link',
-    toolbar: 'Fix link',
+    label: t('Fix link'),
+    toolbar: t('Fix link'),
     single: true,
-    failure: SOMETHING_WRONG,
+    failure: t('Something went wrong'),
     icon: Wrench
   },
   again: {
-    label: 'Download again',
-    toolbar: 'Download again',
+    label: t('Download again'),
+    toolbar: t('Download again'),
     single: true,
-    failure: 'Couldn’t start again',
+    failure: t('Couldn’t start again'),
     icon: Download
   },
   open: {
-    label: 'Open',
-    toolbar: 'Open',
+    label: t('Open'),
+    toolbar: t('Open'),
     single: true,
-    failure: 'Couldn’t open file',
+    failure: t('Couldn’t open file'),
     icon: ExternalLink
   },
   reveal: {
     label: REVEAL_LABEL,
     toolbar: REVEAL_LABEL,
     single: true,
-    failure: 'Couldn’t show file',
+    failure: t('Couldn’t show file'),
     icon: FolderOpen
   },
   copy: {
-    label: 'Copy link',
-    many: (n) => `Copy ${n} links`,
-    failure: 'Couldn’t copy link',
+    label: t('Copy link'),
+    many: (n) => t('Copy {links}', { links: tn(n, '{n} link', '{n} links') }),
+    failure: t('Couldn’t copy link'),
     icon: Copy
   },
   cancel: {
-    label: 'Cancel download',
-    many: (n) => `Cancel ${n} downloads`,
-    toolbar: 'Cancel downloads',
-    failure: SOMETHING_WRONG,
+    label: t('Cancel download'),
+    many: (n) => t('Cancel {downloads}', { downloads: downloads(n) }),
+    toolbar: t('Cancel downloads'),
+    failure: t('Something went wrong'),
     icon: X,
     destructive: true
   },
   remove: {
-    label: 'Remove from list',
-    many: (n) => `Remove ${n} from list`,
-    toolbar: 'Remove from list',
-    failure: SOMETHING_WRONG,
+    label: t('Remove from list'),
+    many: (n) => t('Remove {downloads} from list', { downloads: downloads(n) }),
+    toolbar: t('Remove from list'),
+    failure: t('Something went wrong'),
     icon: ListX
   },
   trash: {
-    label: `Move file to ${TRASH_NAME}`,
-    many: (n) => `Move ${n} files to ${TRASH_NAME}`,
-    toolbar: `Move to ${TRASH_NAME}`,
-    failure: SOMETHING_WRONG,
+    label: t('Move file to {trash}', { trash: TRASH_NAME }),
+    many: (n) => t('Move {files} to {trash}', { files: files(n), trash: TRASH_NAME }),
+    toolbar: t('Move to {trash}', { trash: TRASH_NAME }),
+    failure: t('Something went wrong'),
     icon: Trash2,
     destructive: true
   }
@@ -125,7 +132,9 @@ export const ACTION_META: Record<ActionId, ActionMeta> = {
 export function menuLabel(id: ActionId, items: DownloadItem[]): string {
   const meta = ACTION_META[id]
   if (id === 'copy' && items.every((item) => item.url.startsWith('magnet:')))
-    return items.length > 1 ? `Copy ${items.length} magnet links` : 'Copy magnet link'
+    return items.length > 1
+      ? t('Copy {n} magnet links', { n: items.length })
+      : t('Copy magnet link')
   return items.length > 1 && meta.many ? meta.many(items.length) : meta.label
 }
 

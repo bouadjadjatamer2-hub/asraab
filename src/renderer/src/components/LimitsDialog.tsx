@@ -10,6 +10,7 @@ import {
 } from '@shared/types'
 import { Minus, Plus } from 'lucide-react'
 import { useEffect, useId, useRef, useState } from 'react'
+import { intlLocale, locale, t } from '../i18n'
 import { useNetworkUsage } from '../hooks/useNetworks'
 import { useNetworkVisuals } from '../hooks/useNetworkVisuals'
 import { useAppStore } from '../store/useAppStore'
@@ -118,7 +119,7 @@ function NumberInput({
           const converted = Math.round(value * unitBytes)
           if (Number.isSafeInteger(converted) && converted > 0) onChange(converted)
         }}
-        className="w-20 text-right font-mono tabular-nums"
+        className="w-20 text-end font-mono tabular-nums"
       />
       <span className="font-mono text-[12px] text-muted-foreground">{unit}</span>
     </span>
@@ -143,7 +144,7 @@ function SpeedInput({
       bytes={bytes}
       unit={unit.label}
       unitBytes={unit.bytes}
-      label={`${label}, in ${unit.label}`}
+      label={t('{label}, in {unit}', { label, unit: unit.label })}
       disabled={disabled}
       onChange={onChange}
     />
@@ -189,7 +190,7 @@ function LimitChoice({
           }}
           className="size-4 accent-[var(--color-accent)]"
         />
-        No limit
+        {t('No limit')}
       </label>
       <div className="flex flex-wrap items-center gap-2.5">
         <label className="flex items-center gap-2.5 text-[13px]">
@@ -200,7 +201,7 @@ function LimitChoice({
             onChange={() => onChange(lastValue)}
             className="size-4 accent-[var(--color-accent)]"
           />
-          Limit to
+          {t('Limit to')}
         </label>
         {unit === undefined || unitBytes === undefined ? (
           <SpeedInput
@@ -216,7 +217,7 @@ function LimitChoice({
             bytes={value ?? lastValue}
             unit={unit}
             unitBytes={unitBytes}
-            label={`${label}, in ${unit}`}
+            label={t('{label}, in {unit}', { label, unit })}
             disabled={!enabled}
             onChange={changeValue}
           />
@@ -267,17 +268,19 @@ function GeneralPage({
   return (
     <>
       <div className="flex flex-col gap-1 pb-3">
-        <h3 className="font-sans text-[18px] leading-none font-semibold">All downloads</h3>
+        <h3 className="font-sans text-[18px] leading-none font-semibold">{t('All downloads')}</h3>
         <div className="font-mono text-[12px] text-muted-foreground">
-          {running === 0 ? 'No active downloads' : `${running} downloading right now`}
+          {running === 0
+            ? t('No active downloads')
+            : t('{n} downloading right now', { n: running })}
         </div>
       </div>
 
       <section className={sectionClass}>
-        <h4 className={headingClass}>Total speed</h4>
-        <p className={hintClass}>Limits the combined download speed across all networks.</p>
+        <h4 className={headingClass}>{t('Total speed')}</h4>
+        <p className={hintClass}>{t('Limits the combined download speed across all networks.')}</p>
         <LimitChoice
-          label="Total speed"
+          label={t('Total speed')}
           value={speedLimit}
           fallback={20 * MB}
           onChange={(speedLimit) => change({ speedLimit })}
@@ -285,40 +288,42 @@ function GeneralPage({
       </section>
 
       <section className={sectionClass}>
-        <h4 className={headingClass}>Slow mode</h4>
+        <h4 className={headingClass}>{t('Slow mode')}</h4>
         <p className={hintClass}>
-          Replaces the total speed limit while enabled. Useful during calls or streaming.
+          {t('Replaces the total speed limit while enabled. Useful during calls or streaming.')}
         </p>
         <div className="flex flex-wrap items-center gap-3">
           <SpeedInput
             bytes={slowModeSpeed}
-            label="Slow mode speed"
+            label={t('Slow mode speed')}
             onChange={(slowModeSpeed) => change({ slowModeSpeed })}
           />
-          <label className="ml-auto flex items-center gap-2 text-[13px]">
-            Enabled
+          <label className="ms-auto flex items-center gap-2 text-[13px]">
+            {t('Enabled')}
             <Switch checked={slowMode} onCheckedChange={(slowMode) => change({ slowMode })} />
           </label>
         </div>
       </section>
 
       <section className={sectionClass}>
-        <h4 className={headingClass}>Downloads at once</h4>
-        <p className={hintClass}>Other downloads wait in the queue and start automatically.</p>
+        <h4 className={headingClass}>{t('Downloads at once')}</h4>
+        <p className={hintClass}>
+          {t('Other downloads wait in the queue and start automatically.')}
+        </p>
         <div className="flex items-center gap-3 text-[13.5px]">
           <div className="flex items-center rounded-lg border border-input">
             <Button
               type="button"
               variant="ghost"
               size="icon-sm"
-              aria-label="Decrease simultaneous downloads"
+              aria-label={t('Decrease simultaneous downloads')}
               disabled={downloadsAtOnce <= DOWNLOADS_AT_ONCE.min}
               onClick={() => change({ downloadsAtOnce: downloadsAtOnce - 1 })}
             >
               <Minus />
             </Button>
             <output
-              aria-label="Downloads at once"
+              aria-label={t('Downloads at once')}
               className="w-8 text-center font-mono tabular-nums"
             >
               {downloadsAtOnce}
@@ -327,70 +332,83 @@ function GeneralPage({
               type="button"
               variant="ghost"
               size="icon-sm"
-              aria-label="Increase simultaneous downloads"
+              aria-label={t('Increase simultaneous downloads')}
               disabled={downloadsAtOnce >= DOWNLOADS_AT_ONCE.max}
               onClick={() => change({ downloadsAtOnce: downloadsAtOnce + 1 })}
             >
               <Plus />
             </Button>
           </div>
-          at the same time
+          {t('at the same time')}
         </div>
       </section>
       <section className={sectionClass}>
-        <h4 className={headingClass}>Power &amp; automation</h4>
+        <h4 className={headingClass}>{t('Power & automation')}</h4>
         <p className={hintClass}>
-          Turbo trades politeness for speed: more streams from the first byte, and smaller blocks so
-          every connection stays busy.
+          {t(
+            'Turbo trades politeness for speed: more streams from the first byte, and smaller blocks so every connection stays busy.'
+          )}
         </p>
         <div className="flex flex-col gap-1">
           <SettingRow
-            label="Turbo mode"
-            hint="16 to 64 streams per network, 4 MB blocks. A server that refuses extra connections still works."
+            label={t('Turbo mode')}
+            hint={t(
+              '16 to 64 streams per network, 4 MB blocks. A server that refuses extra connections still works.'
+            )}
             checked={draft.turbo}
             onChange={(turbo) => change({ turbo })}
           />
           <SettingRow
-            label="Sort finished files"
-            hint="Move each download into a Video, Audio, Programs, Documents, Archives or Images folder."
+            label={t('Sort finished files')}
+            hint={t(
+              'Move each download into a Video, Audio, Programs, Documents, Archives or Images folder.'
+            )}
             checked={draft.autoOrganize}
             onChange={(autoOrganize) => change({ autoOrganize })}
           />
           <SettingRow
-            label="Scan with Windows Defender"
-            hint="Runs a Defender scan on each finished file and reports the result."
+            label={t('Scan with Windows Defender')}
+            hint={t('Runs a Defender scan on each finished file and reports the result.')}
             checked={draft.scanDownloads}
             onChange={(scanDownloads) => change({ scanDownloads })}
           />
           <SettingRow
-            label="Watch the clipboard"
-            hint="A file link you copy opens in New download, ready to start. Nothing starts on its own."
+            label={t('Watch the clipboard')}
+            hint={t(
+              'A file link you copy opens in New download, ready to start. Nothing starts on its own.'
+            )}
             checked={draft.clipboardWatch}
             onChange={(clipboardWatch) => change({ clipboardWatch })}
           />
           <SettingRow
-            label="Shut down when finished"
-            hint="Once the queue is empty, Windows shuts down after 60 seconds. Cancel with: shutdown /a"
+            label={t('Shut down when finished')}
+            hint={t(
+              'Once the queue is empty, Windows shuts down after 60 seconds. Cancel with: shutdown /a'
+            )}
             checked={draft.shutdownWhenDone}
             onChange={(shutdownWhenDone) => change({ shutdownWhenDone })}
           />
         </div>
       </section>
       <section className={sectionClass}>
-        <h4 className={headingClass}>Startup &amp; background</h4>
+        <h4 className={headingClass}>{t('Startup & background')}</h4>
         <p className={hintClass}>
-          Keep Tayyar ready for links and downloads without leaving a window open.
+          {t('Keep Tayyar ready for links and downloads without leaving a window open.')}
         </p>
         <div className="flex flex-col gap-1">
           <SettingRow
-            label="Start at login"
-            hint="Open Tayyar automatically when you sign in. On Windows it starts hidden in the tray and appears in Task Manager → Startup."
+            label={t('Start at login')}
+            hint={t(
+              'Open Tayyar automatically when you sign in. On Windows it starts hidden in the tray and appears in Task Manager → Startup.'
+            )}
             checked={draft.startAtLogin}
             onChange={(startAtLogin) => change({ startAtLogin })}
           />
           <SettingRow
-            label="Keep running in the background"
-            hint="Closing the window leaves downloads and the browser extension running. Use Quit in the tray menu to exit fully."
+            label={t('Keep running in the background')}
+            hint={t(
+              'Closing the window leaves downloads and the browser extension running. Use Quit in the tray menu to exit fully.'
+            )}
             checked={draft.runInBackground}
             onChange={(runInBackground) => change({ runInBackground })}
           />
@@ -407,22 +425,23 @@ function GeneralPage({
           disabled={atDefaults}
           onClick={() => setConfirmReset(true)}
         >
-          Reset to defaults
+          {t('Reset to defaults')}
         </Button>
       </div>
       <AlertDialog open={confirmReset} onOpenChange={setConfirmReset}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Reset all downloads to defaults?</AlertDialogTitle>
+            <AlertDialogTitle>{t('Reset all downloads to defaults?')}</AlertDialogTitle>
             <AlertDialogDescription>
-              This resets total speed, slow mode, downloads at once, the download schedule, the
-              power options and startup behaviour. Network limits stay unchanged.
+              {t(
+                'This resets total speed, slow mode, downloads at once, the download schedule, the power options and startup behaviour. Network limits stay unchanged.'
+              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t('Cancel')}</AlertDialogCancel>
             <AlertDialogAction onClick={() => change(GENERAL_DEFAULTS)}>
-              Reset to defaults
+              {t('Reset to defaults')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -477,15 +496,18 @@ function NetworkPage({
       <div className="flex flex-col gap-1 pb-3">
         <h3 className="font-sans text-[18px] leading-none font-semibold">{name}</h3>
         <div className="font-mono text-[12px] text-muted-foreground">
-          {formatBytes(used)} used by Tayyar {dataUsageLabel(period)}
+          {t('{size} used by Tayyar {period}', {
+            size: formatBytes(used),
+            period: dataUsageLabel(period, locale)
+          })}
         </div>
       </div>
 
       <section className={sectionClass}>
-        <h4 className={headingClass}>Speed</h4>
-        <p className={hintClass}>Limits the combined download speed on {name}.</p>
+        <h4 className={headingClass}>{t('Speed')}</h4>
+        <p className={hintClass}>{t('Limits the combined download speed on {name}.', { name })}</p>
         <LimitChoice
-          label={`${name} speed`}
+          label={t('{name} speed', { name })}
           value={preference?.speedLimit}
           fallback={10 * MB}
           onChange={(speedLimit) => change({ speedLimit })}
@@ -493,21 +515,23 @@ function NetworkPage({
       </section>
 
       <section className={sectionClass}>
-        <h4 className={headingClass}>Data limit</h4>
+        <h4 className={headingClass}>{t('Data limit')}</h4>
         <p className={hintClass}>
-          Stops downloads on {name} at the limit. Uploads and other apps don’t count.
+          {t('Stops downloads on {name} at the limit. Uploads and other apps don’t count.', {
+            name
+          })}
         </p>
         <LimitChoice
-          label={`${name} data limit`}
+          label={t('{name} data limit', { name })}
           value={dataLimit}
           fallback={5 * GB}
           unit="GB"
           unitBytes={GB}
           onChange={(limit) => change({ dataLimit: limit })}
         >
-          <span className="text-[12px] text-muted-foreground">per</span>
+          <span className="text-[12px] text-muted-foreground">{t('per')}</span>
           <ToggleGroup
-            aria-label={`${name} data limit period`}
+            aria-label={t('{name} data limit period', { name })}
             value={[period]}
             disabled={dataLimit === undefined}
             onValueChange={(values) => {
@@ -522,7 +546,7 @@ function NetworkPage({
           >
             {DATA_LIMIT_PERIODS.map((entry) => (
               <ToggleGroupItem key={entry.value} value={entry.value}>
-                {entry.label}
+                {t(entry.label)}
               </ToggleGroupItem>
             ))}
           </ToggleGroup>
@@ -531,12 +555,17 @@ function NetworkPage({
           <>
             <UsageBar used={used} limit={dataLimit} period={period} />
             <p className="text-[11.5px] text-muted-foreground">
-              Resets{' '}
+              {t('Resets')}{' '}
               {period === 'day'
-                ? 'tomorrow at midnight'
-                : `on ${nextDataReset(period, now).toLocaleDateString(undefined, { day: 'numeric', month: 'long' })}`}
-              . {period === 'week' && 'Weeks start Monday. '}Raise the limit or reset data usage to
-              keep using this network sooner.
+                ? t('tomorrow at midnight')
+                : t('on {date}', {
+                    date: nextDataReset(period, now).toLocaleDateString(intlLocale, {
+                      day: 'numeric',
+                      month: 'long'
+                    })
+                  })}
+              . {period === 'week' && `${t('Weeks start Monday.')} `}
+              {t('Raise the limit or reset data usage to keep using this network sooner.')}
             </p>
           </>
         )}
@@ -548,7 +577,7 @@ function NetworkPage({
           disabled={busy || used === 0}
           onClick={() => setReset('usage')}
         >
-          Reset data usage
+          {t('Reset data usage')}
         </Button>
         <Button
           variant="secondary"
@@ -556,19 +585,27 @@ function NetworkPage({
           disabled={busy || (preference?.speedLimit === undefined && dataLimit === undefined)}
           onClick={() => setReset('limits')}
         >
-          Remove limits
+          {t('Remove limits')}
         </Button>
       </div>
       <AlertDialog open={reset !== null} onOpenChange={(open) => !open && !busy && setReset(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              {reset === 'usage' ? `Reset data usage for ${name}?` : `Remove limits for ${name}?`}
+              {reset === 'usage'
+                ? t('Reset data usage for {name}?', { name })
+                : t('Remove limits for {name}?', { name })}
             </AlertDialogTitle>
             <AlertDialogDescription>
               {reset === 'usage'
-                ? `This resets ${name}’s usage ${dataUsageLabel(period)} to zero. Its configured limits and usage for other periods stay unchanged. Downloads can use this network again if its data limit was reached.`
-                : `This removes ${name}’s speed and data limits. Its recorded data usage stays unchanged. The total speed limit and slow mode still apply.`}
+                ? t(
+                    'This resets {name}’s usage {period} to zero. Its configured limits and usage for other periods stay unchanged. Downloads can use this network again if its data limit was reached.',
+                    { name, period: dataUsageLabel(period, locale) }
+                  )
+                : t(
+                    'This removes {name}’s speed and data limits. Its recorded data usage stays unchanged. The total speed limit and slow mode still apply.',
+                    { name }
+                  )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           {error && (
@@ -577,7 +614,7 @@ function NetworkPage({
             </p>
           )}
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={busy}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={busy}>{t('Cancel')}</AlertDialogCancel>
             <AlertDialogAction
               disabled={busy}
               onClick={(event) => {
@@ -585,7 +622,7 @@ function NetworkPage({
                 void confirmReset()
               }}
             >
-              {reset === 'usage' ? 'Reset data usage' : 'Remove limits'}
+              {reset === 'usage' ? t('Reset data usage') : t('Remove limits')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -617,7 +654,11 @@ function UsageBar({
       <div
         className={`font-mono text-[11.5px] whitespace-nowrap ${reached ? 'text-[var(--color-danger)]' : 'text-muted-foreground'}`}
       >
-        {formatBytes(used)} of {formatBytes(limit)} {dataUsageLabel(period)}
+        {t('{used} of {limit} {period}', {
+          used: formatBytes(used),
+          limit: formatBytes(limit),
+          period: dataUsageLabel(period, locale)
+        })}
       </div>
     </div>
   )
@@ -630,14 +671,15 @@ function describeLimits(
   formatSpeedLimit: (bytesPerSec: number) => string
 ): string[] {
   if (preference?.dataLimit !== undefined && used >= preference.dataLimit) {
-    return ['Data limit reached']
+    return [t('Data limit reached')]
   }
   // A line each, said as the networks menu says them, so the two never read differently.
   const lines = [
-    preference?.speedLimit !== undefined && `Limit ${formatSpeedLimit(preference.speedLimit)}`,
+    preference?.speedLimit !== undefined &&
+      t('Limit {value}', { value: formatSpeedLimit(preference.speedLimit) }),
     preference?.dataLimit !== undefined && formatDataUsage(used, preference.dataLimit)
   ].filter((line): line is string => typeof line === 'string')
-  return lines.length > 0 ? lines : ['No limit']
+  return lines.length > 0 ? lines : [t('No limit')]
 }
 
 /** Speed & data limits: every download's together, and each network's. Nothing changes until
@@ -666,11 +708,11 @@ export function LimitsDialog({
           showSchedule
             ? () => {
                 contentRef.current
-                  ?.querySelector<HTMLElement>('[aria-label="Download schedule"]')
+                  ?.querySelector<HTMLElement>(`[aria-label="${t('Download schedule')}"]`)
                   ?.scrollIntoView({ block: 'start' })
                 return (
                   contentRef.current?.querySelector<HTMLElement>(
-                    '[aria-label="Enable download schedule"]'
+                    `[aria-label="${t('Enable download schedule')}"]`
                   ) ?? false
                 )
               }
@@ -801,7 +843,7 @@ function LimitsEditor({
       type="button"
       aria-current={page === key ? 'page' : undefined}
       onClick={() => onPageChange(key)}
-      className="flex w-full items-start gap-2.5 rounded-lg px-2.5 py-2 text-left outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring aria-[current=page]:bg-primary/10"
+      className="flex w-full items-start gap-2.5 rounded-lg px-2.5 py-2 text-start outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring aria-[current=page]:bg-primary/10"
     >
       <span className="mt-1.5 size-2 shrink-0 rounded-full" style={{ background: dot }} />
       <span className="flex min-w-0 flex-1 flex-col gap-1">
@@ -822,24 +864,24 @@ function LimitsEditor({
   return (
     <>
       <div className="flex items-center border-b-[0.5px] border-border px-4 py-3">
-        <DialogTitle className="text-[16px] font-semibold">Settings</DialogTitle>
+        <DialogTitle className="text-[16px] font-semibold">{t('Settings')}</DialogTitle>
       </div>
       <div className="flex min-h-0 flex-1">
-        <nav className="flex w-[190px] shrink-0 flex-col gap-0.5 overflow-y-auto border-r-[0.5px] border-border p-2">
-          <div className={navLabelClass}>General</div>
-          {navItem(null, 'var(--text-secondary)', 'All downloads', [
+        <nav className="flex w-[190px] shrink-0 flex-col gap-0.5 overflow-y-auto border-e-[0.5px] border-border p-2">
+          <div className={navLabelClass}>{t('General')}</div>
+          {navItem(null, 'var(--text-secondary)', t('All downloads'), [
             slowMode
-              ? 'Slow mode on'
+              ? t('Slow mode on')
               : speedLimit
-                ? `Limit ${formatSpeedLimit(speedLimit)}`
-                : 'No limit',
+                ? t('Limit {value}', { value: formatSpeedLimit(speedLimit) })
+                : t('No limit'),
             ...(draft.downloadSchedule?.enabled
               ? [
                   `${scheduleTime(draft.downloadSchedule.startMinute)}–${scheduleTime(draft.downloadSchedule.endMinute)}`
                 ]
               : [])
           ])}
-          <div className={navLabelClass}>Networks</div>
+          <div className={navLabelClass}>{t('Networks')}</div>
           {interfaces.map((iface) => {
             const visual = networkVisual(iface.id, iface.kind, iface.displayName)
             const detail = describeLimits(
@@ -852,7 +894,7 @@ function LimitsEditor({
               visual.solid,
               visual.name,
               detail,
-              detail[0] === 'Data limit reached'
+              detail[0] === t('Data limit reached')
             )
           })}
         </nav>
@@ -876,17 +918,17 @@ function LimitsEditor({
         <div className="px-4 pb-2">
           <Alert variant="destructive">
             <AlertDescription>
-              {error ?? 'Check schedule times, repeat days and end date.'}
+              {error ?? t('Check schedule times, repeat days and end date.')}
             </AlertDescription>
           </Alert>
         </div>
       )}
       <div className="flex items-center justify-end gap-2 border-t-[0.5px] border-border px-4 py-2">
         <Button type="button" variant="secondary" onClick={onClose} disabled={saving}>
-          Cancel
+          {t('Cancel')}
         </Button>
         <Button type="button" disabled={!valid || saving} onClick={() => void save()}>
-          {saving ? 'Saving…' : 'Save'}
+          {saving ? t('Saving…') : t('Save')}
         </Button>
       </div>
     </>

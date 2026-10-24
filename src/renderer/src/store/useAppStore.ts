@@ -5,6 +5,7 @@ import type {
   DownloadState,
   DownloadUpdate,
   FinishedDownload,
+  Locale,
   NetworkInterfaceInfo,
   NetworkPreference,
   NetworkPreferences,
@@ -13,6 +14,7 @@ import type {
   ThemeSource
 } from '@shared/types'
 import { create } from 'zustand'
+import { locale as activeLocale } from '../i18n'
 
 export type DownloadFilter = 'all' | 'progress' | 'finished' | 'failed'
 
@@ -30,6 +32,10 @@ interface AppStore {
 
   /** Persisted in the main process alongside nativeTheme.themeSource. */
   themeSource: ThemeSource
+  /** The language this window is drawing in — fixed until the app restarts. */
+  locale: Locale
+  /** A language saved for next launch, waiting for that restart. Null when there is none. */
+  pendingLocale: Locale | null
 
   homeDir: string
   downloadsDir: string
@@ -86,6 +92,10 @@ interface AppStore {
   receiveInterfaces: (interfaces: NetworkInterfaceInfo[]) => void
   setNetworkPreference: (id: string, patch: NetworkPreference) => void
   setThemeSource: (source: ThemeSource) => void
+  /** Saves a language for the next launch. The visible interface changes only on restart. */
+  setLocale: (locale: Locale) => void
+  /** Undoes a pending language change by saving the language already on screen. */
+  cancelPendingLocale: () => void
   /** A snapshot or an update of a download, from the main process. */
   receiveDownloadUpdate: (update: DownloadUpdate) => void
   /** Finished downloads as main lists them; any that finished leave `downloads`. */
@@ -138,6 +148,8 @@ export const useAppStore = create<AppStore>((set, get) => ({
   interfacesError: null,
   networkPreferences: initial.networkPreferences,
   themeSource: initial.themeSource,
+  locale: activeLocale,
+  pendingLocale: null,
 
   homeDir: initial.homeDir,
   downloadsDir: initial.downloadsDir,
@@ -199,6 +211,16 @@ export const useAppStore = create<AppStore>((set, get) => ({
   setThemeSource: (themeSource) => {
     set({ themeSource })
     persist({ themeSource })
+  },
+
+  setLocale: (locale) => {
+    persist({ locale })
+    set({ pendingLocale: locale === get().locale ? null : locale })
+  },
+
+  cancelPendingLocale: () => {
+    persist({ locale: get().locale })
+    set({ pendingLocale: null })
   },
 
   receiveDownloadUpdate: (update) => {

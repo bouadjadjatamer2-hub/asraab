@@ -10,10 +10,11 @@ import { autoUpdater } from 'electron-updater'
 import { IpcChannels } from '../shared/ipc-channels'
 import type { UpdateState } from '../shared/types'
 import { saveSettings } from './settings'
+import { t } from './i18n'
 
 const CHECK_EVERY_MS = 4 * 60 * 60_000
 /** Where an update the app couldn't install itself is downloaded from instead. */
-const DOWNLOAD_PAGE = 'https://getplexo.app/'
+const DOWNLOAD_PAGE = 'https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/tayyar/'
 
 let state: UpdateState = { status: 'idle', autoUpdate: true }
 let getWindow: () => BrowserWindow | null = () => null
@@ -35,7 +36,7 @@ function set(patch: Partial<UpdateState>): void {
 function answer(message: string, detail?: string): void {
   if (!asked) return
   asked = false
-  void dialog.showMessageBox({ message, detail })
+  void dialog.showMessageBox({ title: t('Tayyar'), message, detail })
 }
 
 function check(fromMenu = false): void {
@@ -71,27 +72,27 @@ function menuItems(): MenuItemConstructorOptions[] {
   if (status === 'ready') {
     // Silent, and opened again after: the installer's own pages were all answered the first time.
     items.push({
-      label: `Restart to Update to ${version}`,
+      label: t('Restart to Update to {version}', { version }),
       click: () => autoUpdater.quitAndInstall(true, true)
     })
   } else if (status === 'downloading') {
-    items.push({ label: `Downloading ${version}…`, enabled: false })
+    items.push({ label: t('Downloading {version}…', { version }), enabled: false })
   } else if (status === 'available') {
-    items.push({ label: `Download Tayyar ${version}`, click: download })
+    items.push({ label: t('Download Tayyar {version}', { version }), click: download })
   } else if (status === 'error') {
     items.push({
-      label: `Get Tayyar ${version} from the Website…`,
+      label: t('Get Tayyar {version} from the Website…', { version }),
       click: () => void shell.openExternal(DOWNLOAD_PAGE)
     })
   }
   items.push(
     {
-      label: status === 'checking' ? 'Checking for Updates…' : 'Check for Updates…',
+      label: t(status === 'checking' ? 'Checking for Updates…' : 'Check for Updates…'),
       enabled: status === 'idle' || status === 'available' || status === 'error',
       click: () => check(true)
     },
     {
-      label: 'Update Automatically',
+      label: t('Update Automatically'),
       type: 'checkbox',
       checked: state.autoUpdate,
       click: (item) => setAutoUpdate(item.checked)
@@ -113,23 +114,23 @@ function setAppMenu(): void {
       {
         label: app.name,
         submenu: [
-          { role: 'about' },
+          { role: 'about', label: t('About Tayyar') },
           { type: 'separator' },
           ...menuItems(),
           { type: 'separator' },
-          { role: 'services' },
+          { role: 'services', label: t('Services') },
           { type: 'separator' },
-          { role: 'hide' },
-          { role: 'hideOthers' },
-          { role: 'unhide' },
+          { role: 'hide', label: t('Hide Tayyar') },
+          { role: 'hideOthers', label: t('Hide Others') },
+          { role: 'unhide', label: t('Show All') },
           { type: 'separator' },
-          { role: 'quit' }
+          { role: 'quit', label: t('Quit Tayyar') }
         ]
       },
-      { role: 'fileMenu' },
-      { role: 'editMenu' },
-      { role: 'viewMenu' },
-      { role: 'windowMenu' }
+      { role: 'fileMenu', label: t('File') },
+      { role: 'editMenu', label: t('Edit') },
+      { role: 'viewMenu', label: t('View') },
+      { role: 'windowMenu', label: t('Window') }
     ])
   )
 }
@@ -149,7 +150,10 @@ export function startUpdater(window: () => BrowserWindow | null, autoUpdate: boo
   autoUpdater.on('checking-for-update', () => set({ status: 'checking' }))
   autoUpdater.on('update-not-available', () => {
     set({ status: 'idle', version: undefined })
-    answer('You’re up to date', `Tayyar ${app.getVersion()} is the newest version.`)
+    answer(
+      t('You’re up to date'),
+      t('Tayyar {version} is the newest version.', { version: app.getVersion() })
+    )
   })
   autoUpdater.on('update-available', ({ version }) => {
     asked = false
@@ -165,7 +169,7 @@ export function startUpdater(window: () => BrowserWindow | null, autoUpdate: boo
     // Before an update is found (offline, GitHub down) there's nothing to show. After, the
     // website still has it — the way an unsigned Mac build, which can't install it, gets it.
     set({ status: state.version ? 'error' : 'idle' })
-    answer('Couldn’t check for updates', 'Check your connection and try again.')
+    answer(t('Couldn’t check for updates'), t('Check your connection and try again.'))
   })
 
   setAppMenu()

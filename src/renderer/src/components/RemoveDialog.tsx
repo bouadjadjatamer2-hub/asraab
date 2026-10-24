@@ -1,4 +1,5 @@
 import { isDone, isFailed, type DownloadItem } from '../utils/downloadActions'
+import { t, tn } from '../i18n'
 import { TRASH_NAME } from './downloadActionMeta'
 import {
   AlertDialog,
@@ -77,30 +78,47 @@ function RemoveDialogBody({
   let title: string
   let description: string
   let confirm: string
-  let dismiss = 'Cancel'
+  let dismiss = t('Cancel')
   let destructive = true
   if (mode === 'cancel') {
-    title = one ? 'Cancel download?' : `Cancel ${count} downloads?`
-    description = 'The part already downloaded will be deleted.'
-    confirm = one ? 'Cancel download' : 'Cancel downloads'
-    dismiss = 'Keep'
+    title = one
+      ? t('Cancel download?')
+      : t('Cancel {downloads}?', {
+          downloads: tn(count, '{n} download', '{n} downloads')
+        })
+    description = t('The part already downloaded will be deleted.')
+    confirm = one ? t('Cancel download') : t('Cancel downloads')
+    dismiss = t('Keep')
   } else if (mode === 'trash') {
     // Said as what it comes to: the file is deleted, into the Trash.
-    title = one ? 'Delete file?' : `Delete ${count} files?`
-    description = `The ${one ? 'file' : 'files'} will be moved to the ${TRASH_NAME}.`
-    confirm = one ? 'Delete file' : 'Delete files'
+    title = one
+      ? t('Delete file?')
+      : t('Delete {files}?', { files: tn(count, '{n} file', '{n} files') })
+    description = t(
+      one ? 'The file will be moved to the {trash}.' : 'The files will be moved to the {trash}.',
+      {
+        trash: TRASH_NAME
+      }
+    )
+    confirm = one ? t('Delete file') : t('Delete files')
   } else {
     title = clearAll
-      ? 'Clear finished list?'
+      ? t('Clear finished list?')
       : one
-        ? 'Remove from list?'
-        : `Remove ${count} downloads from list?`
+        ? t('Remove from list?')
+        : t('Remove {downloads} from list?', {
+            downloads: tn(count, '{n} download', '{n} downloads')
+          })
     description = !anyFailed
-      ? `The downloaded ${one && !clearAll ? 'file stays' : 'files stay'} on your computer.`
+      ? one && !clearAll
+        ? t('The downloaded file stays on your computer.')
+        : t('The downloaded files stay on your computer.')
       : anyFinished
-        ? 'Finished files stay on your computer. Failed downloads lose the part they already downloaded.'
-        : 'The part already downloaded will be deleted.'
-    confirm = clearAll ? 'Clear list' : 'Remove'
+        ? t(
+            'Finished files stay on your computer. Failed downloads lose the part they already downloaded.'
+          )
+        : t('The part already downloaded will be deleted.')
+    confirm = clearAll ? t('Clear list') : t('Remove')
     // Only the list changes, unless a failed one's partial data goes with it.
     destructive = anyFailed
   }

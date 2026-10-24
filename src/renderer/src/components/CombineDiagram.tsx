@@ -1,4 +1,5 @@
 import { useFormatSpeed } from '../hooks/useFormatSpeed'
+import { locale, t } from '../i18n'
 
 const ROW_HEIGHT = 36
 // Gaps between the label column and the rest of the diagram stay fixed — only the label
@@ -41,6 +42,7 @@ export function CombineDiagram({
   paused?: boolean
 }): React.JSX.Element {
   const formatSpeed = useFormatSpeed()
+  const rtl = locale === 'ar'
   const height = Math.max(78, networks.length * ROW_HEIGHT + 10)
   const midY = height / 2
 
@@ -54,6 +56,10 @@ export function CombineDiagram({
   const COMBINE_X = CURVE_START_X + CURVE_LEN
   const STREAM_END_X = COMBINE_X + STREAM_LEN
   const WIDTH = STREAM_END_X + END_PAD
+  // The diagram reads in the direction of the language: networks and their labels on the right
+  // converging into the total on the left in Arabic, mirrored from English. Only coordinates
+  // move; the labels themselves stay upright and readable.
+  const x = (value: number): number => (rtl ? WIDTH - value : value)
 
   return (
     <svg
@@ -73,7 +79,7 @@ export function CombineDiagram({
           return (
             <path
               key={network.label + index}
-              d={`M${CURVE_START_X},${y.toFixed(1)} C${CURVE_START_X + 36},${y.toFixed(1)} ${COMBINE_X - 26},${midY.toFixed(1)} ${COMBINE_X},${midY.toFixed(1)}`}
+              d={`M${x(CURVE_START_X)},${y.toFixed(1)} C${x(CURVE_START_X + 36)},${y.toFixed(1)} ${x(COMBINE_X - 26)},${midY.toFixed(1)} ${x(COMBINE_X)},${midY.toFixed(1)}`}
               stroke={color}
               strokeDasharray="6 8"
               opacity={opacity}
@@ -86,7 +92,7 @@ export function CombineDiagram({
           )
         })}
         <path
-          d={`M${COMBINE_X},${midY} L${STREAM_END_X},${midY}`}
+          d={`M${x(COMBINE_X)},${midY} L${x(STREAM_END_X)},${midY}`}
           stroke={
             muted ? 'var(--icon-muted)' : paused ? 'var(--text-secondary)' : 'var(--node-accent)'
           }
@@ -95,12 +101,12 @@ export function CombineDiagram({
         />
       </g>
       <polygon
-        points={`${STREAM_END_X - 1},${midY - 4.5} ${STREAM_END_X + 6},${midY} ${STREAM_END_X - 1},${midY + 4.5}`}
+        points={`${x(STREAM_END_X - 1)},${midY - 4.5} ${x(STREAM_END_X + 6)},${midY} ${x(STREAM_END_X - 1)},${midY + 4.5}`}
         fill={muted ? 'var(--icon-muted)' : paused ? 'var(--text-secondary)' : 'var(--node-accent)'}
         opacity={paused ? 0.6 : 1}
       />
       <circle
-        cx={COMBINE_X}
+        cx={x(COMBINE_X)}
         cy={midY}
         r={9.5}
         fill="none"
@@ -110,7 +116,7 @@ export function CombineDiagram({
         strokeDasharray={muted ? '3 4' : undefined}
       />
       <circle
-        cx={COMBINE_X}
+        cx={x(COMBINE_X)}
         cy={midY}
         r={3.5}
         fill={muted ? 'var(--icon-muted)' : 'var(--node-accent)'}
@@ -118,7 +124,7 @@ export function CombineDiagram({
       {networks.map((network, index) => {
         const y = (index + 0.5) * (height / networks.length)
         const color = muted ? 'var(--icon-muted)' : network.solid
-        return <circle key={`dot-${index}`} cx={DOT_X} cy={y} r={3.5} fill={color} />
+        return <circle key={`dot-${index}`} cx={x(DOT_X)} cy={y} r={3.5} fill={color} />
       })}
       {networks.map((network, index) => {
         const y = (index + 0.5) * (height / networks.length)
@@ -135,9 +141,9 @@ export function CombineDiagram({
         return (
           <g key={`info-${index}`}>
             <text
-              x={LABEL_X}
+              x={x(LABEL_X)}
               y={y - 5.5}
-              textAnchor="end"
+              textAnchor={rtl ? 'start' : 'end'}
               fill={muted ? 'var(--icon-muted)' : 'var(--text-tertiary)'}
               className="font-mono text-[8.5px] font-medium tracking-[0.08em]"
             >
@@ -146,9 +152,9 @@ export function CombineDiagram({
             </text>
             {!muted && (
               <text
-                x={LABEL_X}
+                x={x(LABEL_X)}
                 y={y + 7.5}
-                textAnchor="end"
+                textAnchor={rtl ? 'start' : 'end'}
                 fill={hasSpeed ? network.solid : 'var(--text-tertiary)'}
                 className="font-mono text-[11px] font-semibold tabular-nums"
               >
@@ -160,13 +166,13 @@ export function CombineDiagram({
       })}
       {!muted && !paused && (
         <text
-          x={STREAM_END_X + 2}
+          x={rtl ? END_PAD - 2 : STREAM_END_X + 2}
           y={midY - 11}
-          textAnchor="end"
+          textAnchor={rtl ? 'start' : 'end'}
           fill="var(--text-tertiary)"
           className="font-mono text-[8.5px] tracking-[0.12em] font-medium"
         >
-          COMBINED
+          {t('COMBINED')}
         </text>
       )}
     </svg>

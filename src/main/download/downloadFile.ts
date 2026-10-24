@@ -1,15 +1,38 @@
 import { createWriteStream, type WriteStream } from 'node:fs'
 import { lstat, open, rename, rm, stat } from 'node:fs/promises'
 import { basename, dirname, extname, join } from 'node:path'
+import { markSparse } from './sparseFile'
 
-/** Per stream: 32 streams hold at most 16 MiB. A full buffer is also what tells Auto the disk is
+/** Per stream: 32 streams hold at most 32 MiB. A full buffer is also what tells Auto the disk is
  * behind (see concurrency.ts): larger, and it hears it later. */
-const WRITE_BUFFER_BYTES = 512 * 1024
+const WRITE_BUFFER_BYTES = 1024 * 1024
 
 /** The only large file owned by a download. It lives beside the final file so publishing it
  * requires no copy and never needs a second file's worth of disk space. */
 export class DownloadFile {
   constructor(readonly path: string) {}
+
+  /**
+   * Gives the staging file its final size before parallel writes start. On NTFS this reserves
+   * the whole range at once, so blocks landing at different offsets extend a contiguous file
+   * instead of allocating a new run for every first write. That is what keeps a rotating disk
+   * from seeking between growing fragments; it also makes a full disk fail at the start rather
+   * than in the middle. A file system that can't reserve falls back to the old sparse file.
+   */
+  async reserve(expectedBytes: number): Promise<void> {
+    if (!(expectedBytes > 0)) return
+    const handle = await open(this.path, 'r+')
+    try {
+      const { size } = await handle.stat()
+      if (size !== expectedBytes) await handle.truncate(expectedBytes)
+    } catch (error) {
+      // Sparse still avoids zero-filling gaps, just without the contiguous reservation.
+      console.warn('[tayyar] could not reserve the download file, using a sparse file', error)
+      await markSparse(this.path)
+    } finally {
+      await handle.close()
+    }
+  }
 
   /** Every writer has its own descriptor and explicit offset. Never use append mode here.
    * While a write is on its way to disk the next ones queue, up to WRITE_BUFFER_BYTES, and go

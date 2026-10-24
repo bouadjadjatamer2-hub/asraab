@@ -24,7 +24,7 @@ window.ASRAAB_APPS = [
     statusLabel: { en: 'Live', ar: 'متاح' },
     platform: { en: 'Windows 10/11', ar: 'ويندوز 10/11' },
     version: '1.2.0',
-    size: '125.2 MB',
+    size: '125.8 MB',
     license: 'MIT',
     href: './apps/tayyar/',
     icon: './assets/img/tayyar-icon.png',

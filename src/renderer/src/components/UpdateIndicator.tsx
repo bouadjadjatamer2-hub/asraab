@@ -2,22 +2,23 @@ import type { UpdateState } from '@shared/types'
 import { cn } from 'cn'
 import { CircleAlert, CircleArrowUp, LoaderCircle } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { t } from '../i18n'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
 function describe({ status, version, percent, autoUpdate }: UpdateState): string {
   switch (status) {
     case 'checking':
-      return 'Checking for updates…'
+      return t('Checking for updates…')
     case 'available':
-      return `Tayyar ${version} is available`
+      return t('Tayyar {version} is available', { version })
     case 'downloading':
-      return `Downloading Tayyar ${version}… ${percent}%`
+      return t('Downloading Tayyar {version}… {percent}%', { version, percent })
     case 'ready':
-      return `Tayyar ${version} is ready — restart to update`
+      return t('Tayyar {version} is ready — restart to update', { version })
     case 'error':
-      return `Couldn’t install Tayyar ${version}`
+      return t('Couldn’t install Tayyar {version}', { version })
     default:
-      return autoUpdate ? 'Tayyar updates automatically' : 'Automatic updates are off'
+      return autoUpdate ? t('Tayyar updates automatically') : t('Automatic updates are off')
   }
 }
 
@@ -38,9 +39,9 @@ export function UpdateIndicator(): React.JSX.Element {
     status === 'downloading'
       ? `${percent}%`
       : status === 'ready'
-        ? 'Restart to update'
+        ? t('Restart to update')
         : status === 'available'
-          ? 'Update'
+          ? t('Update')
           : null
   const busy = status === 'checking' || status === 'downloading'
   const Icon = busy ? LoaderCircle : status === 'error' ? CircleAlert : CircleArrowUp

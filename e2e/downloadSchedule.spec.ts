@@ -85,7 +85,7 @@ test('a window starting or ending in the hour clocks skip uses the moment they j
       new Date(2026, 2, 8, hour, minute).getTime()
     const early = { ...schedule, startMinute: 2 * 60 + 30, endMinute: 7 * 60 }
     expect(scheduleWindow(early, march8(1, 59)).nextStart).toBe(march8(3))
-    const threeAm = new Date(march8(3)).toLocaleTimeString([], {
+    const threeAm = new Date(march8(3)).toLocaleTimeString('en', {
       hour: 'numeric',
       minute: '2-digit'
     })

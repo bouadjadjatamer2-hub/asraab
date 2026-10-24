@@ -2,6 +2,7 @@ import type { DownloadState } from '@shared/types'
 import { Folder } from 'lucide-react'
 import { useState } from 'react'
 import { DetailHeader } from '../components/DetailHeader'
+import { t } from '../i18n'
 import { TruncatedText } from '../components/TruncatedText'
 import {
   describeError,
@@ -17,12 +18,12 @@ export function ErrorScreen({ download }: { download: DownloadState }): React.JS
   const cancelled = download.status === 'cancelled'
   const knownSize = download.totalBytes > 0
   const percent = knownSize ? formatPercent(download.bytesDownloaded, wantedBytes(download)) : 0
-  const heading = cancelled ? 'Download cancelled' : 'Download failed'
+  const heading = cancelled ? t('Download cancelled') : t('Download failed')
   const description = cancelled
-    ? 'The download was stopped before finishing.'
+    ? t('The download was stopped before finishing.')
     : download.error
       ? describeError(download.error)
-      : 'The download stopped unexpectedly. Try again.'
+      : t('The download stopped unexpectedly. Try again.')
 
   const handleCopyUrl = async (): Promise<void> => {
     try {
@@ -102,10 +103,10 @@ export function ErrorScreen({ download }: { download: DownloadState }): React.JS
           </div>
 
           {/* File capsule */}
-          <div className="flex w-full items-center gap-[11px] rounded-[9px] border-[0.5px] border-border bg-background p-[10px_12px] text-left">
+          <div className="flex w-full items-center gap-[11px] rounded-[9px] border-[0.5px] border-border bg-background p-[10px_12px] text-start">
             <div className="flex size-[34px] shrink-0 items-center justify-center rounded-[7px] border-[0.5px] border-[var(--border-strong)] bg-card font-mono text-[8.5px] leading-none font-semibold text-[var(--text-secondary)]">
               {isFolder(download) ? (
-                <Folder aria-label="Folder" className="size-[15px]" />
+                <Folder aria-label={t('Folder')} className="size-[15px]" />
               ) : (
                 fileExtensionBadge(download.fileName)
               )}
@@ -120,18 +121,18 @@ export function ErrorScreen({ download }: { download: DownloadState }): React.JS
                   <>
                     {formatBytes(download.bytesDownloaded)}
                     {knownSize
-                      ? ` of ${formatBytes(wantedBytes(download))} (${percent}%)`
-                      : ' downloaded'}
+                      ? ` ${t('of')} ${formatBytes(wantedBytes(download))} (${percent}%)`
+                      : ` ${t('downloaded')}`}
                   </>
                 ) : (
-                  'No data downloaded'
+                  t('No data downloaded')
                 )}
               </div>
             </div>
           </div>
 
           <div className="flex w-full min-w-0 items-center gap-2 border-t-[0.5px] border-border pt-3">
-            <div className="min-w-0 flex-1 text-left font-mono text-[11px] leading-none text-muted-foreground">
+            <div className="min-w-0 flex-1 text-start font-mono text-[11px] leading-none text-muted-foreground">
               <TruncatedText text={download.url} />
             </div>
             <button
@@ -141,7 +142,7 @@ export function ErrorScreen({ download }: { download: DownloadState }): React.JS
                 copied ? 'text-[var(--color-success)]' : 'text-primary'
               }`}
             >
-              {copied ? 'Copied' : 'Copy link'}
+              {copied ? t('Copied') : t('Copy link')}
             </button>
           </div>
         </div>

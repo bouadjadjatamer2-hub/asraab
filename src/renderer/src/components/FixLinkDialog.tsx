@@ -1,5 +1,6 @@
 import type { DownloadState } from '@shared/types'
 import { useState } from 'react'
+import { t } from '../i18n'
 import { describeError, formatBytes } from '../utils/format'
 import { Button } from './ui/button'
 import {
@@ -53,13 +54,23 @@ export function FixLinkDialog({
     >
       <DialogContent showCloseButton={false}>
         <DialogHeader>
-          <DialogTitle>Paste a new link</DialogTitle>
+          <DialogTitle>{t('Paste a new link')}</DialogTitle>
           <DialogDescription>
             {download &&
-              `Paste a new link to the same file: ${download.fileName}${download.totalBytes > 0 ? ` (${formatBytes(download.totalBytes)})` : ''}. Tayyar resumes from where the download stopped.`}
+              (download.totalBytes > 0
+                ? t(
+                    'Paste a new link to the same file: {name} ({size}). Tayyar resumes from where the download stopped.',
+                    { name: download.fileName, size: formatBytes(download.totalBytes) }
+                  )
+                : t(
+                    'Paste a new link to the same file: {name}. Tayyar resumes from where the download stopped.',
+                    { name: download.fileName }
+                  ))}
             {download?.kind === 'http' &&
               download.fromBrowser &&
-              ` Or download it again in ${download.fromBrowser} and choose Resume it.`}
+              t(' Or download it again in {browser} and choose Resume it.', {
+                browser: download.fromBrowser
+              })}
           </DialogDescription>
         </DialogHeader>
         <form
@@ -71,8 +82,9 @@ export function FixLinkDialog({
         >
           <Input
             autoFocus
-            aria-label="New link"
-            placeholder="https://…"
+            aria-label={t('New link')}
+            dir="auto"
+            placeholder={t('https://…')}
             value={url}
             onChange={(event) => setUrl(event.target.value)}
             className="font-mono"
@@ -80,10 +92,10 @@ export function FixLinkDialog({
           {error && <div className="text-[12px] text-[var(--color-danger)]">{error}</div>}
           <DialogFooter>
             <Button type="button" variant="secondary" onClick={close}>
-              Cancel
+              {t('Cancel')}
             </Button>
             <Button type="submit" disabled={fixing || !url.trim()}>
-              {fixing ? 'Checking' : 'Continue download'}
+              {fixing ? t('Checking') : t('Continue download')}
             </Button>
           </DialogFooter>
         </form>

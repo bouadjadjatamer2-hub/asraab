@@ -1,7 +1,9 @@
 import type { DownloadSchedule } from '@shared/types'
 import { useRef, useState } from 'react'
 import { CalendarDays, Clock3 } from 'lucide-react'
+import { ar } from 'date-fns/locale'
 import { DEFAULT_DOWNLOAD_SCHEDULE, localDate, validSchedule } from '@shared/downloadSchedule'
+import { intlLocale, locale, t } from '../i18n'
 import { Button } from './ui/button'
 import { Calendar } from './ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
@@ -113,9 +115,9 @@ function TimePicker({
     onChange(hours * 60 + minutes)
   }
   return (
-    <InputGroup aria-label={label} className="gap-0.5 pl-1.5">
+    <InputGroup aria-label={t(label)} className="gap-0.5 ps-1.5">
       <TimeSegment
-        label={`${label} hour`}
+        label={t(`${label} hour`)}
         value={hour}
         max={23}
         invalid={invalid}
@@ -126,7 +128,7 @@ function TimePicker({
       />
       <InputGroupText aria-hidden="true">:</InputGroupText>
       <TimeSegment
-        label={`${label} minute`}
+        label={t(`${label} minute`)}
         value={minute}
         max={59}
         invalid={invalid}
@@ -135,8 +137,8 @@ function TimePicker({
         onChange={(next) => onChange(hour * 60 + next)}
         onPasteTime={pasteTime}
       />
-      <InputGroupAddon align="inline-end" className="ml-auto" aria-hidden="true">
-        <InputGroupText>24h</InputGroupText>
+      <InputGroupAddon align="inline-end" className="ms-auto" aria-hidden="true">
+        <InputGroupText>{t('24h')}</InputGroupText>
         <Clock3 />
       </InputGroupAddon>
     </InputGroup>
@@ -160,26 +162,27 @@ function EndDatePicker({
             type="button"
             variant="outline"
             size="sm"
-            aria-label="End date"
+            aria-label={t('End date')}
             className="w-full justify-between"
           >
             {selected
-              ? selected.toLocaleDateString(undefined, {
+              ? selected.toLocaleDateString(intlLocale, {
                   day: 'numeric',
                   month: 'short',
                   year: 'numeric'
                 })
-              : 'No end date'}
+              : t('No end date')}
             <CalendarDays data-icon="inline-end" />
           </Button>
         }
       />
-      <PopoverContent align="start" aria-label="Choose end date" className="w-auto gap-0 p-0">
+      <PopoverContent align="start" aria-label={t('Choose end date')} className="w-auto gap-0 p-0">
         <Calendar
           mode="single"
           selected={selected}
           defaultMonth={selected}
           weekStartsOn={1}
+          locale={locale === 'ar' ? ar : undefined}
           autoFocus
           onSelect={(date) => {
             onChange(date ? localDate(date) : undefined)
@@ -196,7 +199,7 @@ function EndDatePicker({
               setOpen(false)
             }}
           >
-            Clear
+            {t('Clear')}
           </Button>
         </div>
       </PopoverContent>
@@ -216,14 +219,16 @@ export function ScheduleFields({
   return (
     <section
       className="flex flex-col gap-2.5 border-t-[0.5px] border-border py-3"
-      aria-label="Download schedule"
+      aria-label={t('Download schedule')}
     >
       <div className="flex items-center justify-between gap-3">
-        <h4 className="font-sans text-[14px] leading-none font-semibold">Download schedule</h4>
+        <h4 className="font-sans text-[14px] leading-none font-semibold">
+          {t('Download schedule')}
+        </h4>
         <label className="flex items-center gap-2 text-[13px]">
-          Enabled
+          {t('Enabled')}
           <Switch
-            aria-label="Enable download schedule"
+            aria-label={t('Enable download schedule')}
             checked={schedule.enabled}
             onCheckedChange={(enabled) =>
               onChange({
@@ -236,10 +241,10 @@ export function ScheduleFields({
       </div>
       {schedule.enabled && (
         <fieldset className="flex min-w-0 flex-col gap-3">
-          <legend className="sr-only">Schedule times and days</legend>
+          <legend className="sr-only">{t('Schedule times and days')}</legend>
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-2 text-[13px]">
-              Start at
+              {t('Start at')}
               <TimePicker
                 label="Start at"
                 value={schedule.startMinute}
@@ -249,9 +254,9 @@ export function ScheduleFields({
             </div>
             <div className="flex flex-col gap-2 text-[13px]">
               <span className="flex items-center justify-between gap-2">
-                Stop at
+                {t('Stop at')}
                 {schedule.endMinute < schedule.startMinute && (
-                  <span className="text-[12px] text-muted-foreground">Next day</span>
+                  <span className="text-[12px] text-muted-foreground">{t('Next day')}</span>
                 )}
               </span>
               <TimePicker
@@ -263,7 +268,7 @@ export function ScheduleFields({
             </div>
           </div>
           <fieldset className="flex min-w-0 flex-col gap-2">
-            <legend className="mb-2 text-[13px]">Repeat on</legend>
+            <legend className="mb-2 text-[13px]">{t('Repeat on')}</legend>
             <ToggleGroup
               multiple
               value={schedule.days.map(String)}
@@ -271,25 +276,25 @@ export function ScheduleFields({
               variant="pill"
               size="xs"
               spacing={1}
-              aria-label="Schedule days"
+              aria-label={t('Schedule days')}
               className="flex-wrap"
             >
               {[1, 2, 3, 4, 5, 6, 0].map((day) => (
                 <ToggleGroupItem
                   key={day}
                   value={String(day)}
-                  aria-label={DAYS[day]}
+                  aria-label={t(DAYS[day])}
                   className="h-6 min-w-6 px-2"
                 >
-                  {DAYS[day]}
+                  {t(DAYS[day])}
                 </ToggleGroupItem>
               ))}
             </ToggleGroup>
           </fieldset>
           <div className="flex flex-col gap-2 text-[13px]">
             <span className="flex items-center justify-between gap-2">
-              End date
-              <span className="text-[12px] text-muted-foreground">Optional</span>
+              {t('End date')}
+              <span className="text-[12px] text-muted-foreground">{t('Optional')}</span>
             </span>
             <EndDatePicker value={schedule.endDate} onChange={(endDate) => change({ endDate })} />
           </div>

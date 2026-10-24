@@ -1,4 +1,5 @@
 import type { ThemeSource } from '@shared/types'
+import { t } from '../i18n'
 import { useAppStore } from '../store/useAppStore'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
@@ -50,7 +51,7 @@ export function ThemeToggle(): React.JSX.Element {
         render={
           <button
             type="button"
-            aria-label={current.nextLabel}
+            aria-label={t(current.nextLabel)}
             onClick={toggle}
             className="flex size-[26px] shrink-0 cursor-default items-center justify-center rounded-[6px] border-[0.5px] border-border bg-secondary text-[var(--text-secondary)] [-webkit-app-region:no-drag]"
           >
@@ -58,7 +59,7 @@ export function ThemeToggle(): React.JSX.Element {
           </button>
         }
       />
-      <TooltipContent>{current.nextLabel}</TooltipContent>
+      <TooltipContent>{t(current.nextLabel)}</TooltipContent>
     </Tooltip>
   )
 }

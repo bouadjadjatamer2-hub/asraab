@@ -40,11 +40,18 @@ test.describe('racing a slow block', () => {
     expect(Date.now() - started).toBeLessThan(10_000)
 
     const requests = origin.chunkRequests().filter((r) => inSlowBlock(r.range))
-    // Twice: a third would mean the hedge's bytes didn't join the block's and it was fetched again.
-    expect(requests, 'the slow block was requested by its holder and by one hedge').toHaveLength(2)
+    // The holder and at least one hedge. A second hedge is allowed when the first is still slow;
+    // what must never happen is a fresh attempt at the block's beginning after bytes were written.
+    expect(requests.length).toBeGreaterThanOrEqual(2)
+    expect(requests.length).toBeLessThanOrEqual(3)
+    const firstHedge = requests[1]
     expect(
-      requests.some((r) => r.range!.start > SLOW * BLOCK),
+      firstHedge.range!.start,
       'the hedge began partway into the block, after what the slow one had already got'
+    ).toBeGreaterThan(SLOW * BLOCK)
+    expect(
+      requests.slice(1).every((r) => r.range!.start >= firstHedge.range!.start),
+      'later attempts continued from the hedge’s progress instead of refetching the block’s start'
     ).toBe(true)
   })
 

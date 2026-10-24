@@ -1,5 +1,6 @@
 import { stat, statfs } from 'node:fs/promises'
 import {
+  app,
   clipboard,
   dialog,
   ipcMain,
@@ -25,6 +26,7 @@ import { onMagnetCheckStatus } from '../download/torrent/metadata'
 import { deviceBindingSupported } from '../network/deviceBinding'
 import { pendingLink, pendingLinks, offerLink, releaseLink } from '../openLinks'
 import { setClipboardWatch } from '../clipboardWatch'
+import { t } from '../i18n'
 import { NetworkMonitor } from '../network/interfaces'
 import { loadSettings, saveSettings } from '../settings'
 import { applyStartAtLogin, setRunInBackground } from '../startup'
@@ -142,6 +144,7 @@ export function registerIpcHandlers(getWindow: () => BrowserWindow | null): Down
         homeDir: getHomeDir(),
         downloadsDir: getDefaultDownloadsDir(),
         themeSource: currentThemeSource(),
+        locale: settings.locale ?? 'en',
         networkPreferences: settings.networkPreferences ?? {},
         downloadsAtOnce: settings.downloadsAtOnce ?? DOWNLOADS_AT_ONCE.default,
         speedLimit: settings.speedLimit,
@@ -164,6 +167,7 @@ export function registerIpcHandlers(getWindow: () => BrowserWindow | null): Down
         homeDir: '',
         downloadsDir: '',
         themeSource: currentThemeSource(),
+        locale: 'en',
         networkPreferences: {},
         downloadsAtOnce: DOWNLOADS_AT_ONCE.default,
         slowMode: false,
@@ -195,6 +199,8 @@ export function registerIpcHandlers(getWindow: () => BrowserWindow | null): Down
     const window = getWindow()
     if (!window) return null
     const result = await dialog.showOpenDialog(window, {
+      title: t('Choose download folder'),
+      buttonLabel: t('Choose'),
       defaultPath,
       properties: ['openDirectory', 'createDirectory']
     })
@@ -206,8 +212,10 @@ export function registerIpcHandlers(getWindow: () => BrowserWindow | null): Down
     const window = getWindow()
     if (!window) return null
     const result = await dialog.showOpenDialog(window, {
+      title: t('Choose .torrent file'),
+      buttonLabel: t('Choose'),
       properties: ['openFile'],
-      filters: [{ name: 'Torrent', extensions: ['torrent'] }]
+      filters: [{ name: t('Torrent files'), extensions: ['torrent'] }]
     })
     if (result.canceled || result.filePaths.length === 0) return null
     return result.filePaths[0]
@@ -216,7 +224,7 @@ export function registerIpcHandlers(getWindow: () => BrowserWindow | null): Down
   handle('pendingLinks', async () => pendingLinks())
   handle('resumeFromLink', async (_event, linkId, downloadId) => {
     const link = pendingLink(linkId)
-    if (link?.probe?.kind !== 'http') throw new Error('That download is no longer waiting.')
+    if (link?.probe?.kind !== 'http') throw new Error(t('That download is no longer waiting.'))
     await manager.relink(downloadId, link.probe.finalUrl, {
       probe: link.probe,
       browser: link.browser
@@ -279,6 +287,13 @@ export function registerIpcHandlers(getWindow: () => BrowserWindow | null): Down
 
   handle('updateState', () => updateState())
   handle('showUpdateMenu', () => showUpdateMenu())
+
+  // Relaunch is scheduled before quit: Electron starts the new instance once this one exits.
+  // The normal before-quit path still suspends downloads and flushes their checkpoints.
+  handle('relaunchApp', async () => {
+    app.relaunch()
+    app.quit()
+  })
 
   return manager
 }

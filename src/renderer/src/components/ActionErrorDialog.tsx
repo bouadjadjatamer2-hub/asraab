@@ -7,6 +7,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle
 } from './ui/alert-dialog'
+import { t } from '../i18n'
 
 /** Says what went wrong with something the user just asked for — a file that's moved, a download
  * that wouldn't start — in the same kind of dialog the app asks its questions in, wherever the
@@ -26,7 +27,7 @@ export function ActionErrorDialog({
           <AlertDialogDescription>{failure?.message}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction>OK</AlertDialogAction>
+          <AlertDialogAction>{t('OK')}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

@@ -89,6 +89,64 @@ test('unpacks a ZIP while downloading, across a dropped connection', async ({
   }
 })
 
+/** A ZIP smaller than one download block, holding one 1 KiB file: the same path a large archive
+ * takes, with no size threshold anywhere in it. */
+async function makeTinyZip(root: string): Promise<{ archive: Buffer; file: Buffer }> {
+  const source = join(root, 'tiny-source')
+  await mkdir(source, { recursive: true })
+  const file = randomBytes(1024)
+  await writeFile(join(source, 'tiny.bin'), file)
+  const archivePath = join(root, 'Tiny.zip')
+  execFileSync(
+    'powershell.exe',
+    [
+      '-NoProfile',
+      '-NonInteractive',
+      '-Command',
+      `Compress-Archive -LiteralPath '${join(source, 'tiny.bin')}' -DestinationPath '${archivePath}' -Force`
+    ],
+    { stdio: 'ignore' }
+  )
+  return { archive: await readFile(archivePath), file }
+}
+
+test('a tiny ZIP downloads and unpacks while downloading', async ({ plexo, dirs, serve }) => {
+  const root = await mkdtemp(join(tmpdir(), 'tayyar-tiny-zip-'))
+  try {
+    const { archive, file } = await makeTinyZip(root)
+    // Small enough that the plan would use one block even at the minimum block size.
+    expect(archive.length).toBeLessThan(1024 * 1024)
+    const origin = await serve({ size: 1 })
+    origin.setContent(archive, '"tiny-zip-v1"')
+    await plexo.api.listInterfaces()
+
+    const id = await plexo.api.startDownload({
+      kind: 'http',
+      url: origin.url('/Tiny.zip'),
+      destinationDir: dirs.dest,
+      suggestedFileName: 'Tiny.zip',
+      totalBytes: archive.length,
+      supportsRanges: true,
+      interfaceIds: ['a'],
+      etag: '"tiny-zip-v1"',
+      lastModified: null,
+      streamExtract: { format: 'zip' }
+    })
+    plexo.tracked.set(id, {
+      expectedSha: treeSha([{ path: 'tiny.bin', data: file }]),
+      destBefore: [],
+      destinationDir: dirs.dest
+    })
+
+    const state = expectHttp(await plexo.waitForStatus('completed', 30_000))
+    expect(state.bytesDownloaded).toBe(archive.length)
+    expect(state.destinationPath).toBe(join(dirs.dest, 'Tiny'))
+    expect(await readFile(join(state.destinationPath, 'tiny.bin'))).toEqual(file)
+  } finally {
+    await rm(root, { recursive: true, force: true })
+  }
+})
+
 /** The dialog has to send the choice through, not only draw it. */
 test('starts an unpacking download from the New download dialog', async ({ serve }) => {
   const root = await mkdtemp(join(tmpdir(), 'tayyar-dialog-'))

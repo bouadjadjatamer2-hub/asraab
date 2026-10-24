@@ -20,6 +20,8 @@ import {
   setRunInBackground
 } from './startup'
 import { testKnobs } from './testKnobs'
+import { setMainLocale, t } from './i18n'
+import { startUpdater } from './updater'
 import type { DownloadManager } from './download/downloadManager'
 
 // In dev mode the app runs as the raw `electron` binary, which otherwise shows "Electron" in
@@ -137,14 +139,14 @@ function createWindow(): void {
   mainWindow.webContents.on('context-menu', (_, { isEditable, selectionText, editFlags }) => {
     const template: Electron.MenuItemConstructorOptions[] = isEditable
       ? [
-          { role: 'cut', enabled: editFlags.canCut },
-          { role: 'copy', enabled: editFlags.canCopy },
-          { role: 'paste', enabled: editFlags.canPaste },
+          { role: 'cut', label: t('Cut'), enabled: editFlags.canCut },
+          { role: 'copy', label: t('Copy'), enabled: editFlags.canCopy },
+          { role: 'paste', label: t('Paste'), enabled: editFlags.canPaste },
           { type: 'separator' },
-          { role: 'selectAll', enabled: editFlags.canSelectAll }
+          { role: 'selectAll', label: t('Select All'), enabled: editFlags.canSelectAll }
         ]
       : selectionText.trim()
-        ? [{ role: 'copy' }]
+        ? [{ role: 'copy', label: t('Copy') }]
         : []
     if (template.length) Menu.buildFromTemplate(template).popup()
   })
@@ -164,9 +166,9 @@ function createTray(): Tray {
   tray.on('click', () => bringForward(ensureWindow()))
   tray.setContextMenu(
     Menu.buildFromTemplate([
-      { label: 'Open Tayyar', click: () => bringForward(ensureWindow()) },
+      { label: t('Open Tayyar'), click: () => bringForward(ensureWindow()) },
       { type: 'separator' },
-      { label: 'Quit Tayyar', click: () => app.quit() }
+      { label: t('Quit Tayyar'), click: () => app.quit() }
     ])
   )
   return tray
@@ -180,17 +182,22 @@ app.whenReady().then(async () => {
     console.error('[plexo] failed to migrate network-preferences.json', error)
   )
 
+  // Set before any menu, dialog or notification can draw. Changing language in the renderer
+  // saves the value; the restart this renderer asks for reads it here.
+  const settings = await loadSettings()
+  setMainLocale(settings.locale ?? 'en')
+
   // The macOS About window (Tayyar › About Tayyar); its copyright comes from electron-builder.yml.
   app.setAboutPanelOptions({
-    credits:
+    credits: t(
       'Tayyar — download with every connection you have.\nBased on Plexo by Anmol Kapil (MIT).'
+    )
   })
 
   // Applied before the window is created so the initial background/icon already match —
   // the saved preference otherwise only takes effect on the next 'updated' event.
   nativeTheme.themeSource = await loadThemeSource()
 
-  const settings = await loadSettings()
   // First run of an install that has no saved choice yet: register the Task Manager → Startup
   // entry once. Later launches leave it alone, so disabling it there sticks.
   if (settings.startAtLogin === undefined) {
@@ -223,12 +230,15 @@ app.whenReady().then(async () => {
   // creates the window through ensureWindow().
   if (startsInBackground) createTray()
   else createWindow()
+  // Check the release feed at launch and every few hours, then download in the background when
+  // automatic updates are on. Only a packaged app has app-update.yml to check against; dev and
+  // e2e runs would just log an error.
+  if (app.isPackaged) startUpdater(() => mainWindow, settings.autoUpdate ?? true)
   if (testKnobs.hideWindow) app.dock?.hide()
   // Clipboard capture is opt-in; it only ever fills the link field, never starts a download.
   void setClipboardWatch(settings.clipboardWatch === true, (url) =>
     offerLink({ url }, ensureWindow())
   )
-  // Updates ship by installer for now: there is no release feed for this build to check.
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) bringForward(ensureWindow())

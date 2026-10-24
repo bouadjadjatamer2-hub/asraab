@@ -2,6 +2,7 @@ import { ChevronDown, ChevronRight } from 'lucide-react'
 import { useState } from 'react'
 import { useNetworkUsage } from '../hooks/useNetworks'
 import { useNetworkVisuals } from '../hooks/useNetworkVisuals'
+import { t, tn } from '../i18n'
 import { useAppStore } from '../store/useAppStore'
 import { useFormatSpeed, useFormatSpeedLimit } from '../hooks/useFormatSpeed'
 import { formatDataUsage } from '../utils/format'
@@ -53,10 +54,10 @@ export function NetworksMenu({
           ))}
         </span>
         {interfaces.length === 0 ? (
-          <span className="text-[var(--color-danger)]">No network</span>
+          <span className="text-[var(--color-danger)]">{t('No network')}</span>
         ) : (
           <>
-            {interfaces.length} {interfaces.length === 1 ? 'network' : 'networks'}
+            {tn(interfaces.length, '{n} network', '{n} networks')}
             {total > 0 && (
               <span className="font-mono text-[11.5px] text-muted-foreground">
                 {formatSpeed(total)}
@@ -68,7 +69,7 @@ export function NetworksMenu({
       </PopoverTrigger>
       <PopoverContent align="end" className="w-[340px] gap-0 p-0">
         <div className="border-b-[0.5px] border-border px-4 py-3 text-[14px] font-semibold">
-          Networks
+          {t('Networks')}
         </div>
         {interfaces.map((iface) => {
           const visual = networkVisual(iface.id, iface.kind, iface.displayName)
@@ -105,7 +106,7 @@ export function NetworksMenu({
               </div>
               {/* What it's doing: a used-up network is paused, which says why it carries nothing. */}
               <div
-                className="text-right font-mono text-[12px] font-medium whitespace-nowrap text-muted-foreground"
+                className="text-end font-mono text-[12px] font-medium whitespace-nowrap text-muted-foreground"
                 style={
                   reached
                     ? { color: 'var(--color-danger)' }
@@ -114,23 +115,25 @@ export function NetworksMenu({
                       : undefined
                 }
               >
-                {reached ? 'Paused' : speed > 0 ? formatSpeed(speed) : 'Idle'}
+                {reached ? t('Paused') : speed > 0 ? formatSpeed(speed) : t('Idle')}
               </div>
               <button
                 type="button"
-                aria-label={`${visual.name} limits`}
+                aria-label={t('{name} limits', { name: visual.name })}
                 className="text-muted-foreground outline-none group-hover:text-foreground after:absolute after:inset-0 focus-visible:after:ring-2 focus-visible:after:ring-ring focus-visible:after:ring-inset"
                 onClick={() => {
                   setOpen(false)
                   onOpenLimits(iface.id)
                 }}
               >
-                <ChevronRight className="size-4" />
+                <ChevronRight className="flip-rtl size-4" />
               </button>
               {/* A line per limit set on it, as short as it can be said; none, and the row is one
                   line. "Limit", not "Max": a max reads as what the network can do. */}
               {speedLimit !== undefined && (
-                <div className={lineClass}>Limit {formatSpeedLimit(speedLimit)}</div>
+                <div className={lineClass}>
+                  {t('Limit {value}', { value: formatSpeedLimit(speedLimit) })}
+                </div>
               )}
               {/* The figure, then a bar for how much is left at a glance. The period and when it
                   resets are a click away, in the limits the row opens. */}
@@ -162,7 +165,7 @@ export function NetworksMenu({
             onOpenLimits(null)
           }}
         >
-          Speed &amp; data limits
+          {t('Speed & data limits')}
         </button>
       </PopoverContent>
     </Popover>

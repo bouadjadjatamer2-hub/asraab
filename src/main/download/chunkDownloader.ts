@@ -98,7 +98,9 @@ const MAX_REDIRECTS = 5
 // WRITE_COALESCE_MS, so a slow connection's bytes still reach the disk (and count) promptly.
 // A batch in flight plus the next one gathering stay under half the writer's buffer
 // (downloadFile.ts): a full writer still means the disk is behind (see DiskWatch), not batching.
-const WRITE_COALESCE_BYTES = 128 * 1024
+// 512 KiB is deliberately larger than a socket's usual 16-64 KiB reads: on a rotating disk each
+// separate write costs a seek, so one contiguous batch does far more good than one tiny write.
+const WRITE_COALESCE_BYTES = 512 * 1024
 const WRITE_COALESCE_MS = 20
 
 interface ServedRange {

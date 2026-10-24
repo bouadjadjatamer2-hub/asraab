@@ -1,3 +1,6 @@
+import type { Locale } from './types'
+import { translate } from './i18n'
+
 const IPC_INVOKE_PREFIX = /^Error invoking remote method '[^']*':\s*/
 const NESTED_ERROR_PREFIX = /^Error:\s*/
 
@@ -95,12 +98,12 @@ const ERROR_HINTS: Array<{ pattern: RegExp; message: string }> = [
  * failures into plain English. Used for both the pre-download probe and a download's own
  * `error` field, so a failure partway through a transfer reads exactly as friendly as one caught
  * before it started. */
-export function describeError(error: unknown): string {
+export function describeError(error: unknown, locale: Locale = 'en'): string {
   const raw = error instanceof Error ? error.message : String(error)
   const stripped = raw.replace(IPC_INVOKE_PREFIX, '').replace(NESTED_ERROR_PREFIX, '')
 
   for (const { pattern, message } of ERROR_HINTS) {
-    if (pattern.test(stripped)) return message
+    if (pattern.test(stripped)) return translate(locale, message)
   }
 
   return stripped

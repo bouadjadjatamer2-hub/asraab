@@ -3,6 +3,7 @@ import { archiveInfo, extractFolderName } from '@shared/archive'
 import { cn } from 'cn'
 import { AlertTriangle, ChevronLeft, ChevronRight, FolderOpen, Globe, Lock, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+import { t } from '../i18n'
 import { useFormatSpeedLimit } from '../hooks/useFormatSpeed'
 import { useNetworkUsage } from '../hooks/useNetworks'
 import { useNetworkVisuals } from '../hooks/useNetworkVisuals'
@@ -215,14 +216,14 @@ function NewDownloadForm({ onDone }: { onDone: () => void }): React.JSX.Element 
     Boolean(destinationDir) &&
     !starting
   const startLabel = starting
-    ? 'Starting'
+    ? t('Starting')
     : probe.status === 'probing'
-      ? 'Checking'
+      ? t('Checking')
       : scheduledWait
-        ? 'Add to scheduled queue'
+        ? t('Add to scheduled queue')
         : full
-          ? 'Add to queue'
-          : 'Download'
+          ? t('Add to queue')
+          : t('Download')
 
   // Two networks on one subnet: the OS sends both down one route, so there's nothing to combine.
   let subnetConflict: { subnet: string; names: string[] } | null = null
@@ -244,6 +245,10 @@ function NewDownloadForm({ onDone }: { onDone: () => void }): React.JSX.Element 
       }
     }
   }
+
+  const usedUpNames = usedUpPick
+    .map((iface) => networkVisual(iface.id, iface.kind, iface.displayName).name)
+    .join(` ${t('and')} `)
 
   const handleToggleInterface = (id: string): void => {
     if (isReached(id)) return
@@ -363,32 +368,34 @@ function NewDownloadForm({ onDone }: { onDone: () => void }): React.JSX.Element 
         void handleStart()
       }}
     >
-      <div className="flex items-center gap-2 border-b-[0.5px] border-border py-3 pr-3 pl-5">
-        <DialogTitle className="flex-1 py-1 text-[16px] font-semibold">New download</DialogTitle>
+      <div className="flex items-center gap-2 border-b-[0.5px] border-border py-3 pe-3 ps-5">
+        <DialogTitle className="flex-1 py-1 text-[16px] font-semibold">
+          {t('New download')}
+        </DialogTitle>
         {shownLink && links.length > 1 && (
           <div className="flex items-center gap-1">
             <Button
               type="button"
               variant="ghost"
               size="icon-sm"
-              aria-label="Previous download"
+              aria-label={t('Previous download')}
               disabled={position === 0}
               onClick={() => showLink(links[position - 1].id)}
             >
-              <ChevronLeft />
+              <ChevronLeft className="flip-rtl" />
             </Button>
             <span className="min-w-12 text-center font-mono text-[11.5px] text-muted-foreground tabular-nums">
-              {position + 1} of {links.length}
+              {t('{current} of {total}', { current: position + 1, total: links.length })}
             </span>
             <Button
               type="button"
               variant="ghost"
               size="icon-sm"
-              aria-label="Next download"
+              aria-label={t('Next download')}
               disabled={position === links.length - 1}
               onClick={() => showLink(links[position + 1].id)}
             >
-              <ChevronRight />
+              <ChevronRight className="flip-rtl" />
             </Button>
           </div>
         )}
@@ -406,11 +413,12 @@ function NewDownloadForm({ onDone }: { onDone: () => void }): React.JSX.Element 
               ref={linkInput}
               autoFocus
               type="text"
+              dir="auto"
               value={url}
               onChange={(event) => setUrl(event.target.value)}
-              placeholder="Paste a link: https:// or magnet:"
+              placeholder={t('Paste a link: https:// or magnet:')}
               spellCheck={false}
-              aria-label="Link"
+              aria-label={t('Link')}
               className="min-w-0 flex-1 border-none bg-transparent font-mono text-[13px] text-foreground outline-none"
             />
             {url && (
@@ -423,20 +431,20 @@ function NewDownloadForm({ onDone }: { onDone: () => void }): React.JSX.Element 
                         setUrl('')
                         linkInput.current?.focus()
                       }}
-                      aria-label="Clear link"
+                      aria-label={t('Clear link')}
                       className="flex size-5 shrink-0 cursor-default items-center justify-center rounded-full text-muted-foreground hover:bg-secondary hover:text-foreground"
                     >
                       <X aria-hidden className="size-3.5" />
                     </button>
                   }
                 />
-                <TooltipContent>Clear link</TooltipContent>
+                <TooltipContent>{t('Clear link')}</TooltipContent>
               </Tooltip>
             )}
           </div>
           <Button type="button" variant="secondary" onClick={handleOpenTorrent} className="h-9">
             <FolderOpen data-icon="inline-start" />
-            Open .torrent
+            {t('Open .torrent')}
           </Button>
         </div>
 
@@ -448,8 +456,9 @@ function NewDownloadForm({ onDone }: { onDone: () => void }): React.JSX.Element 
               <Globe aria-hidden className="size-3" />
             )}
             {[
-              `From ${shownLink.from}`,
-              shownLink.signedInTo && `with your ${shownLink.signedInTo} sign-in`
+              t('From {source}', { source: shownLink.from }),
+              shownLink.signedInTo &&
+                t('with your {service} sign-in', { service: shownLink.signedInTo })
             ]
               .filter(Boolean)
               .join(' · ')}
@@ -459,8 +468,8 @@ function NewDownloadForm({ onDone }: { onDone: () => void }): React.JSX.Element 
         {shownLink?.resumes && (
           <div className="flex items-center gap-3 rounded-lg border-[0.5px] border-border bg-card px-3 py-2 text-[12.5px]">
             <span className="min-w-0 flex-1">
-              Same file as <span className="font-medium">{shownLink.resumes.fileName}</span>, which
-              failed. Resume that instead?
+              {t('Same file as')} <span className="font-medium">{shownLink.resumes.fileName}</span>
+              {t(', which failed. Resume that instead?')}
             </span>
             <Button
               type="button"
@@ -469,14 +478,14 @@ function NewDownloadForm({ onDone }: { onDone: () => void }): React.JSX.Element 
               disabled={starting}
               onClick={() => void handleResume()}
             >
-              Resume it
+              {t('Resume it')}
             </Button>
           </div>
         )}
 
         {probe.status === 'probing' && (
           <div className="font-mono text-[11.5px] text-muted-foreground">
-            {probe.noPeersYet ? 'No peers found yet, still looking…' : 'Checking the link…'}
+            {probe.noPeersYet ? t('No peers found yet, still looking…') : t('Checking the link…')}
           </div>
         )}
         {probe.status === 'error' && (
@@ -497,25 +506,28 @@ function NewDownloadForm({ onDone }: { onDone: () => void }): React.JSX.Element 
               ) : (
                 <input
                   type="text"
+                  dir="auto"
                   value={fileName}
                   onChange={(event) => setFileNameOverride(event.target.value)}
-                  aria-label="File name"
+                  aria-label={t('File name')}
                   spellCheck={false}
-                  className="min-w-0 rounded-md border border-transparent bg-transparent px-1 -ml-1 text-[14px] font-medium outline-none hover:border-input focus:border-input"
+                  className="min-w-0 rounded-md border border-transparent bg-transparent px-1 -ms-1 text-[14px] font-medium outline-none hover:border-input focus:border-input"
                 />
               )}
               <div className="font-mono text-[11.5px] text-muted-foreground">
                 {[
                   torrent && describeFileCount(chosenFiles.length, torrent.files.length),
-                  sizeToFetch !== null ? formatBytes(sizeToFetch) : 'size unknown',
+                  sizeToFetch !== null ? formatBytes(sizeToFetch) : t('size unknown'),
                   !torrent &&
                     (streamFormat
-                      ? 'unpacks while it downloads'
+                      ? t('unpacks while it downloads')
                       : isSingleStreamOnly
                         ? ready.supportsRanges
-                          ? 'Uses one connection. The file size is unknown.'
-                          : 'Uses one connection. This server doesn’t support parallel downloads.'
-                        : 'resumable')
+                          ? t('Uses one connection. The file size is unknown.')
+                          : t(
+                              'Uses one connection. This server doesn’t support parallel downloads.'
+                            )
+                        : t('resumable'))
                 ]
                   .filter(Boolean)
                   .join(' · ')}
@@ -536,7 +548,7 @@ function NewDownloadForm({ onDone }: { onDone: () => void }): React.JSX.Element 
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center gap-3">
               <div className={labelClass} id="new-download-archive">
-                Archive
+                {t('Archive')}
               </div>
               <ToggleGroup
                 value={[streamFormat ? 'extract' : 'save']}
@@ -550,42 +562,42 @@ function NewDownloadForm({ onDone }: { onDone: () => void }): React.JSX.Element 
                 spacing={1}
               >
                 <ToggleGroupItem value="save" className="h-6 px-2">
-                  Keep file
+                  {t('Keep file')}
                 </ToggleGroupItem>
                 <ToggleGroupItem value="extract" disabled={!archive.format} className="h-6 px-2">
-                  Unpack while downloading
+                  {t('Unpack while downloading')}
                 </ToggleGroupItem>
               </ToggleGroup>
             </div>
             {streamFormat ? (
               <div className="text-[12px] leading-snug text-muted-foreground">
-                Files go straight to{' '}
-                <span className="font-medium text-foreground">{extractFolderName(fileName)}</span>.
-                The archive isn’t saved, so only the unpacked files need room. Uses one connection,
-                so it can be slower than a parallel download; pausing starts it over.
+                {t(
+                  'Files go straight to {path}. The archive isn’t saved, so only the unpacked files need room. Uses one connection, so it can be slower than a parallel download; pausing starts it over.',
+                  { path: extractFolderName(fileName) }
+                )}
               </div>
             ) : archive.reason ? (
               <div className="flex items-start gap-2 text-[12px] leading-snug text-[var(--color-usb-text)]">
                 <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
-                {archive.reason}
+                {t(archive.reason)}
               </div>
             ) : null}
           </div>
         )}
 
         <div className="flex items-center gap-3">
-          <div className={labelClass}>Save to</div>
-          <div className="min-w-0 flex-1 truncate font-mono text-[12.5px]">
+          <div className={labelClass}>{t('Save to')}</div>
+          <div dir="ltr" className="min-w-0 flex-1 truncate text-start font-mono text-[12.5px]">
             {toDisplayPath(destinationDir, homeDir)}
           </div>
           <Button type="button" variant="secondary" size="sm" onClick={handleBrowse}>
-            Change
+            {t('Change')}
           </Button>
         </div>
 
         <div className="flex items-start gap-3">
           <div className={cn(labelClass, 'pt-1.5')} id="new-download-networks">
-            Networks
+            {t('Networks')}
           </div>
           <div
             role="group"
@@ -599,9 +611,9 @@ function NewDownloadForm({ onDone }: { onDone: () => void }): React.JSX.Element 
               const speedLimit = networkPreferences[iface.id]?.speedLimit
               // What's worth knowing before it's picked: it can't be, or it's capped.
               const note = reached
-                ? 'Data limit reached'
+                ? t('Data limit reached')
                 : speedLimit !== undefined
-                  ? `Limited to ${formatSpeedLimit(speedLimit)}`
+                  ? t('Limited to {value}', { value: formatSpeedLimit(speedLimit) })
                   : null
               const chip = (
                 <button
@@ -642,7 +654,7 @@ function NewDownloadForm({ onDone }: { onDone: () => void }): React.JSX.Element 
         {ready && !torrent && !isSingleStreamOnly && (
           <div className="flex items-center gap-3">
             <div className={labelClass} id="new-download-streams">
-              Streams
+              {t('Streams')}
             </div>
             <ToggleGroup
               value={[String(streamsChoice)]}
@@ -658,41 +670,48 @@ function NewDownloadForm({ onDone }: { onDone: () => void }): React.JSX.Element 
               {STREAMS_CHOICES.map((choice) => (
                 // h-6/min-w-6: WCAG 2.5.8's 24px floor — the xs toggle size is 20px.
                 <ToggleGroupItem key={choice} value={String(choice)} className="h-6 min-w-6 px-2">
-                  {choice === 'auto' ? 'Auto' : choice}
+                  {choice === 'auto' ? t('Auto') : choice}
                 </ToggleGroupItem>
               ))}
             </ToggleGroup>
-            <div className="font-mono text-[11px] text-muted-foreground">per network</div>
+            <div className="font-mono text-[11px] text-muted-foreground">{t('per network')}</div>
           </div>
         )}
 
         {subnetConflict && (
           <div className="flex items-start gap-2 text-[12px] leading-snug text-[var(--color-usb-text)]">
             <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
-            {subnetConflict.names.join(' and ')} share a subnet ({subnetConflict.subnet}), so the
-            computer sends both down one route and they can’t be combined.
+            {t(
+              '{names} share a subnet ({subnet}), so the computer sends both down one route and they can’t be combined.',
+              {
+                names: subnetConflict.names.join(` ${t('and')} `),
+                subnet: subnetConflict.subnet
+              }
+            )}
           </div>
         )}
         {usedUpPick.length > 0 && (
           <div className="flex items-start gap-2 text-[12px] leading-snug text-[var(--color-usb-text)]">
             <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
-            {usedUpPick
-              .map((iface) => networkVisual(iface.id, iface.kind, iface.displayName).name)
-              .join(' and ')}{' '}
-            {usedUpPick.length === 1 ? 'has' : 'have'} reached{' '}
-            {usedUpPick.length === 1 ? 'its' : 'their'} data limit. Choose another network for this
-            download.
+            {usedUpPick.length === 1
+              ? t('{name} has reached its data limit. Choose another network for this download.', {
+                  name: usedUpNames
+                })
+              : t(
+                  '{names} have reached their data limits. Choose another network for this download.',
+                  { names: usedUpNames }
+                )}
           </div>
         )}
         {interfaces.length > 0 && availableIds.length === 0 && (
           <div className="flex items-start gap-2 text-[12px] leading-snug text-[var(--color-usb-text)]">
             <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
-            Every network has reached its data limit. Raise one in Speed &amp; data limits.
+            {t('Every network has reached its data limit. Raise one in Speed & data limits.')}
           </div>
         )}
         {isSingleStreamOnly && selectedInterfaceIds.length === 1 && interfaces.length > 1 && (
           <div className="text-[12px] text-muted-foreground">
-            This download uses one connection on one network.
+            {t('This download uses one connection on one network.')}
           </div>
         )}
       </div>
@@ -706,7 +725,7 @@ function NewDownloadForm({ onDone }: { onDone: () => void }): React.JSX.Element 
           <div className="flex-1" />
         )}
         <Button type="button" variant="secondary" onClick={onDone}>
-          Cancel
+          {t('Cancel')}
         </Button>
         <Button type="submit" disabled={!canStart}>
           {startLabel}

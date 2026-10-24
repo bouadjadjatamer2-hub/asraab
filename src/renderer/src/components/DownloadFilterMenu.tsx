@@ -1,12 +1,13 @@
 import { Menu } from '@base-ui/react/menu'
 import { Check, ChevronDown } from 'lucide-react'
+import { t } from '../i18n'
 import type { DownloadFilter } from '../store/useAppStore'
 
 const DOWNLOAD_FILTERS: { value: DownloadFilter; label: string }[] = [
-  { value: 'all', label: 'All downloads' },
-  { value: 'progress', label: 'In progress' },
-  { value: 'finished', label: 'Finished' },
-  { value: 'failed', label: 'Needs attention' }
+  { value: 'all', label: t('All downloads') },
+  { value: 'progress', label: t('In progress') },
+  { value: 'finished', label: t('Finished') },
+  { value: 'failed', label: t('Needs attention') }
 ]
 
 export function DownloadFilterMenu({
@@ -33,7 +34,7 @@ export function DownloadFilterMenu({
             <Menu.RadioGroup
               value={value}
               onValueChange={onChange}
-              aria-label="Filter downloads"
+              aria-label={t('Filter downloads')}
               className="flex flex-col gap-0.5"
             >
               {DOWNLOAD_FILTERS.map((filter) => (

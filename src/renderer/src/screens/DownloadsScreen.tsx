@@ -11,6 +11,7 @@ import { LimitsDialog } from '../components/LimitsDialog'
 import { ScheduleIndicator } from '../components/ScheduleIndicator'
 import { networkStatusText } from '../components/NetworkRow'
 import { scheduleMessage, scheduleWindow } from '@shared/downloadSchedule'
+import { locale, t, tn } from '../i18n'
 import { NetworksMenu } from '../components/NetworksMenu'
 import { TorrentBadge } from '../components/TorrentBadge'
 import { Button } from '../components/ui/button'
@@ -71,24 +72,24 @@ function summaryOf(downloads: DownloadState[]): string {
   const count = (status: DownloadState['status']): number =>
     downloads.filter((download) => download.status === status).length
   const parts = [
-    [count('downloading'), 'downloading'],
-    [count('queued'), 'queued'],
-    [count('paused'), 'paused'],
-    [count('error'), 'need attention']
+    [count('downloading'), '{n} downloading'],
+    [count('queued'), '{n} queued'],
+    [count('paused'), '{n} paused'],
+    [count('error'), '{n} need attention']
   ]
     .filter(([n]) => (n as number) > 0)
-    .map(([n, label]) => `${n} ${label}`)
-  return parts.length > 0 ? parts.join(' · ') : 'all done'
+    .map(([n, label]) => tn(n as number, label as string))
+  return parts.length > 0 ? parts.join(' · ') : t('all done')
 }
 
 const groupLabelClass =
   'text-[12px] leading-none font-semibold tracking-[0.01em] text-[var(--text-secondary)]'
 
 const FILTER_TABS: Array<{ id: DownloadFilter; label: string }> = [
-  { id: 'all', label: 'All' },
-  { id: 'progress', label: 'Active' },
-  { id: 'finished', label: 'Finished' },
-  { id: 'failed', label: 'Attention' }
+  { id: 'all', label: t('All') },
+  { id: 'progress', label: t('Active') },
+  { id: 'finished', label: t('Finished') },
+  { id: 'failed', label: t('Attention') }
 ]
 
 /** The list's filters, as tabs: one row that shows the shape of the queue at a glance. */
@@ -102,7 +103,7 @@ function FilterTabs({
   onChange: (value: DownloadFilter) => void
 }): React.JSX.Element {
   return (
-    <div role="tablist" aria-label="Filter downloads" className="mt-4 flex items-center gap-6">
+    <div role="tablist" aria-label={t('Filter downloads')} className="mt-4 flex items-center gap-6">
       {FILTER_TABS.map(({ id, label }) => {
         const active = value === id
         return (
@@ -243,10 +244,10 @@ export function DownloadsScreen(): React.JSX.Element {
           <div className="flex items-start gap-3 pt-5">
             <div className="min-w-0">
               <h1 className="text-[21px] leading-none font-semibold tracking-[-0.02em]">
-                Downloads
+                {t('Downloads')}
               </h1>
               <p className="mt-2 truncate text-[12px] leading-none text-[var(--text-secondary)]">
-                {allItems.length === 0 ? 'Nothing in the queue' : summaryOf(downloads)}
+                {allItems.length === 0 ? t('Nothing in the queue') : summaryOf(downloads)}
               </p>
             </div>
             <div className="flex-1" />
@@ -261,7 +262,7 @@ export function DownloadsScreen(): React.JSX.Element {
               />
               <Button type="button" onClick={() => openNewDownload()}>
                 <Plus data-icon="inline-start" />
-                New download
+                {t('New download')}
               </Button>
             </div>
           </div>
@@ -277,7 +278,7 @@ export function DownloadsScreen(): React.JSX.Element {
       ) : (
         <div
           role="toolbar"
-          aria-label="Selected downloads"
+          aria-label={t('Selected downloads')}
           aria-busy={busy}
           className="flex h-14 shrink-0 items-center gap-3 border-b-[0.5px] border-border px-6"
         >
@@ -288,7 +289,7 @@ export function DownloadsScreen(): React.JSX.Element {
                   type="button"
                   size="icon-sm"
                   variant="ghost"
-                  aria-label="Deselect all"
+                  aria-label={t('Deselect all')}
                   disabled={busy}
                   onClick={() => setSelected(new Set())}
                 >
@@ -296,10 +297,10 @@ export function DownloadsScreen(): React.JSX.Element {
                 </Button>
               }
             />
-            <TooltipContent>Deselect all</TooltipContent>
+            <TooltipContent>{t('Deselect all')}</TooltipContent>
           </Tooltip>
           <span className="shrink-0 whitespace-nowrap text-[13px] font-semibold">
-            {chosen.length} selected
+            {tn(chosen.length, '{n} selected', '{n} selected')}
           </span>
           <Button
             type="button"
@@ -308,7 +309,7 @@ export function DownloadsScreen(): React.JSX.Element {
             disabled={busy || chosen.length === items.length}
             onClick={() => setSelected(new Set(items.map((item) => item.id)))}
           >
-            Select all
+            {t('Select all')}
           </Button>
           <div className="flex-1" />
           <div className="flex min-w-0 items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -338,13 +339,13 @@ export function DownloadsScreen(): React.JSX.Element {
             <div role="status" className="flex flex-col items-center gap-2 px-5 py-16 text-center">
               <p className="text-[16px] font-semibold">
                 {filter === 'progress'
-                  ? 'No downloads in progress'
+                  ? t('No downloads in progress')
                   : filter === 'finished'
-                    ? 'No finished downloads'
-                    : 'No downloads need attention'}
+                    ? t('No finished downloads')
+                    : t('No downloads need attention')}
               </p>
               <Button type="button" variant="secondary" onClick={() => setFilter('all')}>
-                Show all downloads
+                {t('Show all downloads')}
               </Button>
             </div>
           ))}
@@ -353,21 +354,23 @@ export function DownloadsScreen(): React.JSX.Element {
           const all = ids.every((id) => selected.has(id))
           const some = !all && ids.some((id) => selected.has(id))
           return (
-            <section key={group.label} aria-label={group.label}>
+            <section key={group.label} aria-label={t(group.label)}>
               <div className="flex items-center gap-3 pt-6 pb-1.5">
                 <Checkbox
                   aria-label={
                     group.label === 'Needs attention'
-                      ? 'Select all downloads needing attention'
-                      : `Select all ${group.label.toLowerCase()} downloads`
+                      ? t('Select all downloads needing attention')
+                      : t('Select all {group} downloads', {
+                          group: t(group.label).toLowerCase()
+                        })
                   }
                   checked={all}
                   indeterminate={some}
                   onCheckedChange={(on) => toggle(ids, on)}
                 />
                 <h2 className={groupLabelClass}>
-                  {group.label}
-                  <span className="ml-2.5 tracking-normal">{group.items.length}</span>
+                  {t(group.label)}
+                  <span className="ms-2.5 tracking-normal">{group.items.length}</span>
                 </h2>
                 <div className="flex-1" />
                 {group.label === 'Finished' && history.length > 0 && (
@@ -376,7 +379,7 @@ export function DownloadsScreen(): React.JSX.Element {
                     className="text-[12.5px] text-[var(--text-secondary)] hover:text-foreground"
                     onClick={askClearFinished}
                   >
-                    Clear finished list
+                    {t('Clear finished list')}
                   </button>
                 )}
               </div>
@@ -435,38 +438,41 @@ function EmptyState(): React.JSX.Element {
       {noNetworks ? (
         <>
           <div className="text-[19px] leading-tight font-semibold tracking-[-0.01em]">
-            No network connected
+            {t('No network connected')}
           </div>
           <div className="mt-2 max-w-[400px] text-[12.5px] leading-[1.65] text-[var(--text-secondary)]">
-            Tayyar needs at least one active network. Join a Wi-Fi network, plug in Ethernet, or
-            connect your phone using USB tethering.
+            {t(
+              'Tayyar needs at least one active network. Join a Wi-Fi network, plug in Ethernet, or connect your phone using USB tethering.'
+            )}
           </div>
           <div className="mt-6 flex gap-2">
             <Button type="button" variant="secondary" onClick={() => loadInterfaces()}>
-              Scan again
+              {t('Scan again')}
             </Button>
             <Button
               type="button"
               variant="secondary"
               onClick={() => window.plexo.openNetworkSettings()}
             >
-              Network settings
+              {t('Network settings')}
             </Button>
           </div>
         </>
       ) : (
         <>
           <div className="text-[19px] leading-tight font-semibold tracking-[-0.01em]">
-            Ready when you are.
+            {t('Ready when you are.')}
           </div>
           <div className="mt-2 max-w-[400px] text-[12.5px] leading-[1.65] text-[var(--text-secondary)]">
-            Paste a link ({PASTE_SHORTCUT}) or drop a .torrent anywhere in this window. Tayyar
-            spreads it across every network you have.
+            {t(
+              'Paste a link ({shortcut}) or drop a .torrent anywhere in this window. Tayyar spreads it across every network you have.',
+              { shortcut: PASTE_SHORTCUT }
+            )}
           </div>
           <Button type="button" size="lg" className="mt-6 px-4" onClick={() => openNewDownload()}>
             <Plus data-icon="inline-start" />
-            Add a download
-            <span className="ml-1.5 font-mono text-[10.5px] opacity-75">{NEW_SHORTCUT}</span>
+            {t('Add a download')}
+            <span className="ms-1.5 font-mono text-[10.5px] opacity-75">{NEW_SHORTCUT}</span>
           </Button>
         </>
       )}
@@ -524,7 +530,7 @@ const DownloadRow = memo(function DownloadRow({
       // A torrent's badge already says where it came from.
       item.kind === 'http' && sourceOf(item.url),
       isFinished(item) && item.missing
-        ? 'moved or deleted'
+        ? t('moved or deleted')
         : formatWhen(item.completedAt ?? now, now)
     ]
       .filter(Boolean)
@@ -533,7 +539,10 @@ const DownloadRow = memo(function DownloadRow({
     const download = item
     const sizes =
       wanted > 0
-        ? `${formatBytes(download.bytesDownloaded)} of ${formatBytes(wanted)}`
+        ? t('{done} of {total}', {
+            done: formatBytes(download.bytesDownloaded),
+            total: formatBytes(wanted)
+          })
         : formatBytes(download.bytesDownloaded)
     switch (download.status) {
       case 'downloading':
@@ -546,10 +555,17 @@ const DownloadRow = memo(function DownloadRow({
           .join(' · ')
         break
       case 'queued':
-        detail = `${schedule?.enabled && !scheduleWindow(schedule, now).allowed ? (scheduleMessage(schedule, now) ?? 'Waiting for a turn') : 'Waiting for a turn'} · ${sizes}`
+        detail = `${
+          schedule?.enabled && !scheduleWindow(schedule, now).allowed
+            ? (scheduleMessage(schedule, now, locale) ?? t('Waiting for a turn'))
+            : t('Waiting for a turn')
+        } · ${sizes}`
         break
       case 'paused':
-        detail = wanted > 0 ? `Paused at ${percent}% · ${sizes}` : `Paused · ${sizes}`
+        detail =
+          wanted > 0
+            ? t('Paused at {percent}% · {sizes}', { percent, sizes })
+            : t('Paused · {sizes}', { sizes })
         break
       default:
         detail = describeError(download.error ?? 'Something went wrong')
@@ -596,12 +612,12 @@ const DownloadRow = memo(function DownloadRow({
             name: visual.name,
             // Its speed while it runs; otherwise whether it's on, or what's stopping it.
             state: !network.enabled
-              ? 'Off'
+              ? t('Off')
               : network.status !== 'on'
                 ? networkStatusText(network.status, network.transfer)
                 : item.status === 'downloading'
                   ? formatSpeed(network.speedBytesPerSec)
-                  : 'On'
+                  : t('On')
           }
         })
       : null
@@ -621,14 +637,14 @@ const DownloadRow = memo(function DownloadRow({
       )}
     >
       <Checkbox
-        aria-label={`Select ${item.fileName}`}
+        aria-label={t('Select {name}', { name: item.fileName })}
         checked={selected}
         onCheckedChange={(on) => onSelect(item.id, on)}
       />
       <button
         type="button"
         onClick={() => onOpen(item.id)}
-        className="flex min-w-0 flex-1 items-center gap-3 rounded-md text-left outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="flex min-w-0 flex-1 items-center gap-3 rounded-md text-start outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         <div className="flex size-10 shrink-0 items-center justify-center rounded-[11px] border border-border/70 bg-[linear-gradient(150deg,rgba(139,108,255,0.16),rgba(34,211,238,0.05))] font-mono text-[10px] font-semibold text-[var(--text-secondary)]">
           {badge}
@@ -640,14 +656,16 @@ const DownloadRow = memo(function DownloadRow({
             </span>
             {item.kind === 'torrent' && <TorrentBadge />}
             {(dots || speed) && (
-              <div className="ml-auto flex shrink-0 items-center gap-2.5 pl-2">
+              <div className="ms-auto flex shrink-0 items-center gap-2.5 ps-2">
                 {dots && (
                   <Tooltip>
                     <TooltipTrigger
                       render={
                         <span
                           role="img"
-                          aria-label={dots.map((dot) => `${dot.name} ${dot.state}`).join(', ')}
+                          aria-label={dots
+                            .map((dot) => t('{name} {state}', { name: dot.name, state: dot.state }))
+                            .join(', ')}
                           className="flex items-center gap-1 rounded-full border border-border px-1.5 py-1"
                         >
                           {dots.map((dot) => (
@@ -675,7 +693,7 @@ const DownloadRow = memo(function DownloadRow({
                               style={dot.on ? { background: dot.color } : undefined}
                             />
                             <span>{dot.name}</span>
-                            <span className="pl-3 text-right font-mono tabular-nums opacity-80">
+                            <span className="ps-3 text-end font-mono tabular-nums opacity-80">
                               {dot.state}
                             </span>
                           </Fragment>
@@ -722,7 +740,7 @@ const DownloadRow = memo(function DownloadRow({
                 type="button"
                 size="icon-sm"
                 variant="ghost"
-                aria-label={`${action.label} ${item.fileName}`}
+                aria-label={t('{action} {name}', { action: action.label, name: item.fileName })}
                 aria-busy={working}
                 disabled={working}
                 onClick={() => {
@@ -742,11 +760,11 @@ const DownloadRow = memo(function DownloadRow({
       )}
       <button
         type="button"
-        aria-label={`Open ${item.fileName}`}
+        aria-label={t('Open {name}', { name: item.fileName })}
         onClick={() => onOpen(item.id)}
         className="rounded-md p-1 text-muted-foreground transition-colors group-hover/download-row:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
       >
-        <ChevronRight className="size-4" />
+        <ChevronRight className="flip-rtl size-4" />
       </button>
     </div>
   )

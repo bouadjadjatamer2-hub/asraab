@@ -66,4 +66,6 @@ export interface IpcContract {
   resumeFromLink: { args: [linkId: string, downloadId: string]; result: void }
   /** Forgets the sign-in of a link that won't be started. */
   dismissLink: { args: [id: string]; result: void }
+  /** Restarts the app after saving every in-flight download, so a language change takes effect. */
+  relaunchApp: { args: []; result: void }
 }

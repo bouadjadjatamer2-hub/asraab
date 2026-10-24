@@ -2,7 +2,7 @@ import type {} from '../src/preload/globals'
 import assert from 'node:assert/strict'
 import { execFile } from 'node:child_process'
 import { existsSync } from 'node:fs'
-import { mkdir, mkdtemp, readdir, readFile, realpath, rm, stat } from 'node:fs/promises'
+import { mkdir, mkdtemp, readdir, readFile, realpath, rm, stat, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join, relative, resolve, sep } from 'node:path'
 import { promisify } from 'node:util'
@@ -627,6 +627,10 @@ export async function makeDirs(): Promise<{
   const root = await realpath(await mkdtemp(join(tmpdir(), 'plexo-e2e-')))
   const dirs = { userData: join(root, 'userData'), dest: join(root, 'dest') }
   await Promise.all([mkdir(dirs.userData), mkdir(dirs.dest)])
+  // Finished files are sorted into Video/Audio/Other folders by default in the app. These tests
+  // check the exact contents of destinationDir, so their throwaway profile opts out; a download
+  // test that wants sorting can turn it back on.
+  await writeFile(join(dirs.userData, 'app-settings.json'), JSON.stringify({ autoOrganize: false }))
   return { dirs, dispose: () => rm(root, { recursive: true, force: true, maxRetries: 5 }) }
 }
 

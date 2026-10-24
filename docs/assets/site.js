@@ -23,8 +23,8 @@
     privacyUrl:
       'https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/extension/privacy/',
     installerName: 'Tayyar-1.2.0-Setup.exe',
-    installerSize: '125.2 MB',
-    sha256: '643DD40A89A86019B75A8BFE84FCDE6DF4C506371031313019EC49E4AABE2C6B',
+    installerSize: '125.8 MB',
+    sha256: 'C0E5D52718B1728C5250D95135140078A80CFE706D359D74574D14EDC354FA63',
     year: 2026
   }
 

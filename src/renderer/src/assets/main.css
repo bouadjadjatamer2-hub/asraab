@@ -9,6 +9,38 @@
 }
 
 @font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/IBMPlexSansArabic-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./fonts/IBMPlexSansArabic-500.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./fonts/IBMPlexSansArabic-600.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./fonts/IBMPlexSansArabic-700.woff2') format('woff2');
+}
+
+@font-face {
   font-family: 'Roboto Mono';
   font-style: normal;
   font-weight: 400 600;
@@ -295,6 +327,36 @@
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+}
+
+/* Arabic keeps one humanist family for both prose and the monospaced numerals/labels, so no
+   glyph ever falls back to a Latin-only face. Manrope and Roboto Mono remain as fallbacks for
+   code-like runs, while every Arabic letter comes from Plex. */
+html.locale-ar {
+  --font-sans: 'IBM Plex Sans Arabic', 'Segoe UI', 'Segoe UI Variable Text', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Sans Arabic', 'Roboto Mono', ui-monospace, monospace;
+}
+
+/* Arabic is a joined script: the display tracking used for tiny uppercase labels would break its
+   letter joins and make words harder to read. Numerals keep their tabular spacing elsewhere. */
+html.locale-ar * {
+  letter-spacing: normal !important;
+}
+
+html.locale-ar body {
+  font-feature-settings: 'kern' 1;
+}
+
+/* Directional arrows use the same icon component in both directions; this mirrors only the
+   glyph, never its surrounding text. */
+[dir='rtl'] .flip-rtl {
+  transform: scaleX(-1);
+}
+
+/* Charts keep time moving left-to-right, as time-series axes conventionally do, while their
+   labels still come from the active locale. */
+.chart-ltr {
+  direction: ltr;
 }
 
 @media (prefers-reduced-motion: reduce) {

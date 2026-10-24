@@ -9,6 +9,7 @@ import {
   type ThemeSource
 } from '../shared/types'
 import { readJson, updateJson } from './jsonFile'
+import { t } from './i18n'
 import { DEFAULT_DOWNLOAD_SCHEDULE, validSchedule } from '../shared/downloadSchedule'
 
 function settingsPath(): string {
@@ -70,6 +71,7 @@ function sanitizeSettings(parsed: unknown): AppSettings {
   }
   // 'system' was once an option — dropping it falls back to the OS appearance (loadThemeSource).
   if (themeSource === 'light' || themeSource === 'dark') settings.themeSource = themeSource
+  if (parsed.locale === 'en' || parsed.locale === 'ar') settings.locale = parsed.locale
   if (parsed.autoUpdate === false) settings.autoUpdate = false
   if (typeof destinationDir === 'string' && isAbsolute(destinationDir)) {
     settings.destinationDir = destinationDir
@@ -120,7 +122,9 @@ export function saveSettings(patch: unknown): Promise<void> {
     patch.downloadSchedule !== undefined &&
     !validSchedule(patch.downloadSchedule)
   ) {
-    return Promise.reject(new Error('Choose different start and stop times and at least one day.'))
+    return Promise.reject(
+      new Error(t('Choose different start and stop times and at least one day.'))
+    )
   }
   return updateJson(settingsPath(), (current) =>
     sanitizeSettings({ ...sanitizeSettings(current), ...(isRecord(patch) ? patch : {}) })

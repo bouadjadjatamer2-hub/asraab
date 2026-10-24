@@ -3,10 +3,11 @@ import type { IKoffiLib } from 'koffi'
 // On NTFS a write past the last byte written so far first fills the gap with zeros, on disk,
 // while the write waits (https://devblogs.microsoft.com/oldnewthing/20110922-00/?p=9573). Streams
 // start all over the staging file, so a block's first write could zero megabytes ahead of it, and
-// most of the file would be written twice. A sparse file has no gap to fill: what hasn't been
-// written reads as zeros. Node can't ask for it, so it's asked of kernel32. Only an
-// optimisation: a file system without sparse files (exFAT, FAT32) refuses, and the file stays
-// as it was.
+// most of the file would be written twice. DownloadFile.reserve() avoids that by giving the file
+// its final size first; this is the fallback for a file system that refuses to reserve. A sparse
+// file has no gap to fill: what hasn't been written reads as zeros. Node can't ask for it, so
+// it's asked of kernel32. Only an optimisation: a file system without sparse files (exFAT,
+// FAT32) refuses, and the file stays as it was.
 
 const GENERIC_WRITE = 0x40000000
 const SHARE_ALL = 0x7 // read, write and delete: nobody else's handle is disturbed

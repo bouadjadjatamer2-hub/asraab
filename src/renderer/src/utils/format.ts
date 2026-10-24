@@ -8,6 +8,8 @@ import type {
   TorrentDownloadNetwork,
   TorrentDownloadState
 } from '@shared/types'
+import { describeError as sharedDescribeError } from '@shared/errors'
+import { intlLocale, locale, t, tn } from '../i18n'
 
 const UNITS = ['B', 'KB', 'MB', 'GB', 'TB']
 
@@ -94,7 +96,9 @@ export function formatDataUsage(used: number, limit: number): string {
   const exponent = UNITS.indexOf(unit)
   const value =
     exponent === 0 ? rounded : (Math.floor((used / 1024 ** exponent) * 10) / 10).toFixed(1)
-  return max.endsWith(` ${unit}`) ? `${value} of ${max}` : `${value} ${unit} of ${max}`
+  return max.endsWith(` ${unit}`)
+    ? `${value} ${t('of')} ${max}`
+    : `${value} ${unit} ${t('of')} ${max}`
 }
 
 /** A speed against its limit, ["8.0", "10 MB/s"] for "8.0 / 10 MB/s": the unit said once
@@ -114,20 +118,20 @@ export function formatSpeedOfLimit(
 export function formatEta(seconds: number): string {
   if (!Number.isFinite(seconds) || seconds <= 0) return '—'
   // Seconds round up, so anything past 59s is a minute: "1m 0s", never "60s".
-  if (Math.ceil(seconds) < 60) return `${Math.max(1, Math.ceil(seconds))}s`
+  if (Math.ceil(seconds) < 60) return t('{n}s', { n: Math.max(1, Math.ceil(seconds)) })
   const totalSec = Math.max(60, Math.round(seconds))
   const mins = Math.floor(totalSec / 60)
   const secs = totalSec % 60
-  if (mins < 60) return `${mins}m ${secs}s`
+  if (mins < 60) return t('{m}m {s}s', { m: mins, s: secs })
   const hrs = Math.floor(mins / 60)
   const remMins = mins % 60
-  return `${hrs}h ${remMins}m`
+  return t('{h}h {m}m', { h: hrs, m: remMins })
 }
 
 /** "3 files", or "2 of 4 files" when only some were chosen. */
 export function describeFileCount(chosen: number, total: number): string {
-  const files = `${total} ${total === 1 ? 'file' : 'files'}`
-  return chosen === total ? files : `${chosen} of ${files}`
+  const files = tn(total, '{n} file', '{n} files')
+  return chosen === total ? files : t('{chosen} of {files}', { chosen, files })
 }
 
 /** A torrent file's path within the torrent's own folder, which every path starts with. */
@@ -160,7 +164,7 @@ export function isFolder(download: DownloadState | FinishedDownload): boolean {
 
 export function fileExtensionBadge(fileName: string): string {
   const dotIndex = fileName.lastIndexOf('.')
-  if (dotIndex <= 0 || dotIndex === fileName.length - 1) return 'FILE'
+  if (dotIndex <= 0 || dotIndex === fileName.length - 1) return t('FILE')
   return fileName.slice(dotIndex + 1, dotIndex + 5).toUpperCase()
 }
 
@@ -168,16 +172,16 @@ export function fileExtensionBadge(fileName: string): string {
  * "Yesterday 21:10", or the date. */
 export function formatWhen(time: number, now: number): string {
   const minutes = Math.floor((now - time) / 60_000)
-  if (minutes < 1) return 'Just now'
-  if (minutes < 60) return `${minutes} min ago`
+  if (minutes < 1) return t('Just now')
+  if (minutes < 60) return t('{n} min ago', { n: minutes })
   const date = new Date(time)
-  const clock = date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
+  const clock = date.toLocaleTimeString(intlLocale, { hour: '2-digit', minute: '2-digit' })
   const days = Math.round(
     (new Date(now).setHours(0, 0, 0, 0) - new Date(time).setHours(0, 0, 0, 0)) / 86_400_000
   )
-  if (days === 0) return `Today ${clock}`
-  if (days === 1) return `Yesterday ${clock}`
-  return date.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })
+  if (days === 0) return t('Today {time}', { time: clock })
+  if (days === 1) return t('Yesterday {time}', { time: clock })
+  return date.toLocaleDateString(intlLocale, { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
 /** What Tayyar can download: a web link, a magnet link, or a .torrent file on this computer. */
@@ -269,7 +273,9 @@ export function toDisplayPath(path: string, homeDir: string): string {
   return path
 }
 
-export { describeError } from '@shared/errors'
+export function describeError(error: unknown): string {
+  return sharedDescribeError(error, locale)
+}
 
 const LINK_REFUSED = /status (401|403|404|410|416) for range request/
 

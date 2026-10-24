@@ -1,4 +1,5 @@
-import type { DownloadSchedule } from './types'
+import type { DownloadSchedule, Locale } from './types'
+import { localeTag, translate } from './i18n'
 
 export const DEFAULT_DOWNLOAD_SCHEDULE: DownloadSchedule = {
   enabled: false,
@@ -87,28 +88,40 @@ export function scheduleWindow(
   return { allowed: false, nextStart, expired: nextStart === undefined }
 }
 
-export function scheduleTime(minute: number): string {
+export function scheduleTime(minute: number, locale: Locale = 'en'): string {
   const date = new Date(2000, 0, 1, Math.floor(minute / 60), minute % 60)
-  return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
+  return date.toLocaleTimeString(localeTag(locale), { hour: 'numeric', minute: '2-digit' })
 }
 
 export function scheduleMessage(
   schedule: DownloadSchedule | undefined,
-  now = Date.now()
+  now = Date.now(),
+  locale: Locale = 'en'
 ): string | null {
   if (!schedule?.enabled) return null
   const window = scheduleWindow(schedule, now)
   if (window.allowed && window.endsAt) {
-    return `Downloads stop at ${new Date(window.endsAt).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`
+    return translate(locale, 'Downloads stop at {time}', {
+      time: new Date(window.endsAt).toLocaleTimeString(localeTag(locale), {
+        hour: 'numeric',
+        minute: '2-digit'
+      })
+    })
   }
   if (window.nextStart) {
     const next = new Date(window.nextStart)
     const day =
       localDate(next) === localDate(new Date(now))
-        ? 'today'
-        : next.toLocaleDateString([], { weekday: 'short' })
-    const time = next.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
-    return `Waiting until ${time} ${day}`
+        ? translate(locale, 'today')
+        : next.toLocaleDateString(localeTag(locale), { weekday: 'short' })
+    const time = next.toLocaleTimeString(localeTag(locale), {
+      hour: 'numeric',
+      minute: '2-digit'
+    })
+    return translate(locale, 'Waiting until {time} {day}', { time, day })
   }
-  return window.expired ? 'Schedule ended · downloads waiting' : 'Schedule needs attention'
+  return translate(
+    locale,
+    window.expired ? 'Schedule ended · downloads waiting' : 'Schedule needs attention'
+  )
 }
