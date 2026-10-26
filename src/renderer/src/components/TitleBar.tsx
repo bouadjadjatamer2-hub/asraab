@@ -17,7 +17,7 @@ import {
 } from './ui/alert-dialog'
 
 const isMac = window.plexo.platform === 'darwin'
-const VERSION = 'v1.2.2'
+const VERSION = 'v1.2.3'
 
 /** The window's title bar: the drop mark, the wordmark, and a quiet version stamp, on a strip
  * the window is dragged by. The OS's controls sit at the right (macOS: traffic lights at the

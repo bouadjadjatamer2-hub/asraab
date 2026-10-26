@@ -10,6 +10,26 @@
 
   root.PlexoChangelog = [
     {
+      version: 'v1.2.3',
+      items: [
+        {
+          kind: 'fixed',
+          title: 'ZIPs packed with Zstandard',
+          text: 'Repack sites ship archives that 7-Zip compresses with Zstandard, and Majra used to stop on the first byte with `invalid stored block lengths`. It now unpacks them while downloading, like any other ZIP.'
+        },
+        {
+          kind: 'improved',
+          title: 'A clear reason for what cannot be unpacked',
+          text: 'An archive using a compression method Majra has no reader for, or one protected by a password, now says so by name and suggests saving it for 7-Zip or WinRAR, instead of a decoder error.'
+        },
+        {
+          kind: 'fixed',
+          title: 'A failed unpack no longer hangs',
+          text: 'When unpacking stops on an error, the download ends with that reason instead of sitting at 100% for good.'
+        }
+      ]
+    },
+    {
       version: 'v1.2.2',
       items: [
         {

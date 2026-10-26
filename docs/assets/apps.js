@@ -23,8 +23,8 @@ window.ASRAAB_APPS = [
     status: 'live',
     statusLabel: { en: 'Live', ar: 'متاح' },
     platform: { en: 'Windows 10/11', ar: 'ويندوز 10/11' },
-    version: '1.2.2',
-    size: '125.3 MB',
+    version: '1.2.3',
+    size: '127.8 MB',
     license: 'MIT',
     href: './apps/majra/',
     icon: './assets/img/majra-icon.png',
@@ -33,5 +33,5 @@ window.ASRAAB_APPS = [
 ]
 
 window.ASRAAB_CATALOG = {
-  updated: '2026-10-24'
+  updated: '2026-10-26'
 }

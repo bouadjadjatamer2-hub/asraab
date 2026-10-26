@@ -193,7 +193,11 @@ export class ZipExtractor implements StreamUnpacker {
     mkdirSync(dir, { recursive: true })
     this.worker = new Worker(ZIP_WORKER_SOURCE, {
       eval: true,
-      workerData: { dir, unzipper: require.resolve('unzipper') }
+      workerData: {
+        dir,
+        unzipper: require.resolve('unzipper'),
+        parseExtraField: require.resolve('unzipper/lib/parseExtraField')
+      }
     })
     this.worker.on('message', (message: { type: string; id: number; error?: string }) => {
       const pending = this.pending.get(message.id)
@@ -308,6 +312,69 @@ const { mkdirSync, createWriteStream } = require('node:fs')
 const { mkdir } = require('node:fs/promises')
 const { dirname, join } = require('node:path')
 const { pipeline } = require('node:stream/promises')
+const zlib = require('node:zlib')
+
+// unzipper's parser always runs the entry data through raw DEFLATE. That is the method every
+// common ZIP uses, but not the only one: 7-Zip writes Zstandard (method 93) by default in recent
+// versions, and repack sites ship archives packed that way, which used to fail with zlib's own
+// "invalid stored block lengths". The parser names each entry's method just before it builds the
+// decompressor, so it is recorded there and the matching reader handed back below. Methods this
+// build has no reader for fail with a sentence that says what to do instead.
+const parseExtraFieldPath = workerData.parseExtraField
+const parseExtraField = require(parseExtraFieldPath)
+const inflateRaw = zlib.createInflateRaw
+let compressionMethod = 8
+require.cache[parseExtraFieldPath].exports = function (extraField, vars) {
+  compressionMethod = vars.compressionMethod
+  return parseExtraField(extraField, vars)
+}
+const METHOD_NAMES = {
+  1: 'Shrink',
+  2: 'Reduce',
+  3: 'Reduce',
+  4: 'Reduce',
+  5: 'Reduce',
+  6: 'Implode',
+  9: 'Deflate64',
+  10: 'PKWARE DCL',
+  12: 'bzip2',
+  14: 'LZMA',
+  18: 'IBM TERSE',
+  19: 'LZ77',
+  95: 'XZ',
+  96: 'JPEG',
+  97: 'WavPack',
+  98: 'PPMd',
+  99: 'AES encryption'
+}
+// The export is read-only on current Node, so it is redefined rather than assigned.
+Object.defineProperty(zlib, 'createInflateRaw', {
+  configurable: true,
+  writable: true,
+  enumerable: true,
+  value: function () {
+    if (compressionMethod === 8) return inflateRaw.apply(zlib, arguments)
+    if (compressionMethod === 93) {
+      if (typeof zlib.createZstdDecompress !== 'function') {
+        throw new Error(
+          'This archive is Zstandard-compressed, and this build of Majra can\u2019t unpack that while downloading. Save it, then unpack it with 7-Zip.'
+        )
+      }
+      return zlib.createZstdDecompress()
+    }
+    if (compressionMethod === 99) {
+      throw new Error(
+        'The archive is password-protected. Save it and unpack it with your archive tool.'
+      )
+    }
+    const name = METHOD_NAMES[compressionMethod] || 'method ' + compressionMethod
+    throw new Error(
+      'This archive uses ' +
+        name +
+        ' compression, which can\u2019t be unpacked while downloading. Save it, then unpack it with 7-Zip or WinRAR.'
+    )
+  }
+})
 const unzipper = require(workerData.unzipper)
 const dir = workerData.dir
 mkdirSync(dir, { recursive: true })
@@ -378,9 +445,11 @@ function targetPath(name) {
   return unique
 }
 
+let activeEntry = null
+
 const consumed = (async () => {
   for await (const entry of parser) {
-    if (stopped) {
+    if (stopped || failure) {
       entry.autodrain()
       continue
     }
@@ -394,24 +463,36 @@ const consumed = (async () => {
       entry.autodrain()
       continue
     }
-    if (entry.vars && entry.vars.encrypted) {
+    if (entry.vars && (entry.vars.encrypted || (entry.vars.flags & 0x1))) {
       entry.autodrain()
       throw new Error('The archive is password-protected. Save it and unpack it with your archive tool.')
     }
     const target = join(dir, relative)
     await mkdir(dirname(target), { recursive: true })
-    await pipeline(entry, createWriteStream(target))
+    // A parser error (a method this build can't unpack, a damaged header) stops the entry from
+    // ever ending: without this the write below would wait for bytes that can't come.
+    activeEntry = entry
+    try {
+      await pipeline(entry, createWriteStream(target))
+    } finally {
+      activeEntry = null
+    }
   }
-})().catch((error) => {
-  failure = error instanceof Error ? error : new Error(String(error))
-  if (!parser.destroyed) parser.destroy()
-})
+})().catch((error) => stop(error))
 
-parser.on('error', (error) => {
-  failure ??= error
-})
+/** Records why unpacking can't go on, and releases whatever is waiting on the parser. */
+function stop(error) {
+  failure ??= error instanceof Error ? error : new Error(String(error))
+  if (activeEntry && !activeEntry.destroyed) activeEntry.destroy(failure)
+  if (!parser.destroyed) parser.destroy()
+}
+
+parser.on('error', (error) => stop(error))
 
 function waitForDrain() {
+  // A parser that already stopped will never drain: the write that asked is the one that
+  // reported the failure, and waiting here would hold the transfer open for good.
+  if (failure || parser.destroyed) return Promise.resolve()
   return new Promise((resolve, reject) => {
     const cleanup = () => {
       parser.off('drain', onDrain)
@@ -433,6 +514,11 @@ function waitForDrain() {
     parser.once('drain', onDrain)
     parser.once('error', onError)
     parser.once('close', onClose)
+    // Destroyed between the check above and these listeners: its events are already gone.
+    if (parser.destroyed) {
+      cleanup()
+      resolve()
+    }
   })
 }
 
