@@ -7,7 +7,7 @@ export const BACKGROUND_FLAG = '--background'
 // defaults to on: closing the window must not stop downloads the user left running.
 let runInBackground = true
 
-/** Whether closing the last window should leave Tayyar in the tray. */
+/** Whether closing the last window should leave Majra in the tray. */
 export function keepsRunningInBackground(): boolean {
   return runInBackground
 }
@@ -22,7 +22,7 @@ export function launchedInBackground(): boolean {
 }
 
 /**
- * Adds or removes Tayyar's entry in Windows Task Manager → Startup (the per-user Run key).
+ * Adds or removes Majra's entry in Windows Task Manager → Startup (the per-user Run key).
  * The entry passes BACKGROUND_FLAG, so signing in leaves the app in the tray.
  *
  * Only packaged builds have a stable executable path to register; development and e2e runs
@@ -34,7 +34,7 @@ export function applyStartAtLogin(enabled: boolean): void {
     if (process.platform === 'win32') {
       app.setLoginItemSettings({
         openAtLogin: enabled,
-        name: 'Tayyar',
+        name: 'Majra',
         path: process.execPath,
         args: [BACKGROUND_FLAG]
       })

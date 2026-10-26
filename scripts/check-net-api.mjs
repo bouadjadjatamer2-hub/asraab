@@ -3,8 +3,8 @@
 import { _electron as electron } from 'playwright'
 
 const app = await electron.launch({
-  executablePath: 'C:\\Users\\Lenovo\\Downloads\\tayyar\\dist\\win-unpacked\\tayyar.exe',
-  args: ['--user-data-dir=C:\\Users\\Lenovo\\AppData\\Local\\Temp\\tayyar-stack-check']
+  executablePath: 'C:\\Users\\Lenovo\\Downloads\\majra\\dist\\win-unpacked\\majra.exe',
+  args: ['--user-data-dir=C:\\Users\\Lenovo\\AppData\\Local\\Temp\\majra-stack-check']
 })
 await app.firstWindow()
 const report = await app.evaluate(async ({ net }) => {

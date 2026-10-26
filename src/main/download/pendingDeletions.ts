@@ -108,7 +108,7 @@ export class PendingDeletions {
       })
       .catch((error) => {
         // The deletion still runs; only the after-crash record is lost.
-        console.warn('[tayyar] could not save the pending-deletion list', error)
+        console.warn('[majra] could not save the pending-deletion list', error)
       })
     return this.writing
   }

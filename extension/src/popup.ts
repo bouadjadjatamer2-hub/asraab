@@ -20,9 +20,9 @@ async function render(): Promise<void> {
   ])
   const [tone, text] =
     reached === 'closed'
-      ? ['', 'Tayyar not open']
+      ? ['', 'Majra not open']
       : reached === 'update'
-        ? ['warn', 'Update Tayyar']
+        ? ['warn', 'Update Majra']
         : settings.capture
           ? ['ok', 'Connected']
           : ['', 'Capture off']
@@ -33,7 +33,7 @@ async function render(): Promise<void> {
 
   element<HTMLInputElement>('capture').checked = settings.capture
   element('capture-hint').textContent = settings.capture
-    ? 'Downloads open in Tayyar instead of the browser.'
+    ? 'Downloads open in Majra instead of the browser.'
     : 'Downloads stay in the browser.'
 
   element('site-row').hidden = host === null
@@ -46,7 +46,7 @@ async function render(): Promise<void> {
     element('site-hint').textContent = !settings.capture
       ? 'Capture is off everywhere.'
       : on
-        ? 'Downloads from this site go to Tayyar.'
+        ? 'Downloads from this site go to Majra.'
         : 'Downloads from this site stay in the browser.'
   }
 }
@@ -72,11 +72,11 @@ element('grant').addEventListener('click', () => {
   void api.permissions.request(ALL_SITES).then(render)
 })
 element('open-plexo').addEventListener('click', () => {
-  void api.runtime.sendMessage({ wakeTayyar: true })
+  void api.runtime.sendMessage({ wakeMajra: true })
 })
 element('options').addEventListener('click', () => void api.runtime.openOptionsPage())
 
 api.storage.onChanged.addListener(() => void render())
 void render()
 // So the toolbar icon agrees with the popup now, not at its next check.
-void api.runtime.sendMessage({ checkTayyar: true }).catch(() => {})
+void api.runtime.sendMessage({ checkMajra: true }).catch(() => {})

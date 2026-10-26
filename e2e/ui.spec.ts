@@ -382,7 +382,7 @@ test.describe('language', () => {
     const page = (): Page => plexo.page
     await page().getByRole('button', { name: 'Switch to Arabic' }).click()
     await expect(page().getByRole('alertdialog')).toContainText(
-      'Restart Tayyar to switch to Arabic?'
+      'Restart Majra to switch to Arabic?'
     )
     // Keep this launch in English; the saved choice applies on the next one.
     await page().getByRole('button', { name: 'Later' }).click()
@@ -398,16 +398,15 @@ test.describe('language', () => {
 
     // The decorative signature is pinned to the physical bottom-right even in RTL, and never
     // stands between the pointer and the status bar.
-    const signature = page().getByText('TAMER', { exact: true })
+    const signature = page().locator('[data-signature]')
     await expect(signature).toBeVisible()
     const place = await signature.evaluate((element) => {
       const box = element.getBoundingClientRect()
-      const decoration = element.parentElement!
       return {
         rightGap: window.innerWidth - box.right,
         bottomGap: window.innerHeight - box.bottom,
-        pointerEvents: getComputedStyle(decoration).pointerEvents,
-        hidden: decoration.getAttribute('aria-hidden')
+        pointerEvents: getComputedStyle(element).pointerEvents,
+        hidden: element.getAttribute('aria-hidden')
       }
     })
     expect(place.rightGap).toBeLessThan(40)
@@ -417,7 +416,7 @@ test.describe('language', () => {
 
     await page().getByRole('button', { name: 'التبديل إلى الإنجليزية' }).click()
     await expect(page().getByRole('alertdialog')).toContainText(
-      'أعد تشغيل Tayyar للتبديل إلى الإنجليزية؟'
+      'أعد تشغيل Majra للتبديل إلى الإنجليزية؟'
     )
     await page().getByRole('button', { name: 'لاحقًا' }).click()
     await plexo.relaunch()

@@ -38,10 +38,10 @@ async function renderConnection(): Promise<void> {
   element('dot').className = `dot ${reached === 'ok' ? 'ok' : reached === 'update' ? 'warn' : ''}`
   element('connection').textContent =
     reached === 'ok'
-      ? 'Connected to Tayyar'
+      ? 'Connected to Majra'
       : reached === 'update'
-        ? 'Update Tayyar to use this extension'
-        : 'Tayyar isn’t open'
+        ? 'Update Majra to use this extension'
+        : 'Majra isn’t open'
   element('open-plexo').hidden = reached !== 'closed'
   const port = plexoPort()
   element('port').textContent = port === null ? '' : `127.0.0.1:${port}`
@@ -71,7 +71,7 @@ element<HTMLFormElement>('add-site').addEventListener('submit', async (event) =>
 })
 
 element('open-plexo').addEventListener('click', () => {
-  void api.runtime.sendMessage({ wakeTayyar: true }).then(() => setTimeout(renderConnection, 4000))
+  void api.runtime.sendMessage({ wakeMajra: true }).then(() => setTimeout(renderConnection, 4000))
 })
 
 element('version').textContent = `Extension ${api.runtime.getManifest().version}`

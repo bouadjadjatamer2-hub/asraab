@@ -57,7 +57,7 @@ export function CompleteScreen({
   const files = isTorrent && download.files.total > 1 ? download.files : null
 
   return (
-    <div className="flex h-full flex-col bg-background">
+    <div className="screen-enter flex h-full flex-col bg-background">
       <DetailHeader download={download} />
       <div role="status" className="sr-only">
         {t('Download complete: {name}', { name: download.fileName })}

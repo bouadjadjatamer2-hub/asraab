@@ -1,23 +1,23 @@
 import type { BrowserContext } from './types'
 
-// The extension imports this file too, so Tayyar and the extension can't drift apart.
+// The extension imports this file too, so Majra and the extension can't drift apart.
 
-/** Tayyar listens on the first that's free and the extension tries them all, so a port another app
+/** Majra listens on the first that's free and the extension tries them all, so a port another app
  * holds needs no setting. */
 export const BRIDGE_PORTS = [19288, 19289, 19290] as const
-/** Raised when an older extension or Tayyar couldn't follow a change to /ping or /add. */
+/** Raised when an older extension or Majra couldn't follow a change to /ping or /add. */
 export const BRIDGE_API = 1
-/** The extension waits a little longer than this, and Tayyar adds nothing once it has given up,
+/** The extension waits a little longer than this, and Majra adds nothing once it has given up,
  * so a download never ends up in both. */
 export const BRIDGE_DEADLINE_MS = 8000
 
 export interface BridgePing {
-  app: 'tayyar'
+  app: 'majra'
   version: string
   api: number
 }
 
-/** 200 with a BridgeHandoff: Tayyar will take it. 422: the browser keeps it. Never held past the
+/** 200 with a BridgeHandoff: Majra will take it. 422: the browser keeps it. Never held past the
  * deadline: Chrome stops an extension's service worker when a fetch takes over 30 s. */
 export interface BridgeAddRequest {
   url: string
@@ -28,9 +28,9 @@ export interface BridgeAddRequest {
   fileName?: string
 }
 
-/** Tayyar shows the download only once POST /confirm brings this back: the extension confirms
+/** Majra shows the download only once POST /confirm brings this back: the extension confirms
  * after the browser's copy is really gone, since it can finish before it's cancelled. Unconfirmed,
- * it expires and Tayyar shows nothing, so a download never ends up in both. */
+ * it expires and Majra shows nothing, so a download never ends up in both. */
 export interface BridgeHandoff {
   token: string
 }

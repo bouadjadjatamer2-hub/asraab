@@ -1,12 +1,5 @@
-/* Small shared shell for legal / error pages. Mirrors the main site tokens. */
+﻿/* Small shared shell for legal / error pages. Mirrors the main site tokens. */
 
-@font-face {
-  font-family: 'Space Grotesk';
-  font-style: normal;
-  font-weight: 300 700;
-  font-display: swap;
-  src: url('./fonts/SpaceGrotesk-Variable.woff2') format('woff2');
-}
 @font-face {
   font-family: 'Manrope';
   font-style: normal;
@@ -24,39 +17,39 @@
 
 :root {
   color-scheme: dark;
-  --bg: #0a0b10;
-  --bg-soft: #0d0f16;
-  --card: #11131a;
-  --raised: #171a23;
-  --line: #232838;
-  --line-strong: #313748;
-  --text: #f1f3fa;
-  --muted: #a3a9bc;
-  --faint: #8d93a6;
-  --dim: #7d8396;
-  --violet: #8b6cff;
-  --cyan: #22d3ee;
-  --gradient: linear-gradient(135deg, #8b6cff 0%, #6d8bff 52%, #22d3ee 135%);
-  --gradient-button: linear-gradient(135deg, #7555e8 0%, #4a60d2 52%, #0a7b90 135%);
-  --focus: #9be9f5;
+  --bg: #0d100e;
+  --bg-soft: #111510;
+  --card: #131814;
+  --raised: #1a201b;
+  --line: #262d26;
+  --line-strong: #3a423a;
+  --text: #f1f0e7;
+  --muted: #a7ab9f;
+  --faint: #8e9387;
+  --dim: #7b8075;
+  --violet: #e8a35f;
+  --cyan: #c2620f;
+  --gradient: linear-gradient(135deg, #e8a35f 0%, #d08338 52%, #c2620f 135%);
+  --gradient-button: linear-gradient(135deg, #c2620f 0%, #9a4a0e 52%, #7a3a0a 135%);
+  --focus: #f2c78e;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
     color-scheme: light;
-    --bg: #f5f6fb;
-    --bg-soft: #eef0fa;
-    --card: #ffffff;
-    --raised: #eceefa;
-    --line: #e3e5ef;
-    --line-strong: #c7cad9;
-    --text: #12141b;
-    --muted: #5c6172;
-    --faint: #5f6475;
-    --dim: #666b7b;
-    --violet: #6d4aff;
-    --cyan: #0e7d93;
-    --focus: #6d4aff;
+    --bg: #f4f1e9;
+    --bg-soft: #ece8de;
+    --card: #fffcf5;
+    --raised: #ebe7dc;
+    --line: #e1dcd0;
+    --line-strong: #c6c0b2;
+    --text: #171a16;
+    --muted: #565b52;
+    --faint: #676c62;
+    --dim: #676c62;
+    --violet: #b45309;
+    --cyan: #1c7a62;
+    --focus: #b45309;
   }
 }
 
@@ -90,8 +83,8 @@ body::before {
   height: 880px;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 72% 20%, rgba(139, 108, 255, 0.16), transparent 62%),
-    radial-gradient(ellipse at 15% 10%, rgba(34, 211, 238, 0.05), transparent 60%);
+    radial-gradient(ellipse at 72% 20%, rgba(232, 163, 95, 0.16), transparent 62%),
+    radial-gradient(ellipse at 15% 10%, rgba(194, 98, 15, 0.05), transparent 60%);
 }
 
 body::after {
@@ -126,7 +119,7 @@ a:hover {
 }
 
 ::selection {
-  background: rgba(139, 108, 255, 0.35);
+  background: rgba(232, 163, 95, 0.35);
   color: var(--text);
 }
 
@@ -167,11 +160,11 @@ img {
   width: 27px;
   height: 27px;
   border-radius: 7px;
-  filter: drop-shadow(0 4px 12px rgba(139, 108, 255, 0.25));
+  filter: drop-shadow(0 4px 12px rgba(232, 163, 95, 0.25));
 }
 
 .legal-brand span {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.26em;
@@ -216,13 +209,13 @@ img {
   height: 5px;
   border-radius: 50%;
   background: var(--gradient);
-  box-shadow: 0 0 10px rgba(34, 211, 238, 0.4);
+  box-shadow: 0 0 10px rgba(194, 98, 15, 0.4);
 }
 
 h1,
 h2 {
   color: var(--text);
-  font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
   text-wrap: balance;
 }
 
@@ -267,7 +260,7 @@ p {
   border-radius: 14px;
   background:
     linear-gradient(var(--card), var(--card)) padding-box,
-    linear-gradient(135deg, rgba(139, 108, 255, 0.55), rgba(34, 211, 238, 0.3)) border-box;
+    linear-gradient(135deg, rgba(232, 163, 95, 0.55), rgba(194, 98, 15, 0.3)) border-box;
   padding: 18px 20px;
   color: var(--text);
   font-size: 14px;
@@ -312,13 +305,13 @@ p {
   background: var(--gradient-button);
   padding: 0 18px;
   color: #fff !important;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-size: 13px;
   font-weight: 600;
   text-decoration: none;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 10px 24px -12px rgba(109, 74, 255, 0.65);
+    0 10px 24px -12px rgba(180, 83, 9, 0.65);
 }
 
 .legal-footer {
@@ -385,3 +378,4 @@ p {
     transition-duration: 0.01ms !important;
   }
 }
+

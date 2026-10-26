@@ -1,4 +1,4 @@
-/* Arabic copy for the Asraab website and the Tayyar app page.
+/* Arabic copy for the Asraab website and the Majra app page.
  *
  * English lives in index.html so the page is complete without JavaScript. When the visitor
  * chooses Arabic we swap the copy here and mirror the layout to RTL. Adding a key to `ar` and
@@ -6,12 +6,12 @@
  */
 window.ASRAAB_I18N = {
   ar: {
-    'meta.title': 'تيار — كل اتصالاتك. تحميل واحد. · أسراب',
+    'meta.title': 'مجرى — كل رابط يهبط هنا. · أسراب',
     'meta.description':
-      'تيار مدير تحميل مجاني ومفتوح المصدر لويندوز. يقسّم الملفات بين Wi-Fi والإيثرنت وUSB، ويدعم حتى 64 اتصالاً، وفكّ الضغط أثناء التنزيل، وإضافة للمتصفح.',
+      'مجرى مدير تحميل مجاني ومفتوح المصدر لويندوز. يقسّم الملفات بين Wi-Fi والإيثرنت وUSB، ويدعم حتى 64 اتصالاً، وفكّ الضغط أثناء التنزيل، وإضافة للمتصفح.',
 
     'a11y.skip': 'تجاوز إلى المحتوى',
-    'a11y.home': 'الصفحة الرئيسية لتيار',
+    'a11y.home': 'الصفحة الرئيسية لمجرى',
     'a11y.breadcrumb': 'مسار التنقل',
     'site.a11yHome': 'الصفحة الرئيسية لأسراب',
     'site.nav.apps': 'التطبيقات',
@@ -24,11 +24,11 @@ window.ASRAAB_I18N = {
     'site.footerTagline': 'كتالوج صغير لتطبيقات مستقلة تستحق البقاء.',
     'site.footerStatus': 'ويندوز · مفتوح المصدر',
     'site.footerCatalog': 'الكتالوج',
-    'site.tayyarRepo': 'مستودع تيار',
+    'site.majraRepo': 'مستودع مجرى',
     'site.extensionPrivacy': 'خصوصية الإضافة',
     'site.siteSource': 'كود الموقع',
     'site.footerRights': '© {year} مساهمو أسراب.',
-    'site.footerDisclaimer': 'تيار غير مرتبط بـ Internet Download Manager أو Tonec Inc.',
+    'site.footerDisclaimer': 'مجرى غير مرتبط بـ Internet Download Manager أو Tonec Inc.',
     'site.mitWhere': 'MIT حيث يهم',
     'nav.allApps': 'كل التطبيقات',
     'nav.catalog': 'الكتالوج',
@@ -40,8 +40,8 @@ window.ASRAAB_I18N = {
     'nav.faq': 'الأسئلة',
     'nav.primary': 'التنقل الرئيسي',
     'nav.mobilePrimary': 'التنقل في القائمة',
-    'nav.github': 'تيار على GitHub',
-    'nav.downloadShort': 'حمّل تيار',
+    'nav.github': 'مجرى على GitHub',
+    'nav.downloadShort': 'حمّل مجرى',
     'nav.menu': 'فتح القائمة',
     'nav.closeMenu': 'إغلاق القائمة',
     'theme.toLight': 'التبديل إلى الوضع الفاتح',
@@ -52,17 +52,17 @@ window.ASRAAB_I18N = {
     'lang.english': 'English',
 
     'hero.eyebrow': 'مدير تحميل لنظام ويندوز',
-    'hero.title1': 'تحميل واحد.',
-    'hero.title2': 'كل اتصالاتك.',
+    'hero.title1': 'كل رابط.',
+    'hero.title2': 'يهبط هنا.',
     'hero.lede':
-      'يقسّم تيار الملف إلى كتل ويسحبها عبر Wi-Fi والإيثرنت وUSB في الوقت نفسه — مع استكمال التحميل بعد إعادة التشغيل، والطوابير، وفكّ الضغط أثناء التنزيل.',
+      'يقسّم مجرى الملف إلى كتل ويسحبها عبر Wi-Fi والإيثرنت وUSB في الوقت نفسه — مع استكمال التحميل بعد إعادة التشغيل، والطوابير، وفكّ الضغط أثناء التنزيل.',
     'hero.download': 'حمّل لويندوز',
     'hero.secondary': 'شاهد كيف يعمل',
     'hero.windows': 'ويندوز 10 و11',
     'hero.note': 'مجاني ومفتوح المصدر (MIT) · بدون حساب',
     'hero.chipNetworks': 'ثلاث شبكات معاً',
     'hero.chipExtract': 'فكّ ضغط أثناء التحميل',
-    'hero.statsAria': 'تيار في لمحة',
+    'hero.statsAria': 'مجرى في لمحة',
     'hero.stats.streamsLabel': 'اتصالاً لكل شبكة',
     'hero.stats.networksLabel': 'أنواع الشبكات',
     'hero.stats.extractLabel': 'فكّ ضغط أثناء التنزيل',
@@ -71,13 +71,13 @@ window.ASRAAB_I18N = {
 
     'home.metaTitle': 'أسراب — تطبيقات أقل. أفضل منها.',
     'home.metaDescription':
-      'أسراب كتالوج صغير ومختار بعناية لبرامج ويندوز المستقلة. تطبيق واحد حتى الآن والمزيد في الطريق: تيار، مدير تحميل مجاني ومفتوح المصدر.',
+      'أسراب كتالوج صغير ومختار بعناية لبرامج ويندوز المستقلة. تطبيق واحد حتى الآن والمزيد في الطريق: مجرى، مدير تحميل مجاني ومفتوح المصدر.',
     'home.eyebrow': 'برامج ويندوز مستقلة',
     'home.title1': 'تطبيقات أقل.',
     'home.title2': 'أفضل منها.',
     'home.lede':
       'أسراب كتالوج صغير ومختار بعناية لبرامج ويندوز المستقلة. تطبيق واحد حتى الآن، والمزيد في الطريق — بلا حسابات إجبارية، بلا برامج مرفقة، وبلا حيل.',
-    'home.meetTayyar': 'تعرّف على تيار',
+    'home.meetMajra': 'تعرّف على مجرى',
     'home.metaAccounts': 'بدون حسابات',
     'home.metaDirect': 'تحميل مباشر',
     'home.note': 'مجاني حيث أمكن. مفتوح المصدر حيث يهم. وصادق في كل الحالات.',
@@ -98,7 +98,7 @@ window.ASRAAB_I18N = {
     'home.mockApps': '01 — التطبيقات',
     'home.mockUpdated': 'تحديث 2026',
     'home.mockCategory': 'مدير تحميل ويندوز',
-    'home.mockTagline': 'كل اتصالاتك. تحميل واحد.',
+    'home.mockTagline': 'كل رابط يهبط هنا.',
     'home.mockCopy': 'يقسّم الملفات بين Wi-Fi والإيثرنت وUSB في الوقت نفسه.',
     'home.mockNetworks': '3 شبكات · 24 اتصالاً',
     'home.mockNext': 'القادم',
@@ -141,16 +141,16 @@ window.ASRAAB_I18N = {
     'home.aboutPoint3Title': 'التطبيقات يمكن أن تغادر.',
     'home.aboutPoint3Body':
       'إذا توقف تطبيق عن تلبية المعايير، يخرج من الكتالوج. الصغر هو القصد، وليس مرحلة.',
-    'home.repoAria': 'هيكل كتالوج أسراب: مستودع لكل تطبيق، بدءاً بتيار',
+    'home.repoAria': 'هيكل كتالوج أسراب: مستودع لكل تطبيق، بدءاً بمجرى',
 
     'features.eyebrow': 'مصمّم للملفات الكبيرة',
     'features.title': 'سرعة عندما تكون هناك سعة.',
     'features.lede':
-      'تيار يقوم بالعمل غير اللامع: يقسّم الملفات، يُبقي كل اتصال مشغولاً، يتحقق مما وصل، ويتركك تغلق النافذة.',
+      'مجرى يقوم بالعمل غير اللامع: يقسّم الملفات، يُبقي كل اتصال مشغولاً، يتحقق مما وصل، ويتركك تغلق النافذة.',
     'features.f1Tag': 'MULTI-NET',
     'features.f1Title': 'كل الاتصالات معاً',
     'features.f1Body':
-      'يمكن لـ Wi-Fi والإيثرنت وUSB ومشاركة الهاتف أن تحمل الملف نفسه في الوقت ذاته. يربط تيار كل مسار بالشبكة التي اخترتها.',
+      'يمكن لـ Wi-Fi والإيثرنت وUSB ومشاركة الهاتف أن تحمل الملف نفسه في الوقت ذاته. يربط مجرى كل مسار بالشبكة التي اخترتها.',
     'features.f2Tag': 'STREAMS',
     'features.f2Title': 'من 2 إلى 64 اتصالاً',
     'features.f2Body':
@@ -164,13 +164,13 @@ window.ASRAAB_I18N = {
     'features.f4Body':
       'الصق رابط الملف وانطلق. لا صفحة وسيطة ولا حساب إجباري. التحميلات المحمية بتسجيل الدخول تعمل عبر الإضافة.',
     'features.f5Tag': 'BROWSER',
-    'features.f5Title': 'من المتصفح إلى تيار',
+    'features.f5Title': 'من المتصفح إلى مجرى',
     'features.f5Body':
       'إضافة Chromium تُسلّم التحميلات إلى التطبيق مع ملفات تعريف الارتباط الخاصة بالمتصفح، ثم تنسحب من الطريق.',
     'features.f6Tag': 'TRAY',
     'features.f6Title': 'يبقى في شريط النظام',
     'features.f6Body':
-      'أغلق النافذة ويستمر التحميل. ابدأ تيار مع ويندوز ليكون جاهزاً في الخلفية عند الحاجة.',
+      'أغلق النافذة ويستمر التحميل. ابدأ مجرى مع ويندوز ليكون جاهزاً في الخلفية عند الحاجة.',
     'features.also': 'وأيضاً بالداخل',
     'features.alsoBody':
       'استكمال بعد إعادة التشغيل · طوابير وحدود · جدولة · تصنيفات · ملفات torrent · فحص اختياري بـ Windows Defender',
@@ -179,7 +179,7 @@ window.ASRAAB_I18N = {
     'how.title': 'من الرابط إلى ملف مكتمل.',
     'how.lede': 'بلا متاهة إعداد. ثبّت، الصق، واتركه يعمل.',
     'how.step1Tag': '01 / تثبيت',
-    'how.step1Title': 'ثبّت تيار',
+    'how.step1Title': 'ثبّت مجرى',
     'how.step1Body':
       'حمّل مثبّت ويندوز وشغّله. الملف غير موقّع رقمياً، لذا قد يطلب SmartScreen تأكيداً — نشرح ذلك بالأسفل.',
     'how.step2Tag': '02 / إضافة',
@@ -187,7 +187,7 @@ window.ASRAAB_I18N = {
     'how.step2Body':
       'الصق رابطاً مباشراً، أو افتح ملف ‎.torrent‎، أو أرسل التحميل من إضافة المتصفح.',
     'how.step3Tag': '03 / تشغيل',
-    'how.step3Title': 'اترك تيار يعمل',
+    'how.step3Title': 'اترك مجرى يعمل',
     'how.step3Body':
       'تتوزع الكتل على شبكاتك، ويُتحقق منها أثناء وصولها، وتُفكّ الأرشيفات المدعومة دون انتظار.',
     'how.note': 'تستطيع الإيقاف المؤقت، والاستكمال، وإعادة الترتيب، والجدولة من الطابور.',
@@ -195,9 +195,9 @@ window.ASRAAB_I18N = {
     'connections.eyebrow': 'توازٍ حسب التصميم',
     'connections.title': 'اتصالات أكثر. انتظار أقل.',
     'connections.lede':
-      'اختر عدد الاتصالات التي يفتحها تيار لكل شبكة. الاتصالات الإضافية تفيد عندما يكون لدى الخادم سعة؛ لكنها لا تخلق سرعة غير موجودة.',
+      'اختر عدد الاتصالات التي يفتحها مجرى لكل شبكة. الاتصالات الإضافية تفيد عندما يكون لدى الخادم سعة؛ لكنها لا تخلق سرعة غير موجودة.',
     'connections.consoleLabel': 'مختبر الاتصالات',
-    'connections.panelLede': 'حدّد سقفاً لكل شبكة. تيار يتولى بقية الطابور.',
+    'connections.panelLede': 'حدّد سقفاً لكل شبكة. مجرى يتولى بقية الطابور.',
     'connections.point1': 'إعدادات من 2 إلى 32؛ وضع Turbo يرفعها إلى 64 لكل شبكة.',
     'connections.point2': 'كل مسار يبقى مرتبطاً بالشبكة التي اخترتها.',
     'connections.point3': 'الكتل تنتقل إلى الاتصال المتاح.',
@@ -219,7 +219,7 @@ window.ASRAAB_I18N = {
     'download.eyebrow': 'ويندوز 10 و11 · 64 بت',
     'download.title': 'جاهز عندما تكون جاهزاً.',
     'download.lede': 'ملف تثبيت واحد. بدون حساب. أحدث إصدار وبصمته بالأسفل.',
-    'download.button': 'حمّل تيار',
+    'download.button': 'حمّل مجرى',
     'download.releaseNotes': 'ملاحظات الإصدار',
     'download.releaseChannel': 'قناة الإصدار',
     'download.latest': 'الأحدث',
@@ -233,7 +233,7 @@ window.ASRAAB_I18N = {
     'download.licenseLabel': 'الرخصة',
     'download.licenseValue': 'MIT',
     'download.checksumLabel': 'SHA-256',
-    'download.appIconAlt': 'أيقونة تطبيق تيار',
+    'download.appIconAlt': 'أيقونة تطبيق مجرى',
     'download.copyChecksum': 'نسخ بصمة SHA-256',
     'download.unsignedTitle': 'بخصوص تحذير SmartScreen',
     'download.unsignedBody':
@@ -251,7 +251,7 @@ window.ASRAAB_I18N = {
     'extension.eyebrow': 'إضافة Chromium',
     'extension.title': 'دع المتصفح يسلّمها.',
     'extension.lede':
-      'ثبّت الإضافة، وستفتح التحميلات في تيار بدلاً من رف التحميل في المتصفح — مع ملفات تعريف الارتباط.',
+      'ثبّت الإضافة، وستفتح التحميلات في مجرى بدلاً من رف التحميل في المتصفح — مع ملفات تعريف الارتباط.',
     'extension.button': 'حمّل الإضافة (.zip)',
     'extension.browsers': 'Chrome · Edge · Brave · Opera',
     'extension.supported': 'المتصفحات المدعومة',
@@ -264,27 +264,27 @@ window.ASRAAB_I18N = {
     'extension.step3Body':
       'اختر Load unpacked ثم حدّد المجلد الذي استخرجته. ملف manifest.json موجود في جذوره.',
     'extension.step4Title': 'أرسل تحميلاً',
-    'extension.step4Body': 'استخدم زر الإضافة أو قائمة النقر الأيمن. يجب أن يكون تيار قيد التشغيل.',
+    'extension.step4Body': 'استخدم زر الإضافة أو قائمة النقر الأيمن. يجب أن يكون مجرى قيد التشغيل.',
     'extension.manualTitle': 'تثبيت يدوي',
     'extension.manualBody':
       'الإضافة ليست على Chrome Web Store بعد، لذا لن يحدّثها المتصفح تلقائياً. أعد تنزيل ملف zip مع كل إصدار جديد.',
     'extension.privacyLink': 'اقرأ سياسة خصوصية الإضافة',
-    'extension.localNote': 'تتواصل الإضافة مع تيار على 127.0.0.1 فقط. لا خوادم للمطوّر.',
-    'extension.connected': 'متصل بتيار',
-    'extension.send': 'أرسل إلى تيار',
+    'extension.localNote': 'تتواصل الإضافة مع مجرى على 127.0.0.1 فقط. لا خوادم للمطوّر.',
+    'extension.connected': 'متصل بمجرى',
+    'extension.send': 'أرسل إلى مجرى',
     'extension.fileName': 'design-pack.zip',
 
     'faq.eyebrow': 'أسئلة، وأجوبة صريحة',
     'faq.title': 'النسخة الصادقة، بما فيها الحواف الخشنة.',
     'faq.lede': 'إذا لم تجد إجابتك، افتح تذكرة على GitHub.',
-    'faq.q1': 'هل يدمج تيار اتصالاتي فعلاً؟',
+    'faq.q1': 'هل يدمج مجرى اتصالاتي فعلاً؟',
     'faq.a1':
       'نعم — عندما تكون أكثر من شبكة نشطة ويدعم الخادم طلبات النطاق (Range). يقسّم الملف إلى كتل ويربط المسارات بواجهات مختلفة. الخادم الذي يحدّ اتصالاً واحداً، أو مزوّد خدمة يقيّد خطك، يظل سقفك.',
     'faq.q2': 'ما إصدارات ويندوز المدعومة؟',
     'faq.a2': 'ويندوز 10 و11 بنواة 64 بت. المثبّت الحالي مبني لمعمارية x64.',
     'faq.q3': 'هل هو مجاني؟',
     'faq.a3':
-      'نعم. تيار مجاني ومفتوح المصدر تحت رخصة MIT، ومبني على Plexo. لا حساب، ولا اشتراك، ولا إعلانات.',
+      'نعم. مجرى مجاني ومفتوح المصدر تحت رخصة MIT. لا حساب، ولا اشتراك، ولا إعلانات.',
     'faq.q4': 'لماذا يحذرني ويندوز؟',
     'faq.a4':
       'المثبّت غير موقّع رقمياً، لذا لا يستطيع SmartScreen التحقق من الناشر. اختر More info ثم Run anyway، أو ابنِ التطبيق من المصدر. يتطلب التوقيع شهادة مدفوعة، ولا يملكها المشروع بعد.',
@@ -296,25 +296,25 @@ window.ASRAAB_I18N = {
       'ZIP وRAR وTAR، بما فيها ‎.tar.gz‎ و‎.tar.bz2‎ و‎.tar.xz‎. أما ‎.7z‎ والأرشيفات متعددة الأجزاء فلا تُفكّ أثناء التنزيل؛ نزّلها كاملة ثم استخرجها بأداتك المعتادة.',
     'faq.q7': 'هل سيجعل كل تحميل أسرع؟',
     'faq.a7':
-      'لا. تيار يستفيد من الاتصالات وسعة الخادم المتاحة لديك. إذا كان الخادم يحدّك بمسار واحد بطيء، فلن تساعد الاتصالات الإضافية. وقد يضر Turbo بالأداء على عتاد ضعيف أو خوادم صارمة.',
+      'لا. مجرى يستفيد من الاتصالات وسعة الخادم المتاحة لديك. إذا كان الخادم يحدّك بمسار واحد بطيء، فلن تساعد الاتصالات الإضافية. وقد يضر Turbo بالأداء على عتاد ضعيف أو خوادم صارمة.',
     'faq.q8': 'هل يجمع بياناتي؟',
     'faq.a8':
-      'يحفظ تيار الإعدادات وسجل التحميل على جهازك. تتواصل الإضافة مع تيار على 127.0.0.1 فقط — وليس مع خوادم المطوّر. راجع سياسة خصوصية الإضافة للتفاصيل.',
+      'يحفظ مجرى الإعدادات وسجل التحميل على جهازك. تتواصل الإضافة مع مجرى على 127.0.0.1 فقط — وليس مع خوادم المطوّر. راجع سياسة خصوصية الإضافة للتفاصيل.',
     'faq.q9': 'هل يدعم ملفات torrent؟',
     'faq.a9':
-      'نعم، يمكن فتح ملفات ‎.torrent‎ وروابط magnet بواسطة تيار. المثبّت لا يستحوذ على ارتباطات torrent الافتراضية لديك.',
+      'نعم، يمكن فتح ملفات ‎.torrent‎ وروابط magnet بواسطة مجرى. المثبّت لا يستحوذ على ارتباطات torrent الافتراضية لديك.',
     'faq.more': 'لديك سؤال آخر؟',
     'faq.ask': 'افتح تذكرة على GitHub',
 
-    'app.shortName': 'تيار',
+    'app.shortName': 'مجرى',
     'app.windowsShort': 'ويندوز 10/11',
-    'app.mobileTagline': 'كل اتصالاتك. تحميل واحد.',
+    'app.mobileTagline': 'كل رابط يهبط هنا.',
     'app.crossEyebrow': 'جزء من أسراب',
     'app.crossTitle': 'أول تطبيق. والمزيد في الطريق.',
     'app.crossLede':
-      'أسراب كتالوج صغير لبرامج ويندوز المستقلة. تيار استحق المكان الأول؛ والتطبيق الرائع القادم قيد الاختبار الآن.',
+      'أسراب كتالوج صغير لبرامج ويندوز المستقلة. مجرى استحق المكان الأول؛ والتطبيق الرائع القادم قيد الاختبار الآن.',
 
-    'footer.tayyar': 'تيار',
+    'footer.majra': 'مجرى',
     'footer.asraab': 'أسراب',
     'footer.standards': 'كيف نختار',
     'footer.tagline': 'مدير تحميل يستخدم كل اتصال لديك.',
@@ -330,8 +330,7 @@ window.ASRAAB_I18N = {
     'footer.license': 'رخصة MIT',
     'footer.privacy': 'الخصوصية',
     'footer.faq': 'الأسئلة الشائعة',
-    'footer.basedOn': 'مبني على Plexo',
-    'footer.rights': '© {year} مساهمو تيار.',
+    'footer.rights': '© {year} مساهمو مجرى.',
     'footer.disclaimer': 'غير مرتبط بـ Internet Download Manager أو Tonec Inc.',
     'footer.made': 'صُنع لويندوز',
     'footer.backTop': 'إلى الأعلى',
@@ -364,7 +363,7 @@ window.ASRAAB_I18N = {
     'home.mockApps': '01 — APPS',
     'home.mockUpdated': 'UPDATED 2026',
     'home.mockCategory': 'WINDOWS DOWNLOAD MANAGER',
-    'home.mockTagline': 'Every connection. One download.',
+    'home.mockTagline': 'Every link lands here.',
     'home.mockCopy': 'Splits files across Wi-Fi, Ethernet and USB at the same time.',
     'home.mockNetworks': '3 NETWORKS · 24 STREAMS',
     'home.mockNext': 'What’s next',
@@ -388,4 +387,4 @@ window.ASRAAB_I18N = {
 }
 
 /* Keep the old global available for any cached page or test harness. */
-window.TAYYAR_I18N = window.ASRAAB_I18N
+window.MAJRA_I18N = window.ASRAAB_I18N

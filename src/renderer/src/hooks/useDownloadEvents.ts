@@ -30,7 +30,7 @@ export function useDownloadEvents(): void {
       clearTimeout(reload)
       reload = setTimeout(loadHistory, 150)
     })
-    // A finished file can only be moved or deleted while Tayyar is in the background: listing
+    // A finished file can only be moved or deleted while Majra is in the background: listing
     // again on coming back keeps "moved or deleted" true to the disk, as browsers do when their
     // downloads list is opened.
     window.addEventListener('focus', loadHistory)

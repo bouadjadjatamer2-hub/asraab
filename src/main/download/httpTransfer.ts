@@ -480,8 +480,11 @@ export class HttpTransfer implements Transfer {
     const request = this.runtime.requestPayload.streamExtract
     if (!request?.dir) throw new Error('The unpacking folder is missing.')
     if (this.extractor?.hasExited) {
-      this.host.failDownload('The unpacking tool stopped before the download finished.', true)
-      throw new Error('The unpacking tool stopped before the download finished.')
+      const message =
+        this.extractor.failure?.message ??
+        'The unpacking tool stopped before the download finished.'
+      this.host.failDownload(message, true)
+      throw new Error(message)
     }
     this.extractor ??= createUnpacker(request.format, request.dir)
     return this.extractor

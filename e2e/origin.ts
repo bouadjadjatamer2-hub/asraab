@@ -48,6 +48,8 @@ export interface OriginRequest {
   /** Which TCP connection it arrived on, numbered in the order they opened. */
   connection: number
   range: { start: number; end: number | null } | null
+  /** The Referer header as sent, if any — some hosts refuse a bare request, others any Referer. */
+  referer: string | undefined
 }
 
 export interface LoggedRequest extends OriginRequest {
@@ -206,7 +208,8 @@ export class Origin {
       path: req.url ?? '/',
       from: (req.socket.remoteAddress ?? '').replace(/^::ffff:/, ''),
       connection: this.connectionIds.get(req.socket) ?? 0,
-      range: parseRange(req.headers.range)
+      range: parseRange(req.headers.range),
+      referer: req.headers.referer
     }
     const fault = this.rule(request) ?? 'ok'
     const entry: LoggedRequest = { ...request, at: Date.now(), fault, status: 0, bytesSent: 0 }

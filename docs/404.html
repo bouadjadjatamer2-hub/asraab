@@ -4,19 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#0A0B10" />
+    <meta name="theme-color" content="#0d100e" />
     <meta name="robots" content="noindex" />
     <title>Page not found — Asraab</title>
     <link rel="icon" href="/tayyar-download-manager-/favicon.ico" sizes="any" />
     <style>
-      @font-face {
-        font-family: 'Space Grotesk';
-        font-style: normal;
-        font-weight: 300 700;
-        font-display: swap;
-        src: url('/tayyar-download-manager-/assets/fonts/SpaceGrotesk-Variable.woff2')
-          format('woff2');
-      }
       @font-face {
         font-family: 'Manrope';
         font-style: normal;
@@ -34,14 +26,14 @@
 
       :root {
         color-scheme: dark;
-        --bg: #0a0b10;
-        --text: #f1f3fa;
-        --muted: #a3a9bc;
-        --faint: #8d93a6;
-        --dim: #7d8396;
-        --line: #232838;
-        --gradient: linear-gradient(135deg, #8b6cff 0%, #6d8bff 52%, #22d3ee 135%);
-        --gradient-button: linear-gradient(135deg, #7555e8 0%, #4a60d2 52%, #0a7b90 135%);
+        --bg: #0d100e;
+        --text: #f1f0e7;
+        --muted: #a7ab9f;
+        --faint: #8e9387;
+        --dim: #7b8075;
+        --line: #262d26;
+        --gradient: linear-gradient(135deg, #e8a35f 0%, #d08338 52%, #c2620f 135%);
+        --gradient-button: linear-gradient(135deg, #c2620f 0%, #9a4a0e 52%, #7a3a0a 135%);
       }
 
       *,
@@ -75,8 +67,8 @@
         height: 900px;
         pointer-events: none;
         background:
-          radial-gradient(ellipse at 72% 28%, rgba(139, 108, 255, 0.19), transparent 62%),
-          radial-gradient(ellipse at 18% 12%, rgba(34, 211, 238, 0.06), transparent 58%);
+          radial-gradient(ellipse at 72% 28%, rgba(232, 163, 95, 0.19), transparent 62%),
+          radial-gradient(ellipse at 18% 12%, rgba(194, 98, 15, 0.06), transparent 58%);
       }
 
       body::after {
@@ -119,11 +111,11 @@
       .brand-mark {
         width: 31px;
         height: 31px;
-        filter: drop-shadow(0 5px 16px rgba(139, 108, 255, 0.3));
+        filter: drop-shadow(0 5px 16px rgba(232, 163, 95, 0.3));
       }
 
       .brand-word {
-        font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+        font-family: 'Manrope', 'Segoe UI', sans-serif;
         font-size: 15px;
         font-weight: 600;
         letter-spacing: 0.28em;
@@ -144,8 +136,8 @@
         width: 5px;
         height: 5px;
         border-radius: 50%;
-        background: #22d3ee;
-        box-shadow: 0 0 10px rgba(34, 211, 238, 0.6);
+        background: #c2620f;
+        box-shadow: 0 0 10px rgba(194, 98, 15, 0.6);
       }
 
       main {
@@ -165,7 +157,7 @@
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
-        font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+        font-family: 'Manrope', 'Segoe UI', sans-serif;
         font-size: clamp(7rem, 22vw, 12rem);
         font-weight: 600;
         letter-spacing: -0.09em;
@@ -191,13 +183,13 @@
         height: 5px;
         border-radius: 50%;
         background: var(--gradient);
-        box-shadow: 0 0 10px rgba(34, 211, 238, 0.4);
+        box-shadow: 0 0 10px rgba(194, 98, 15, 0.4);
       }
 
       h1 {
         margin: 13px 0 12px;
         color: var(--text);
-        font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+        font-family: 'Manrope', 'Segoe UI', sans-serif;
         font-size: clamp(2rem, 4.5vw, 3.15rem);
         font-weight: 600;
         letter-spacing: -0.045em;
@@ -228,10 +220,10 @@
         min-height: 46px;
         border: 1px solid var(--line);
         border-radius: 10px;
-        background: #11131a;
+        background: #131814;
         padding: 0 19px;
         color: var(--text);
-        font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+        font-family: 'Manrope', 'Segoe UI', sans-serif;
         font-size: 13px;
         font-weight: 600;
         text-decoration: none;
@@ -243,8 +235,8 @@
       }
 
       .button:hover {
-        border-color: #3b4257;
-        background: #171a23;
+        border-color: #3e473e;
+        background: #1a201b;
         transform: translateY(-1px);
       }
 
@@ -254,7 +246,7 @@
         color: #fff;
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.22),
-          0 12px 28px -14px rgba(109, 74, 255, 0.7);
+          0 12px 28px -14px rgba(180, 83, 9, 0.7);
       }
 
       .button.primary:hover {
@@ -262,7 +254,7 @@
       }
 
       :focus-visible {
-        outline: 2px solid #9be9f5;
+        outline: 2px solid #f2c78e;
         outline-offset: 3px;
       }
 
@@ -369,22 +361,22 @@
     <main>
       <div class="shell content">
         <p class="code" aria-hidden="true">404</p>
-        <p class="eyebrow">Off the flight path</p>
+        <p class="eyebrow">Off the landing path</p>
         <h1>This page took a wrong turn.</h1>
         <p>
-          The link may be old, or the file moved. Head back to the catalog, or visit Tayyar’s page
+          The link may be old, or the file moved. Head back to the catalog, or visit Majra’s page
           and download the latest Windows build from there.
         </p>
         <div class="actions">
           <a class="button primary" href="/tayyar-download-manager-/">Back to Asraab</a>
-          <a class="button" href="/tayyar-download-manager-/apps/tayyar/">Meet Tayyar</a>
+          <a class="button" href="/tayyar-download-manager-/apps/majra/">Meet Majra</a>
         </div>
       </div>
     </main>
 
     <footer>
       <div class="shell">
-        <span>© 2026 Asraab contributors. Tayyar is free and open source under MIT.</span>
+        <span>© 2026 Asraab contributors. Majra is free and open source under MIT.</span>
         <span
           ><a href="https://github.com/bouadjadjatamer2-hub">GitHub</a> ·
           <a href="/tayyar-download-manager-/extension/privacy/">Extension privacy</a></span

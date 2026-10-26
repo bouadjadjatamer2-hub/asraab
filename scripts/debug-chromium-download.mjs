@@ -28,13 +28,13 @@ const server = http.createServer((req, res) => {
 })
 await new Promise((resolve) => server.listen(8973, '127.0.0.1', resolve))
 
-const dest = 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\tayyar-chromium-test2'
+const dest = 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\majra-chromium-test2'
 rmSync(dest, { recursive: true, force: true })
 mkdirSync(dest, { recursive: true })
 
 const app = await electron.launch({
-  executablePath: 'C:\\Users\\Lenovo\\Downloads\\tayyar\\dist\\win-unpacked\\tayyar.exe',
-  args: ['--user-data-dir=C:\\Users\\Lenovo\\AppData\\Local\\Temp\\tayyar-dl-check2']
+  executablePath: 'C:\\Users\\Lenovo\\Downloads\\majra\\dist\\win-unpacked\\majra.exe',
+  args: ['--user-data-dir=C:\\Users\\Lenovo\\AppData\\Local\\Temp\\majra-dl-check2']
 })
 app.process().stderr?.on('data', (chunk) => console.log('main stderr:', String(chunk).trim()))
 app.process().stdout?.on('data', (chunk) => console.log('main stdout:', String(chunk).trim()))

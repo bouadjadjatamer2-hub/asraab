@@ -10,6 +10,41 @@
 
   root.PlexoChangelog = [
     {
+      version: 'v1.2.2',
+      items: [
+        {
+          kind: 'new',
+          title: 'Majra',
+          text: 'The app is now Majra, with a new amber-drop icon and a warmer, calmer window. Your old settings, queue and half-finished downloads move over on first launch.'
+        },
+        {
+          kind: 'new',
+          title: 'Unpack while it downloads',
+          text: 'A ZIP, RAR or TAR archive can unpack as its bytes arrive, so a big archive is usable before the transfer ends. The unpacker runs beside the download and never freezes the window.'
+        },
+        {
+          kind: 'faster',
+          title: 'Eight streams, chosen for your disk',
+          text: 'Each network runs up to 8 connections on a fast drive and 4 on a rotating one, so the speed follows the hardware instead of a fixed count.'
+        },
+        {
+          kind: 'improved',
+          title: 'Light and dark, Arabic and English',
+          text: 'The whole window follows the system theme, or the one you pick, and the Arabic layout reads right to left from the first screen to the last.'
+        },
+        {
+          kind: 'fixed',
+          title: 'Mirrors that refuse a Referer',
+          text: 'Majra no longer invents a `Referer` for a pasted link. Mirrors that answer 403 to one now download normally, while sites that require their own page still get it.'
+        },
+        {
+          kind: 'fixed',
+          title: 'File names and unpacking errors',
+          text: 'Unsafe characters in an archive member are cleaned before it is saved, and an unpacker that fails now reports why instead of leaving a silent folder.'
+        }
+      ]
+    },
+    {
       version: 'v1.0.0-rc.15',
       items: [
         {

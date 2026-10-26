@@ -393,13 +393,13 @@ function GeneralPage({
       <section className={sectionClass}>
         <h4 className={headingClass}>{t('Startup & background')}</h4>
         <p className={hintClass}>
-          {t('Keep Tayyar ready for links and downloads without leaving a window open.')}
+          {t('Keep Majra ready for links and downloads without leaving a window open.')}
         </p>
         <div className="flex flex-col gap-1">
           <SettingRow
             label={t('Start at login')}
             hint={t(
-              'Open Tayyar automatically when you sign in. On Windows it starts hidden in the tray and appears in Task Manager → Startup.'
+              'Open Majra automatically when you sign in. On Windows it starts hidden in the tray and appears in Task Manager → Startup.'
             )}
             checked={draft.startAtLogin}
             onChange={(startAtLogin) => change({ startAtLogin })}
@@ -496,7 +496,7 @@ function NetworkPage({
       <div className="flex flex-col gap-1 pb-3">
         <h3 className="font-sans text-[18px] leading-none font-semibold">{name}</h3>
         <div className="font-mono text-[12px] text-muted-foreground">
-          {t('{size} used by Tayyar {period}', {
+          {t('{size} used by Majra {period}', {
             size: formatBytes(used),
             period: dataUsageLabel(period, locale)
           })}

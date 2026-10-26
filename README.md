@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="docs/assets/img/tayyar-icon.png" width="80" alt="Tayyar app icon" />
+  <img src="docs/assets/img/majra-icon.png" width="80" alt="Majra app icon" />
 </p>
 
-<h1 align="center">Tayyar</h1>
+<h1 align="center">Majra</h1>
 
 <p align="center">
-  <strong>Every connection. One download.</strong><br />
+  <strong>Every link lands here.</strong><br />
   A free, open-source Windows download manager that puts Wi-Fi, Ethernet, USB tethering and mobile data to work on the same file.
 </p>
 
@@ -14,28 +14,28 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.1/Tayyar-1.2.1-Setup.exe"><img src="https://img.shields.io/badge/Download_for_Windows-v1.2.1-7C5CFF?style=for-the-badge&amp;logo=windows&amp;logoColor=white" alt="Download Tayyar 1.2.1 for Windows" /></a>
-  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/"><img src="https://img.shields.io/badge/Asraab-website-22C7B8?style=for-the-badge" alt="Open the Asraab website" /></a>
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.2/Majra-1.2.2-Setup.exe"><img src="https://img.shields.io/badge/Download_for_Windows-v1.2.2-B45309?style=for-the-badge&amp;logo=windows&amp;logoColor=white" alt="Download Majra 1.2.2 for Windows" /></a>
+  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/"><img src="https://img.shields.io/badge/Asraab-website-1F7D5C?style=for-the-badge" alt="Open the Asraab website" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-4CC38A?style=for-the-badge" alt="MIT License" /></a>
 </p>
 
 <p align="center">
   <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/">Asraab</a> ·
-  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/tayyar/">Tayyar page</a> ·
-  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.1/Tayyar-1.2.1-Setup.exe">Download</a> ·
-  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.1/Tayyar-Browser-Extension.zip">Browser extension</a> ·
-  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.1">Release notes</a> ·
+  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/majra/">Majra page</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.2/Majra-1.2.2-Setup.exe">Download</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.2/Majra-Browser-Extension.zip">Browser extension</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.2">Release notes</a> ·
   <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/issues">Issues</a>
 </p>
 
-<a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/"><img src="docs/og.png" alt="Tayyar — one download over every connection" width="100%" /></a>
+<a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/"><img src="docs/og.png" alt="Majra — one download over every connection" width="100%" /></a>
 
-Tayyar splits files into blocks and binds each stream to a network interface, so a download can use Wi-Fi, Ethernet and USB tethering at the same time. It also resumes interrupted transfers, schedules downloads, extracts archives while they arrive, captures links from the browser, handles torrents, and can scan finished files with Windows Defender.
+Majra splits files into blocks and binds each stream to a network interface, so a download can use Wi-Fi, Ethernet and USB tethering at the same time. It also resumes interrupted transfers, schedules downloads, extracts archives while they arrive, captures links from the browser, handles torrents, and can scan finished files with Windows Defender.
 
-Tayyar is a fork of [Plexo](https://github.com/anmolkapil/plexo) (MIT), rebuilt as a Windows desktop app and extended for maximum throughput. See [NOTICE.md](NOTICE.md) for what changed.
+Majra is built for real-world links: signed-in pages, byte-range servers, very large archives, and connections that come and go. It is free, open source, and has no account or bundled adware.
 
 > [!NOTE]
-> “Every connection” means every network interface Windows exposes. Tayyar cannot create bandwidth that is not there: two connections behind the same router often share one uplink, and servers without byte-range support fall back to a single stream.
+> “Every connection” means every network interface Windows exposes. Majra cannot create bandwidth that is not there: two connections behind the same router often share one uplink, and servers without byte-range support fall back to a single stream.
 
 Asraab is a curated, owner-maintained catalog. There is no public submission form, account system or web admin panel. Adding an app is a maintainer-only change to [`docs/assets/apps.js`](docs/assets/apps.js) plus a page under `docs/apps/<slug>/`. The homepage’s “coming soon” card is editorial, not an invitation to submit an app.
 
@@ -45,17 +45,17 @@ Asraab is a curated, owner-maintained catalog. There is no public submission for
 
 ### The website
 
-The [Asraab catalog](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/) is bilingual and theme-aware. The [Tayyar page](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/tayyar/) keeps the installer, extension ZIP and checksum together, and sends both downloads straight to your browser — no release-page detour.
+The [Asraab catalog](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/) is bilingual and theme-aware. The [Majra page](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/majra/) keeps the installer, extension ZIP and checksum together, and sends both downloads straight to your browser — no release-page detour.
 
 [![Asraab catalog — dark desktop view](docs/screenshots/website-desktop.png)](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/)
 
 <table>
   <tr>
     <td width="50%" valign="top">
-      <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/tayyar/"><img src="docs/screenshots/website-arabic.png" alt="Tayyar page in Arabic with the light theme" /></a>
+      <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/majra/"><img src="docs/screenshots/website-arabic.png" alt="Majra page in Arabic with the light theme" /></a>
     </td>
     <td width="50%" valign="top">
-      <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/tayyar/#download"><img src="docs/screenshots/website-download.png" alt="Tayyar download page with the installer, release details and SHA-256 checksum" /></a>
+      <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/majra/#download"><img src="docs/screenshots/website-download.png" alt="Majra download page with the installer, release details and SHA-256 checksum" /></a>
     </td>
   </tr>
   <tr>
@@ -71,7 +71,7 @@ The [Asraab catalog](https://bouadjadjatamer2-hub.github.io/tayyar-download-mana
 
 ### The app
 
-[![Tayyar downloading one file over Wi-Fi, USB tethering and Ethernet](docs/screenshots/app-detail.png)](docs/screenshots/app-detail.png)
+[![Majra downloading one file over Wi-Fi, USB tethering and Ethernet](docs/screenshots/app-detail.png)](docs/screenshots/app-detail.png)
 
 <sub>Captured from the real app; the three network interfaces are simulated for the screenshot. One file, three connections, one progress bar.</sub>
 
@@ -84,7 +84,7 @@ The [Asraab catalog](https://bouadjadjatamer2-hub.github.io/tayyar-download-mana
 - **Interface-bound streams.** Each worker is bound to one network interface, so Wi-Fi, Ethernet, USB tethering and mobile data can feed the same download at once.
 - **Dynamic segmentation.** Starts at 8 streams per network and grows to 32 while the server and disk keep up. Turbo mode goes further, with up to 64 streams per network and 4 MB blocks.
 - **A shared work queue.** Faster networks take more blocks automatically instead of waiting for a slower one.
-- **Range-aware fallback.** If a server does not support byte ranges, Tayyar uses a single connection instead of pretending to split the file.
+- **Range-aware fallback.** If a server does not support byte ranges, Majra uses a single connection instead of pretending to split the file.
 
 ### Built to finish
 
@@ -109,7 +109,7 @@ The [Asraab catalog](https://bouadjadjatamer2-hub.github.io/tayyar-download-mana
 
 ## How it works
 
-1. **Probe the link.** Tayyar reads the response headers, filename, size, range support and validators.
+1. **Probe the link.** Majra reads the response headers, filename, size, range support and validators.
 2. **Plan the blocks.** The file becomes a queue of byte ranges sized for the connection and disk.
 3. **Bind and pull.** Each request is bound to a chosen interface. Auto keeps a stable count (8 streams per network, 4 on a hard disk) instead of growing until the link collapses; Turbo is the explicit opt-in to more.
 4. **Assemble and publish.** Blocks land in a preallocated staging file, get verified, and are renamed only after the download is whole.
@@ -120,24 +120,24 @@ When an archive is being extracted, completed blocks are fed to the extractor as
 
 ## Download
 
-**Windows 10 / 11 · 64-bit · v1.2.1 · 125.3 MB**
+**Windows 10 / 11 · 64-bit · v1.2.2 · 125.3 MB**
 
-[**Download Tayyar-1.2.1-Setup.exe**](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.1/Tayyar-1.2.1-Setup.exe) · [Release notes](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.1) · [All releases](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases)
+[**Download Majra-1.2.2-Setup.exe**](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.2/Majra-1.2.2-Setup.exe) · [Release notes](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.2) · [All releases](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases)
 
 |                      |                                     |
 | -------------------- | ----------------------------------- |
-| **Version**          | 1.2.1                               |
+| **Version**          | 1.2.2                               |
 | **Platform**         | Windows 10 / 11, 64-bit             |
-| **Installer**        | `Tayyar-1.2.1-Setup.exe` · 125.3 MB |
+| **Installer**        | `Majra-1.2.2-Setup.exe` · 125.3 MB |
 | **License**          | MIT                                 |
 | **Account required** | No                                  |
 
-### What's new in 1.2.1
+### What's new in 1.2.2
 
-- Stable Auto speed: 8 connections per network, and 4 when the destination is a hard disk.
-- Disk writes run on a separate writer thread, with fewer stalls on weak machines and large files.
-- ZIP extraction runs off the UI thread, so the window stays responsive.
-- Cancel now removes the row immediately and cleans up in the background, including locked files.
+- Archive extraction now survives names Windows cannot normally create: reserved names, trailing dots or spaces, overlong names, and Unicode collisions are made safe without losing files.
+- Extraction errors now report the real reason (bad archive, unsupported method, disk write failure) instead of a generic “tool stopped”.
+- Torrents work in packaged builds again: the peer and WebTorrent patches are applied before every test and build.
+- A new stream-drop identity, calmer warm palette, and short compositor-only animations. Low-power machines and reduced-motion users automatically get a still interface.
 
 > [!WARNING]
 > The installer is not code-signed, so Windows SmartScreen may show a warning. Choose **More info → Run anyway**, or build from source. The project does not have a code-signing certificate yet.
@@ -146,7 +146,7 @@ When an archive is being extracted, completed blocks are fed to the extractor as
 <summary>Verify the SHA-256 checksum</summary>
 
 ```powershell
-Get-FileHash .\Tayyar-1.2.1-Setup.exe -Algorithm SHA256
+Get-FileHash .\Majra-1.2.2-Setup.exe -Algorithm SHA256
 ```
 
 Expected:
@@ -161,23 +161,23 @@ DDBB1E8BE18ABBD991FAF2103A079DA1F0632502F054BC5248914A5918180D4F
 
 ## Browser extension (optional)
 
-[**Download Tayyar-Browser-Extension.zip**](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.1/Tayyar-Browser-Extension.zip) · [Privacy policy](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/extension/privacy/)
+[**Download Majra-Browser-Extension.zip**](https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.2/Majra-Browser-Extension.zip) · [Privacy policy](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/extension/privacy/)
 
-The Chromium extension hands downloads to Tayyar with the browser's cookies, so signed-in files work. It supports Chrome, Edge, Brave and Opera.
+The Chromium extension hands downloads to Majra with the browser's cookies, so signed-in files work. It supports Chrome, Edge, Brave and Opera.
 
 1. Download the ZIP and extract it somewhere you will remember.
 2. Open your browser's extensions page — `chrome://extensions` in Chrome, `edge://extensions` in Edge.
 3. Turn on **Developer mode**, choose **Load unpacked**, and select the extracted folder. `manifest.json` sits at its root.
-4. Keep Tayyar running, then use the toolbar button or the right-click menu.
+4. Keep Majra running, then use the toolbar button or the right-click menu.
 
 > [!NOTE]
-> This is a manual install and is not on the Chrome Web Store yet, so the browser will not update it automatically. Re-download the ZIP when a new release lands. The extension only talks to Tayyar on `127.0.0.1`; there are no developer servers.
+> This is a manual install and is not on the Chrome Web Store yet, so the browser will not update it automatically. Re-download the ZIP when a new release lands. The extension only talks to Majra on `127.0.0.1`; there are no developer servers.
 
 ---
 
 ## Privacy
 
-There is no account, no advertising and no analytics. Tayyar talks only to the URLs you give it, and the extension talks only to the app on your computer. Download history and settings stay on your PC. The [extension privacy policy](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/extension/privacy/) has the details.
+There is no account, no advertising and no analytics. Majra talks only to the URLs you give it, and the extension talks only to the app on your computer. Download history and settings stay on your PC. The [extension privacy policy](https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/extension/privacy/) has the details.
 
 ---
 
@@ -224,27 +224,27 @@ Issues and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) fo
 
 ## Credits
 
-Tayyar is a fork of [Plexo](https://github.com/anmolkapil/plexo) by Anmol Kapil, used under the MIT License. Plexo's copyright and permission notice are retained in [LICENSE](LICENSE); the changes made for Tayyar are listed in [NOTICE.md](NOTICE.md).
+Majra is a fork of [Plexo](https://github.com/anmolkapil/plexo) by Anmol Kapil, used under the MIT License. Plexo's copyright and permission notice are retained in [LICENSE](LICENSE); the changes made for Majra are listed in [NOTICE.md](NOTICE.md).
 
 Bundled tools and their licenses — including UnRAR and `unzipper` — are also listed in [NOTICE.md](NOTICE.md). Not affiliated with, endorsed by, or derived from Internet Download Manager (Tonec Inc.).
 
 ## License
 
-[MIT](LICENSE) © 2026 Tayyar contributors.
+[MIT](LICENSE) © 2026 Majra contributors.
 
 ---
 
 <h2 dir="rtl" align="right">بالعربية</h2>
 
 <p dir="rtl" align="right">
-  <strong>تيار</strong> مدير تحميل مجاني ومفتوح المصدر لنظام ويندوز 10/11. يوزّع الملف الواحد على Wi-Fi والإيثرنت وUSB في الوقت نفسه، مع استئناف التحميل بعد إغلاق التطبيق، والجدولة، واستخراج الأرشيف أثناء التنزيل، والتقاط الروابط من المتصفح.
+  <strong>مجرى</strong> مدير تحميل مجاني ومفتوح المصدر لنظام ويندوز 10/11. يوزّع الملف الواحد على Wi-Fi والإيثرنت وUSB في الوقت نفسه، مع استئناف التحميل بعد إغلاق التطبيق، والجدولة، واستخراج الأرشيف أثناء التنزيل، والتقاط الروابط من المتصفح.
 </p>
 
 <p dir="rtl" align="right">
   <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/">موقع أسراب</a> ·
-  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/tayyar/">صفحة تيار</a> ·
-  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.1/Tayyar-1.2.1-Setup.exe">تحميل الإصدار 1.2.1</a> ·
-  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.1/Tayyar-Browser-Extension.zip">إضافة المتصفح</a>
+  <a href="https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/majra/">صفحة مجرى</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.2/Majra-1.2.2-Setup.exe">تحميل الإصدار 1.2.2</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.2/Majra-Browser-Extension.zip">إضافة المتصفح</a>
 </p>
 
-<p dir="rtl" align="right">تيار هو أول تطبيق في كتالوج أسراب، والمزيد في الطريق. الموقع متوفر بالعربية والإنجليزية.</p>
+<p dir="rtl" align="right">مجرى هو أول تطبيق في كتالوج أسراب، والمزيد في الطريق. الموقع متوفر بالعربية والإنجليزية.</p>

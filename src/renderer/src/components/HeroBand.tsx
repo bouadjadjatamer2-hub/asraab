@@ -13,7 +13,7 @@ export function HeroBand({
   return (
     <div
       className={cn(
-        'border-b border-b-[var(--hero-border)] bg-[image:var(--hero-bg)] px-5 py-[18px] text-foreground',
+        'border-t-2 border-b border-t-accent/35 border-b-[var(--hero-border)] bg-[image:var(--hero-bg)] px-5 py-[18px] text-foreground',
         className
       )}
     >

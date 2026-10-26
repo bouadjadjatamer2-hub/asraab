@@ -1,7 +1,7 @@
-appId: app.tayyar.desktop
-productName: Tayyar
+appId: app.majra.desktop
+productName: Majra
 # Shown in the macOS About window and Finder's Get Info, and in the Windows file properties.
-copyright: Copyright © 2026 Tayyar contributors. Based on Plexo © 2026 Anmol Kapil (MIT).
+copyright: Copyright © 2026 Majra contributors.
 afterPack: scripts/check-torrent-package.mjs
 directories:
   buildResources: build
@@ -14,13 +14,12 @@ files:
   - '!electron.vite.config.{js,ts,mjs,cjs}'
   - '!{.eslintcache,eslint.config.mjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md,NOTICE.md}'
   - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
-  - '!scripts/make-icons.py'
   # koffi ships prebuilds for every OS; it's loaded on Linux (network/deviceBinding.ts) and on
   # Windows (download/sparseFile.ts).
   - '!node_modules/koffi/{src,vendor,doc}/**'
   - '!node_modules/koffi/build/koffi/!(linux_x64|linux_arm64|win32_x64|win32_arm64)/**'
-  # Plexo uses TCP peers only. simple-peer is patched to use browser globals instead of loading
-  # the native WebRTC polyfill; don't ship unused host-platform binaries in cross-platform builds.
+  # Plexo upstream uses TCP peers only. simple-peer is patched to use browser globals instead of
+  # loading the native WebRTC polyfill; don't ship unused host-platform binaries in builds.
   - '!node_modules/node-datachannel/**'
   - '!node_modules/webrtc-polyfill/**'
   - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
@@ -32,10 +31,10 @@ extraResources:
   - from: LICENSE
     to: LICENSE
 win:
-  # No protocols or fileAssociations: the NSIS installer would register Tayyar as *the* handler for
+  # No protocols or fileAssociations: the NSIS installer would register Majra as *the* handler for
   # magnet links and .torrent files, taking them from a torrent client the user already has.
-  # A .torrent can still be opened with Tayyar through "Open with".
-  executableName: tayyar
+  # A .torrent can still be opened with Majra through "Open with".
+  executableName: majra
   target:
     - target: nsis
       arch: [x64]
@@ -63,15 +62,15 @@ mac:
       arch: [x64, arm64]
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
-    - NSDownloadsFolderUsageDescription: Plexo saves downloaded files to your Downloads folder.
-    # Magnet links and .torrent files can be opened with Plexo, as one choice among others: it's
+    - NSDownloadsFolderUsageDescription: Majra saves downloaded files to your Downloads folder.
+    # Magnet links and .torrent files can be opened with Majra, as one choice among others: it's
     # never made the default over a torrent client the user already has (LSHandlerRank).
-    # plexo:// is Plexo's own scheme, so registering it takes nothing from another app.
+    # majra:// is Majra's own scheme, so registering it takes nothing from another app.
     - CFBundleURLTypes:
         - CFBundleURLName: Magnet link
           CFBundleURLSchemes: [magnet]
-        - CFBundleURLName: Plexo
-          CFBundleURLSchemes: [plexo]
+        - CFBundleURLName: Majra
+          CFBundleURLSchemes: [majra]
       CFBundleDocumentTypes:
         - CFBundleTypeName: Torrent
           CFBundleTypeRole: Viewer
@@ -92,7 +91,7 @@ linux:
     - target: rpm
       arch: [x64, arm64]
     # Plain archive for distros without FUSE or a native package (AUR packagers, NixOS, etc.):
-    # extract and run ./plexo. Doesn't update itself, like the .deb and .rpm.
+    # extract and run ./majra. Doesn't update itself, like the .deb and .rpm.
     - target: tar.gz
       arch: [x64, arm64]
   # Names the .tar.gz, which has no options of its own. Without it the x64 archive would carry no
@@ -102,7 +101,7 @@ linux:
   maintainer: electronjs.org
   category: Utility
   # Offered for magnet links and .torrent files ("Open with"), not made their default.
-  mimeTypes: [x-scheme-handler/magnet, application/x-bittorrent, x-scheme-handler/plexo]
+  mimeTypes: [x-scheme-handler/magnet, application/x-bittorrent, x-scheme-handler/majra]
 appImage:
   artifactName: ${name}-${version}-${arch}.${ext}
 deb:

@@ -10,15 +10,15 @@ function describe({ status, version, percent, autoUpdate }: UpdateState): string
     case 'checking':
       return t('Checking for updates…')
     case 'available':
-      return t('Tayyar {version} is available', { version })
+      return t('Majra {version} is available', { version })
     case 'downloading':
-      return t('Downloading Tayyar {version}… {percent}%', { version, percent })
+      return t('Downloading Majra {version}… {percent}%', { version, percent })
     case 'ready':
-      return t('Tayyar {version} is ready — restart to update', { version })
+      return t('Majra {version} is ready — restart to update', { version })
     case 'error':
-      return t('Couldn’t install Tayyar {version}', { version })
+      return t('Couldn’t install Majra {version}', { version })
     default:
-      return autoUpdate ? t('Tayyar updates automatically') : t('Automatic updates are off')
+      return autoUpdate ? t('Majra updates automatically') : t('Automatic updates are off')
   }
 }
 

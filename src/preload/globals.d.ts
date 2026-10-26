@@ -1,7 +1,7 @@
-import type { TayyarApi } from './index'
+import type { MajraApi } from './index'
 
 declare global {
   interface Window {
-    plexo: TayyarApi
+    plexo: MajraApi
   }
 }

@@ -110,7 +110,7 @@ export function registerIpcHandlers(getWindow: () => BrowserWindow | null): Down
     // Read back rather than taken from the patch: what was saved is what passed the checks.
     const settings = await loadSettings()
     // Only touch the OS entry when this save changed the choice. Re-applying on every launch
-    // would undo someone disabling Tayyar in Task Manager → Startup.
+    // would undo someone disabling Majra in Task Manager → Startup.
     if (patch?.startAtLogin !== undefined) {
       applyStartAtLogin(settings.startAtLogin ?? true)
     }

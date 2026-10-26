@@ -59,11 +59,11 @@ export function FixLinkDialog({
             {download &&
               (download.totalBytes > 0
                 ? t(
-                    'Paste a new link to the same file: {name} ({size}). Tayyar resumes from where the download stopped.',
+                    'Paste a new link to the same file: {name} ({size}). Majra resumes from where the download stopped.',
                     { name: download.fileName, size: formatBytes(download.totalBytes) }
                   )
                 : t(
-                    'Paste a new link to the same file: {name}. Tayyar resumes from where the download stopped.',
+                    'Paste a new link to the same file: {name}. Majra resumes from where the download stopped.',
                     { name: download.fileName }
                   ))}
             {download?.kind === 'http' &&

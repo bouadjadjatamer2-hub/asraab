@@ -1,10 +1,10 @@
 {
-  "name": "tayyar",
-  "version": "1.2.1",
-  "description": "Tayyar — a download manager that uses every network connection you have.",
+  "name": "majra",
+  "version": "1.2.2",
+  "description": "Majra — a download manager that uses every network connection you have.",
   "main": "./out/main/index.js",
-  "author": "Tayyar contributors",
-  "homepage": "https://github.com/anmolkapil/plexo",
+  "author": "Majra contributors",
+  "homepage": "https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-",
   "scripts": {
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -71,6 +71,7 @@
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "tailwindcss": "^4.3.3",
+    "three": "^0.170.0",
     "typescript": "^5.9.3",
     "vite": "^7.2.6"
   },

@@ -107,6 +107,32 @@ test.describe('happy paths @smoke', () => {
     expect(origin.chunkRequests().filter((request) => request.range !== null)).toEqual([])
   })
 
+  test('a mirror that refuses any Referer downloads with none', async ({ plexo, serve }) => {
+    // download.thinkbroadband.com behaves this way: a bare request is fine, any Referer is 403.
+    const origin = await serve({ size: 4 * BLOCK })
+    origin.setRule(({ referer }) => (referer ? { status: 403 } : 'ok'))
+    await plexo.start(origin.url(), origin.sha256, { connections: 4 })
+    const state = await plexo.waitForHttpStatus('completed')
+    expect(state.bytesDownloaded).toBe(4 * BLOCK)
+    expect(origin.log.every((request) => request.referer === undefined)).toBe(true)
+  })
+
+  test('a site that only serves its own pages gets that page as the Referer', async ({
+    plexo,
+    serve
+  }) => {
+    const origin = await serve({ size: 4 * BLOCK })
+    const site = `${new URL(origin.url()).origin}/`
+    origin.setRule(({ referer }) => (referer === site ? 'ok' : { status: 403 }))
+    await plexo.start(origin.url(), origin.sha256, { connections: 4 })
+    const state = await plexo.waitForHttpStatus('completed')
+    expect(state.bytesDownloaded).toBe(4 * BLOCK)
+    // The probe tried bare first, then learned; every chunk after that carries the site.
+    expect(origin.log[0]!.referer).toBeUndefined()
+    expect(origin.chunkRequests().length).toBeGreaterThan(0)
+    expect(origin.chunkRequests().every((request) => request.referer === site)).toBe(true)
+  })
+
   test('a link that answers 403 with or without a range is still an error', async ({
     plexo,
     serve

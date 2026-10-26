@@ -3,8 +3,8 @@
 import { _electron as electron } from 'playwright'
 
 const app = await electron.launch({
-  executablePath: 'C:\\Users\\Lenovo\\Downloads\\tayyar\\dist\\win-unpacked\\tayyar.exe',
-  args: ['--user-data-dir=C:\\Users\\Lenovo\\AppData\\Local\\Temp\\tayyar-probe-check']
+  executablePath: 'C:\\Users\\Lenovo\\Downloads\\majra\\dist\\win-unpacked\\majra.exe',
+  args: ['--user-data-dir=C:\\Users\\Lenovo\\AppData\\Local\\Temp\\majra-probe-check']
 })
 const win = await app.firstWindow()
 await win.waitForTimeout(2000)
@@ -26,7 +26,7 @@ const readError = async () => {
 await input.fill('https://ankergames.net/game/warhammer-40000-boltgun-2')
 await win.waitForTimeout(6000)
 console.log('real page:', await readError())
-await win.screenshot({ path: 'C:\\Users\\Lenovo\\Downloads\\tayyar\\dist\\_check-page.png' })
+await win.screenshot({ path: 'C:\\Users\\Lenovo\\Downloads\\majra\\dist\\_check-page.png' })
 
 await input.fill('https://ankergames.net/game/warhammer-4000')
 await win.waitForTimeout(6000)

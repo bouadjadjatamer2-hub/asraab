@@ -36,7 +36,7 @@ export function ErrorScreen({ download }: { download: DownloadState }): React.JS
   }
 
   return (
-    <div className="flex h-full flex-col bg-background">
+    <div className="screen-enter flex h-full flex-col bg-background">
       <DetailHeader download={download} />
       <div className="flex flex-1 flex-col items-center justify-center px-5 py-6">
         <div className="flex w-full max-w-[440px] flex-col items-center gap-[18px] rounded-xl border-[0.5px] border-border bg-card p-6 text-center">

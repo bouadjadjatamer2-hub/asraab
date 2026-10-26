@@ -19,7 +19,7 @@ function AlertDialogBackdrop({
     <AlertDialogPrimitive.Backdrop
       data-slot="alert-dialog-backdrop"
       className={cn(
-        'fixed inset-0 isolate z-50 bg-black/10 supports-backdrop-filter:backdrop-blur-xs data-[ending-style]:opacity-0 data-[starting-style]:opacity-0',
+        'fixed inset-0 isolate z-50 bg-black/20 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0',
         className
       )}
       {...props}

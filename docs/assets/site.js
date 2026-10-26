@@ -7,29 +7,28 @@
   'use strict'
 
   const defaults = {
-    version: '1.2.1',
+    version: '1.2.2',
     releaseUrl: 'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/latest',
     releaseTagUrl:
-      'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.1',
+      'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.2',
     installerUrl:
-      'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.1/Tayyar-1.2.1-Setup.exe',
+      'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.2/Majra-1.2.2-Setup.exe',
     extensionUrl:
-      'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.1/Tayyar-Browser-Extension.zip',
+      'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.2/Majra-Browser-Extension.zip',
     githubUrl: 'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-',
     issuesUrl: 'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/issues',
     licenseUrl:
       'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/blob/main/LICENSE',
-    plexoUrl: 'https://github.com/anmolkapil/plexo',
-    privacyUrl:
+      privacyUrl:
       'https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/extension/privacy/',
-    installerName: 'Tayyar-1.2.1-Setup.exe',
+    installerName: 'Majra-1.2.2-Setup.exe',
     installerSize: '125.3 MB',
     sha256: 'DDBB1E8BE18ABBD991FAF2103A079DA1F0632502F054BC5248914A5918180D4F',
     year: 2026
   }
 
-  const config = Object.assign({}, defaults, window.TAYYAR_CONFIG || {})
-  const messages = window.ASRAAB_I18N || window.TAYYAR_I18N || { ar: {}, en: {} }
+  const config = Object.assign({}, defaults, window.MAJRA_CONFIG || {})
+  const messages = window.ASRAAB_I18N || window.MAJRA_I18N || { ar: {}, en: {} }
   const root = document.documentElement
   const motionQuery =
     typeof window.matchMedia === 'function'
@@ -77,7 +76,7 @@
   }
 
   function storedPreference(key) {
-    return storageGet(`asraab-${key}`) || storageGet(`tayyar-${key}`)
+    return storageGet(`asraab-${key}`) || storageGet(`majra-${key}`)
   }
 
   function baseVars(extra = {}) {
@@ -146,7 +145,6 @@
       github: config.githubUrl,
       issues: config.issuesUrl,
       license: config.licenseUrl,
-      plexo: config.plexoUrl,
       privacy: config.privacyUrl
     }
 
@@ -195,7 +193,7 @@
     root.dataset.theme = state.theme
 
     if (themeColorMeta) {
-      themeColorMeta.setAttribute('content', state.theme === 'light' ? '#F5F6FB' : '#0A0B10')
+      themeColorMeta.setAttribute('content', state.theme === 'light' ? '#f4f1e9' : '#0d100e')
     }
 
     if (persist) storageSet('asraab-theme', state.theme)

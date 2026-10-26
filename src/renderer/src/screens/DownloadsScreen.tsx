@@ -122,7 +122,7 @@ function FilterTabs({
             <span
               className={cn(
                 'font-mono text-[10px] tabular-nums',
-                active ? 'text-[#8b6cff]' : 'text-muted-foreground/70'
+                active ? 'text-accent' : 'text-muted-foreground/70'
               )}
             >
               {counts[id]}
@@ -130,7 +130,7 @@ function FilterTabs({
             <span
               aria-hidden="true"
               className={cn(
-                'absolute inset-x-0 bottom-0 h-[2px] rounded-full bg-[linear-gradient(90deg,#8b6cff,#22d3ee)] transition-opacity',
+                'absolute inset-x-0 bottom-0 h-[2px] rounded-full bg-accent transition-opacity',
                 active ? 'opacity-100' : 'opacity-0'
               )}
             />
@@ -238,14 +238,21 @@ export function DownloadsScreen(): React.JSX.Element {
   }
 
   return (
-    <div className="flex h-full flex-col bg-background">
+    <div className="screen-enter flex h-full flex-col bg-background">
       {chosen.length === 0 ? (
         <div className="shrink-0 border-b-[0.5px] border-border px-6">
           <div className="flex items-start gap-3 pt-5">
             <div className="min-w-0">
-              <h1 className="text-[21px] leading-none font-semibold tracking-[-0.02em]">
-                {t('Downloads')}
-              </h1>
+              <div className="flex items-center gap-2.5">
+                <h1 className="text-[21px] leading-none font-bold tracking-[-0.025em]">
+                  {t('Downloads')}
+                </h1>
+                <span aria-hidden className="flex items-end gap-[3px] pb-[1px]">
+                  <span className="h-3.5 w-[2.5px] rounded-full bg-accent" />
+                  <span className="h-2.5 w-[2.5px] rounded-full bg-accent/55" />
+                  <span className="h-1.5 w-[2.5px] rounded-full bg-accent/30" />
+                </span>
+              </div>
               <p className="mt-2 truncate text-[12px] leading-none text-[var(--text-secondary)]">
                 {allItems.length === 0 ? t('Nothing in the queue') : summaryOf(downloads)}
               </p>
@@ -430,8 +437,8 @@ function EmptyState(): React.JSX.Element {
   return (
     <div className="flex flex-col items-center px-5 pt-14 pb-10 text-center">
       <div className="relative mb-7">
-        <div className="absolute -inset-3 rounded-[30px] bg-[#8b6cff]/20 blur-2xl" />
-        <div className="relative grid size-[68px] place-items-center rounded-[22px] border border-white/10 bg-[linear-gradient(150deg,#201640,#0d1020)] shadow-[0_24px_60px_-24px_rgba(139,108,255,0.85)]">
+        <div className="relative grid size-[68px] place-items-center rounded-[18px] border border-white/10 bg-[linear-gradient(155deg,#1d241d,#0d110e)] shadow-[0_18px_40px_-26px_rgba(180,83,9,0.9)] ring-1 ring-accent/15">
+          <span aria-hidden className="absolute inset-x-3 top-2 h-[2px] rounded-full bg-accent/60" />
           <LogoMark className="size-9" gradient />
         </div>
       </div>
@@ -442,7 +449,7 @@ function EmptyState(): React.JSX.Element {
           </div>
           <div className="mt-2 max-w-[400px] text-[12.5px] leading-[1.65] text-[var(--text-secondary)]">
             {t(
-              'Tayyar needs at least one active network. Join a Wi-Fi network, plug in Ethernet, or connect your phone using USB tethering.'
+              'Majra needs at least one active network. Join a Wi-Fi network, plug in Ethernet, or connect your phone using USB tethering.'
             )}
           </div>
           <div className="mt-6 flex gap-2">
@@ -465,7 +472,7 @@ function EmptyState(): React.JSX.Element {
           </div>
           <div className="mt-2 max-w-[400px] text-[12.5px] leading-[1.65] text-[var(--text-secondary)]">
             {t(
-              'Paste a link ({shortcut}) or drop a .torrent anywhere in this window. Tayyar spreads it across every network you have.',
+              'Paste a link ({shortcut}) or drop a .torrent anywhere in this window. Majra spreads it across every network you have.',
               { shortcut: PASTE_SHORTCUT }
             )}
           </div>
@@ -630,10 +637,10 @@ const DownloadRow = memo(function DownloadRow({
     <div
       data-selected={selected || undefined}
       className={cn(
-        'group/download-row my-2 flex items-center gap-3 rounded-xl border border-border/70 bg-card px-3 py-3 transition-colors',
+        'list-row group/download-row my-2 flex items-center gap-3 rounded-lg border border-border/70 bg-card px-3 py-3 transition-colors',
         selected
-          ? 'border-[#8b6cff]/45 bg-[#8b6cff]/[0.07] hover:bg-[#8b6cff]/[0.1] focus-within:bg-[#8b6cff]/[0.1]'
-          : 'hover:border-[#8b6cff]/30 hover:bg-secondary/70 focus-within:border-[#8b6cff]/30'
+          ? 'border-accent/45 bg-accent/[0.07] hover:bg-accent/[0.1] focus-within:bg-accent/[0.1]'
+          : 'hover:border-accent/35 hover:bg-secondary/70 focus-within:border-accent/35'
       )}
     >
       <Checkbox
@@ -646,7 +653,7 @@ const DownloadRow = memo(function DownloadRow({
         onClick={() => onOpen(item.id)}
         className="flex min-w-0 flex-1 items-center gap-3 rounded-md text-start outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-[11px] border border-border/70 bg-[linear-gradient(150deg,rgba(139,108,255,0.16),rgba(34,211,238,0.05))] font-mono text-[10px] font-semibold text-[var(--text-secondary)]">
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-[8px] border border-border/70 bg-secondary font-mono text-[10px] font-semibold text-[var(--text-secondary)]">
           {badge}
         </div>
         <div className="flex min-w-0 flex-1 flex-col gap-1.5">
@@ -711,7 +718,7 @@ const DownloadRow = memo(function DownloadRow({
           {segments.length > 0 && (
             <div
               className={cn(
-                'flex h-1 overflow-hidden rounded-full bg-muted',
+                'flex h-1 gap-[2px] overflow-hidden rounded-full bg-muted',
                 // Not moving: the colors stay, faded, so it doesn't read as running.
                 !isFinished(item) &&
                   (item.status === 'paused' || item.status === 'queued') &&
@@ -721,6 +728,7 @@ const DownloadRow = memo(function DownloadRow({
               {segments.map((segment) => (
                 <div
                   key={segment.id}
+                  className="rounded-full transition-[width] duration-300 ease-out"
                   style={{
                     width: `${Math.min(100, segment.share * 100)}%`,
                     background: segment.color

@@ -317,7 +317,7 @@ export interface NetworkPreference {
   off?: boolean
   /** Bytes a second all downloads together may take over it. */
   speedLimit?: number
-  /** Bytes Tayyar may receive in the chosen calendar period. */
+  /** Bytes Majra may receive in the chosen calendar period. */
   dataLimit?: number
   /** Defaults to month for existing settings. Weeks start Monday in local time. */
   dataLimitPeriod?: DataLimitPeriod

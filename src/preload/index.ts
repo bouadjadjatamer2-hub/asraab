@@ -111,7 +111,7 @@ const plexoApi = {
   }
 }
 
-export type TayyarApi = typeof plexoApi
+export type MajraApi = typeof plexoApi
 
 // Nothing in the renderer needs raw Electron/Node access — only the typed plexoApi above is
 // exposed. The @electron-toolkit/preload electronAPI (which hands the renderer an unrestricted

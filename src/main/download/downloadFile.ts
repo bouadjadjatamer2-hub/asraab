@@ -75,7 +75,7 @@ export class DownloadFile {
       if (size !== expectedBytes) await handle.truncate(expectedBytes)
     } catch (error) {
       // Sparse still avoids zero-filling gaps, just without the contiguous reservation.
-      console.warn('[tayyar] could not reserve the download file, using a sparse file', error)
+      console.warn('[majra] could not reserve the download file, using a sparse file', error)
       await markSparse(this.path)
     } finally {
       await handle.close()

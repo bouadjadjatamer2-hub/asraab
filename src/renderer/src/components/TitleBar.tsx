@@ -17,10 +17,11 @@ import {
 } from './ui/alert-dialog'
 
 const isMac = window.plexo.platform === 'darwin'
-const VERSION = 'v1.2.1'
+const VERSION = 'v1.2.2'
 
-/** The window's title bar: the mark, the name, and a quiet version stamp, on a strip the window
- * is dragged by. The OS's controls sit at the right (macOS: traffic lights at the left). */
+/** The window's title bar: the drop mark, the wordmark, and a quiet version stamp, on a strip
+ * the window is dragged by. The OS's controls sit at the right (macOS: traffic lights at the
+ * left). */
 export function TitleBar(): React.JSX.Element {
   const turbo = useAppStore((store) => store.turbo)
   const locale = useAppStore((store) => store.locale)
@@ -57,13 +58,19 @@ export function TitleBar(): React.JSX.Element {
         isMac ? 'pl-[94px] pr-4' : 'pl-4 pr-[140px]'
       } [-webkit-app-region:drag]`}
     >
-      <LogoMark className="size-[17px]" gradient />
-      <div className="text-[11px] leading-none font-semibold tracking-[0.3em] text-[var(--text-secondary)]">
-        TAYYAR
+      <div aria-hidden className="h-[18px] w-[3px] rounded-full bg-accent" />
+      <LogoMark className="size-[18px]" gradient />
+      <div className="flex flex-col gap-[3px]">
+        <div className="text-[11px] leading-none font-extrabold tracking-[0.24em] text-foreground">
+          MAJRA
+        </div>
+        <div className="font-mono text-[7px] leading-none tracking-[0.18em] text-muted-foreground/80">
+          MULTI-LINK TRANSFER
+        </div>
       </div>
       {turbo && (
         <span
-          className="rounded-full border border-[#8b6cff]/35 bg-[linear-gradient(90deg,rgba(139,108,255,0.16),rgba(34,211,238,0.14))] px-1.5 py-[2px] font-mono text-[8.5px] leading-none font-semibold tracking-[0.16em] text-[#8b6cff]"
+          className="ms-1 rounded-[4px] border border-accent/40 bg-accent/10 px-1.5 py-[2px] font-mono text-[8.5px] leading-none font-semibold tracking-[0.14em] text-[var(--color-usb-text)]"
           title={t('Turbo mode: more streams per network')}
         >
           {t('TURBO')}
@@ -76,7 +83,7 @@ export function TitleBar(): React.JSX.Element {
           type="button"
           onClick={() => setOpen(true)}
           title={t('Restart to apply {language}', { language: pendingName ?? '' })}
-          className="flex h-6 items-center gap-1.5 rounded-full border border-[#d8a44c]/45 bg-[#d8a44c]/12 px-2 font-sans text-[10px] font-semibold whitespace-nowrap text-[#a66f12] transition-colors hover:bg-[#d8a44c]/20 dark:text-[#e8bb6d] [-webkit-app-region:no-drag]"
+          className="flex h-6 items-center gap-1.5 rounded-[5px] border border-[#d8a44c]/45 bg-[#d8a44c]/12 px-2 font-sans text-[10px] font-semibold whitespace-nowrap text-[#a66f12] transition-colors hover:bg-[#d8a44c]/20 dark:text-[#e8bb6d] [-webkit-app-region:no-drag]"
         >
           <RotateCcw className="size-3" aria-hidden />
           {t('Restart to apply {language}', { language: pendingName ?? '' })}
@@ -88,11 +95,11 @@ export function TitleBar(): React.JSX.Element {
         onClick={choose}
         title={t(target === 'ar' ? 'Switch to Arabic' : 'Switch to English')}
         aria-label={t(target === 'ar' ? 'Switch to Arabic' : 'Switch to English')}
-        className={`flex h-6 items-center gap-1.5 rounded-full border bg-[linear-gradient(135deg,rgba(139,108,255,0.12),rgba(34,211,238,0.12))] px-2 font-sans text-[10.5px] leading-none font-semibold text-[var(--text-secondary)] shadow-[inset_0_1px_0_rgba(255,255,255,0.25)] transition-colors hover:border-[#8b6cff]/45 hover:text-foreground [-webkit-app-region:no-drag] ${
-          pendingLocale ? 'border-[#d8a44c]/50' : 'border-[#8b6cff]/30'
+        className={`flex h-6 items-center gap-1.5 rounded-[5px] border bg-transparent px-2 font-sans text-[10.5px] leading-none font-semibold text-[var(--text-secondary)] transition-colors hover:border-accent/50 hover:bg-accent/5 hover:text-foreground [-webkit-app-region:no-drag] ${
+          pendingLocale ? 'border-[#d8a44c]/50' : 'border-border'
         }`}
       >
-        <Globe2 className="size-3.5 text-[#8b6cff]" aria-hidden />
+        <Globe2 className="size-3.5 text-accent" aria-hidden />
         {LOCALE_NAME[target]}
         <span className="sr-only">{t('Language')}</span>
       </button>
@@ -112,7 +119,7 @@ export function TitleBar(): React.JSX.Element {
           <AlertDialogHeader>
             <AlertDialogTitle>
               {pendingLocale
-                ? t('Restart Tayyar to switch to {language}?', { language: pendingName ?? '' })
+                ? t('Restart Majra to switch to {language}?', { language: pendingName ?? '' })
                 : t('Language saved')}
             </AlertDialogTitle>
             <AlertDialogDescription>

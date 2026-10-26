@@ -21,5 +21,5 @@ export function installLocale(): void {
   document.documentElement.lang = locale
   document.documentElement.dir = rtl ? 'rtl' : 'ltr'
   document.documentElement.classList.toggle('locale-ar', rtl)
-  document.title = 'Tayyar'
+  document.title = 'Majra'
 }

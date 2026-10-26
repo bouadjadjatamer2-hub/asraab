@@ -10,7 +10,7 @@ import { expect, expectHttp, makeDirs, PlexoApp, shaOfPath, test, treeSha } from
 async function makeZip(root: string): Promise<{ archive: Buffer; a: Buffer; b: Buffer }> {
   const source = join(root, 'source')
   await mkdir(join(source, 'nested'), { recursive: true })
-  const a = Buffer.from('hello from Tayyar\n')
+  const a = Buffer.from('hello from Majra\n')
   const b = randomBytes(300_000)
   await writeFile(join(source, 'a.txt'), a)
   await writeFile(join(source, 'nested', 'b.bin'), b)
@@ -37,7 +37,7 @@ test('unpacks a ZIP while downloading, across a dropped connection', async ({
   dirs,
   serve
 }) => {
-  const root = await mkdtemp(join(tmpdir(), 'tayyar-stream-'))
+  const root = await mkdtemp(join(tmpdir(), 'majra-stream-'))
   try {
     const { archive, a, b } = await makeZip(root)
     const origin = await serve({ size: 1 })
@@ -111,7 +111,7 @@ async function makeTinyZip(root: string): Promise<{ archive: Buffer; file: Buffe
 }
 
 test('a tiny ZIP downloads and unpacks while downloading', async ({ plexo, dirs, serve }) => {
-  const root = await mkdtemp(join(tmpdir(), 'tayyar-tiny-zip-'))
+  const root = await mkdtemp(join(tmpdir(), 'majra-tiny-zip-'))
   try {
     const { archive, file } = await makeTinyZip(root)
     // Small enough that the plan would use one block even at the minimum block size.
@@ -149,7 +149,7 @@ test('a tiny ZIP downloads and unpacks while downloading', async ({ plexo, dirs,
 
 /** The dialog has to send the choice through, not only draw it. */
 test('starts an unpacking download from the New download dialog', async ({ serve }) => {
-  const root = await mkdtemp(join(tmpdir(), 'tayyar-dialog-'))
+  const root = await mkdtemp(join(tmpdir(), 'majra-dialog-'))
   const { dirs, dispose } = await makeDirs()
   let app: PlexoApp | null = null
   try {
@@ -203,7 +203,7 @@ test.describe('slow first byte', () => {
   test.use({ appEnv: { PLEXO_E2E_FIRST_BYTE_MS: '6000' } })
 
   test('waits out a slow server before the archive starts', async ({ plexo, dirs, serve }) => {
-    const root = await mkdtemp(join(tmpdir(), 'tayyar-slow-stream-'))
+    const root = await mkdtemp(join(tmpdir(), 'majra-slow-stream-'))
     try {
       const { archive, a, b } = await makeZip(root)
       const origin = await serve({ size: 1 })

@@ -4,7 +4,7 @@ import { URL } from 'node:url'
 import { asConnectionError, type HttpConnection } from '../network/routes'
 import type { BrowserContext } from '../../shared/types'
 import { testKnobs } from '../testKnobs'
-import { requestHeaders } from './browserContext'
+import { rememberReferer, requestHeaders } from './browserContext'
 import { diskCoalesceBytes } from './diskWriter'
 import { compareVersion, type FileVersion, type VersionCheck } from './fileVersion'
 
@@ -186,6 +186,8 @@ export function downloadChunk(options: ChunkDownloadOptions): Promise<void> {
     // knows all of its bytes have landed before it settles (and the next one resumes after them).
     let pendingWrites = 0
     let afterWrites: (() => void) | null = null
+    // Set when a 403 says this server only serves its own pages' links: the Referer for the retry.
+    let siteReferer: string | null = null
     let flushDestination: (() => void) | null = null
 
     const afterPendingWrites = (done: () => void): void => {
@@ -263,7 +265,7 @@ export function downloadChunk(options: ChunkDownloadOptions): Promise<void> {
 
     const attempt = (targetUrl: URL, redirectsLeft: number): void => {
       void connection
-        .request(targetUrl, { ...requestHeaders(targetUrl, browser), ...range }, signal)
+        .request(targetUrl, { ...requestHeaders(targetUrl, browser, siteReferer ?? undefined), ...range }, signal)
         .then(({ req, res, sentAt }) => {
           if (settled) {
             req.destroy()
@@ -284,6 +286,17 @@ export function downloadChunk(options: ChunkDownloadOptions): Promise<void> {
             attempt(new URL(res.headers.location, targetUrl), redirectsLeft - 1)
             return
           }
+
+          // Nothing was sent with this request (a link resumed in a new run, so no check recorded
+          // it) and the server refused a bare one: it may only serve links from its own site. Ask
+          // once more with the site as the Referer (never with one from somewhere else).
+          if (status === 403 && !browser?.referer && siteReferer === null) {
+            siteReferer = `${targetUrl.origin}/`
+            res.resume()
+            attempt(targetUrl, redirectsLeft)
+            return
+          }
+          if (siteReferer && status !== 0) rememberReferer(targetUrl, status < 400)
 
           // A 200 is only correct here if we asked from byte 0 — otherwise the
           // server ignored our Range and we'd silently write the wrong bytes

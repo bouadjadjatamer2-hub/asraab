@@ -138,13 +138,13 @@ export const DownloadingScreen = memo(function DownloadingScreen({
     if (isPaused) {
       const label = isQueued ? t('Queued') : t('Paused')
       document.title = knownSize
-        ? t('Tayyar — {label} ({percent}%)', { label, percent })
-        : t('Tayyar — {label}', { label })
+        ? t('Majra — {label} ({percent}%)', { label, percent })
+        : t('Majra — {label}', { label })
     } else {
-      document.title = knownSize ? t('Tayyar — {percent}%', { percent }) : t('Tayyar — downloading')
+      document.title = knownSize ? t('Majra — {percent}%', { percent }) : t('Majra — downloading')
     }
     return () => {
-      document.title = 'Tayyar'
+      document.title = 'Majra'
     }
   }, [percent, knownSize, isPaused, isQueued])
 
@@ -221,7 +221,7 @@ export const DownloadingScreen = memo(function DownloadingScreen({
   const throughputStatusLabel = isPaused ? null : t('LAST {n}S', { n: SPEED_HISTORY_SECONDS })
 
   return (
-    <div className="flex h-full flex-col bg-background">
+    <div className="screen-enter flex h-full flex-col bg-background">
       <DetailHeader download={download} />
       {isQueued && !scheduleWindow.allowed && (
         <div className="border-b-[0.5px] border-border px-5 py-3 text-[12.5px] text-muted-foreground">

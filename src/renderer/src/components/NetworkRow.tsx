@@ -396,7 +396,7 @@ export function NetworkRow({
           className="ms-5 size-2 rounded-full"
           style={{
             background: hasError ? DANGER : visual.solid,
-            animation: isActive ? 'plexo-glow 1.8s infinite' : undefined,
+            animation: isActive ? 'majra-signal 1.8s infinite' : undefined,
             opacity: isActive || hasError ? 1 : 0.65
           }}
         />

@@ -13,14 +13,14 @@ export type Reach = 'ok' | 'closed' | 'update'
 
 let found: number | null = null
 
-/** Anything other than Tayyar holding the port counts as closed. */
+/** Anything other than Majra holding the port counts as closed. */
 async function ask(port: number): Promise<Reach> {
   try {
     const response = await fetch(`http://127.0.0.1:${port}/ping`, {
       signal: AbortSignal.timeout(1500)
     })
     const ping = (await response.json()) as Partial<BridgePing>
-    if (!response.ok || ping.app !== 'tayyar') return 'closed'
+    if (!response.ok || ping.app !== 'majra') return 'closed'
     return ping.api === BRIDGE_API ? 'ok' : 'update'
   } catch {
     return 'closed'
@@ -38,16 +38,16 @@ export async function reach(): Promise<Reach> {
   return at >= 0 ? 'ok' : answers.includes('update') ? 'update' : 'closed'
 }
 
-/** Tayyar will take the download once confirmed (see BridgeHandoff). */
+/** Majra will take the download once confirmed (see BridgeHandoff). */
 export interface Handoff {
   port: number
   token: string
 }
 
-/** kept: Tayyar said no, or took too long. */
+/** kept: Majra said no, or took too long. */
 export async function send(request: BridgeAddRequest): Promise<Handoff | 'kept' | 'closed'> {
   // Asked first every time, so the sign-in only ever goes to a port that has just answered as
-  // Tayyar, never to another app that has since taken it.
+  // Majra, never to another app that has since taken it.
   if ((await reach()) !== 'ok' || found === null) return 'closed'
   const port = found
   try {
@@ -55,7 +55,7 @@ export async function send(request: BridgeAddRequest): Promise<Handoff | 'kept' 
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(request),
-      // Past Tayyar's own deadline: Tayyar answers nothing once this has given up.
+      // Past Majra's own deadline: Majra answers nothing once this has given up.
       signal: AbortSignal.timeout(BRIDGE_DEADLINE_MS + 2000)
     })
     if (!response.ok) return 'kept'
@@ -98,7 +98,7 @@ function hostOf(url: string | undefined): string[] {
   }
 }
 
-/** Cookies for where the download starts and where its redirects end; Tayyar sends each request
+/** Cookies for where the download starts and where its redirects end; Majra sends each request
  * only the ones that match it. */
 export async function browserContext(
   urls: readonly (string | undefined)[],
@@ -149,7 +149,7 @@ function browserName(): string {
 
 /** Only ever on a click: the browser asks the user whether to open the app. */
 export async function wake(): Promise<boolean> {
-  const tab = await api.tabs.create({ url: 'tayyar://open' })
+  const tab = await api.tabs.create({ url: 'majra://open' })
   let reached = false
   for (let tries = 0; tries < 20 && !reached; tries++) {
     await new Promise((resolve) => setTimeout(resolve, 500))

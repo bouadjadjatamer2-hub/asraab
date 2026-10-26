@@ -3,8 +3,8 @@ import type { BridgeAddRequest } from '../../src/shared/browserBridge'
 import { browserContext, confirm, reach, send, storeOf, wake, type Reach } from './plexo'
 import { excluded, loadSettings } from './settings'
 
-const MENU_ID = 'download-with-tayyar'
-// Tayyar can't tell the extension it has quit, so the toolbar icon checks on a timer.
+const MENU_ID = 'download-with-majra'
+// Majra can't tell the extension it has quit, so the toolbar icon checks on a timer.
 const CHECK_ALARM = 'check-plexo'
 
 const openedAt = new Map<number, number>()
@@ -17,17 +17,17 @@ async function showState(reached?: Reach): Promise<void> {
   const { capture } = await loadSettings()
   reached ??= await reach()
   const title = !capture
-    ? 'Tayyar: capture is off'
+    ? 'Majra: capture is off'
     : reached === 'closed'
-      ? 'Tayyar isn’t open: downloads stay in the browser'
+      ? 'Majra isn’t open: downloads stay in the browser'
       : reached === 'update'
-        ? 'Update Tayyar to use this extension'
-        : 'Tayyar'
+        ? 'Update Majra to use this extension'
+        : 'Majra'
   await api.action.setIcon({ path: capture && reached === 'ok' ? ICON : ICON_OFF })
   await api.action.setTitle({ title })
 }
 
-/** True when Tayyar took the download; otherwise the browser keeps it. */
+/** True when Majra took the download; otherwise the browser keeps it. */
 async function capture(item: chrome.downloads.DownloadItem): Promise<boolean> {
   const settings = await loadSettings()
   const url = item.finalUrl || item.url
@@ -48,8 +48,8 @@ async function capture(item: chrome.downloads.DownloadItem): Promise<boolean> {
     if (handoff === 'closed') await showState('closed')
     return false
   }
-  // Tayyar shows the download only once the browser's copy is gone. Firefox can't hold a download
-  // while Tayyar checks it, so a small one may have finished meanwhile: cancelling then does
+  // Majra shows the download only once the browser's copy is gone. Firefox can't hold a download
+  // while Majra checks it, so a small one may have finished meanwhile: cancelling then does
   // nothing, and the browser keeps it rather than both ending up with it.
   await api.downloads.cancel(item.id).catch(() => {})
   const [after] = await api.downloads.search({ id: item.id }).catch(() => [])
@@ -61,7 +61,7 @@ async function capture(item: chrome.downloads.DownloadItem): Promise<boolean> {
   return true
 }
 
-/** A link that opens a tab only to download leaves that tab empty once Tayyar takes it. */
+/** A link that opens a tab only to download leaves that tab empty once Majra takes it. */
 async function closeEmptyTab(urls: readonly (string | undefined)[]): Promise<void> {
   const recently = Date.now() - 30_000
   for (const tab of await api.tabs.query({})) {
@@ -72,7 +72,7 @@ async function closeEmptyTab(urls: readonly (string | undefined)[]): Promise<voi
   }
 }
 
-// In Chromium, answering later holds back the browser's own Save As dialog until Tayyar has
+// In Chromium, answering later holds back the browser's own Save As dialog until Majra has
 // decided, so the user is never asked twice. Firefox has no such event.
 const determining = api.downloads.onDeterminingFilename
 if (determining) {
@@ -84,7 +84,7 @@ if (determining) {
   api.downloads.onCreated.addListener((item) => void capture(item))
 }
 
-/** Sent whatever the settings say, and Tayyar is started if needed: the user asked for it. */
+/** Sent whatever the settings say, and Majra is started if needed: the user asked for it. */
 async function sendLink(
   info: chrome.contextMenus.OnClickData,
   tab?: chrome.tabs.Tab
@@ -116,7 +116,7 @@ function createMenu(): void {
   void api.contextMenus
     .removeAll()
     .then(() =>
-      api.contextMenus.create({ id: MENU_ID, title: 'Download with Tayyar', contexts: ['link'] })
+      api.contextMenus.create({ id: MENU_ID, title: 'Download with Majra', contexts: ['link'] })
     )
 }
 
@@ -134,7 +134,7 @@ api.tabs.onCreated.addListener((tab) => {
 api.storage.onChanged.addListener(() => void showState())
 
 api.runtime.onMessage.addListener((message) => {
-  const { wakeTayyar, checkTayyar } = message as { wakeTayyar?: boolean; checkTayyar?: boolean }
-  if (checkTayyar) void showState()
-  if (wakeTayyar) void wake().then((woke) => showState(woke ? 'ok' : 'closed'))
+  const { wakeMajra, checkMajra } = message as { wakeMajra?: boolean; checkMajra?: boolean }
+  if (checkMajra) void showState()
+  if (wakeMajra) void wake().then((woke) => showState(woke ? 'ok' : 'closed'))
 })

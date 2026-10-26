@@ -1,6 +1,6 @@
-# Rebuilding Tayyar
+# Rebuilding Majra
 
-This folder holds the source of **Tayyar 1.2.0**. `node_modules`, `out` and `dist` were removed to
+This folder holds the source of **Majra 1.2.0**. `node_modules`, `out` and `dist` were removed to
 save space; everything below recreates them.
 
 ## Requirements
@@ -18,7 +18,7 @@ npx electron-vite build
 npx electron-builder --win --publish never
 ```
 
-The installer lands in `dist\tayyar-1.2.0-setup.exe`. It is not code-signed, so Windows
+The installer lands in `dist\majra-1.2.0-setup.exe`. It is not code-signed, so Windows
 SmartScreen will warn on first run.
 
 `npm install` runs the repo's `postinstall` (`patch-package`, `install-electron`,
@@ -30,7 +30,7 @@ SmartScreen will warn on first run.
 npm run build:extension
 ```
 
-The zip is written next to the project as `Tayyar-Browser-Extension.zip` (Chrome: `chrome://extensions`
+The zip is written next to the project as `Majra-Browser-Extension.zip` (Chrome: `chrome://extensions`
 → Developer mode → Load unpacked → the unzipped folder).
 
 ## Checks
@@ -45,7 +45,7 @@ Ad-hoc checks used during development live in `scripts\check-*.mjs` and run with
 
 ## Notes
 
-- Product name: **Tayyar**; app id `app.tayyar.desktop`; protocol `tayyar://`.
+- Product name: **Majra**; app id `app.majra.desktop`; protocol `majra://`.
 - HTTP downloads normally go through Node's stack with per-interface binding (multi-network).
 - When a server refuses Node's TLS handshake (e.g. Cloudflare returns 403), the probe retries via
   Chromium's stack and records `transport: 'chromium'`; the download follows the same route

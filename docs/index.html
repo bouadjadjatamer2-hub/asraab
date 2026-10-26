@@ -17,9 +17,9 @@
         root.classList.remove('no-js')
         root.classList.add('js')
         try {
-          var theme = localStorage.getItem('asraab-theme') || localStorage.getItem('tayyar-theme')
+          var theme = localStorage.getItem('asraab-theme') || localStorage.getItem('majra-theme')
           if (theme === 'light' || theme === 'dark') root.dataset.theme = theme
-          var lang = localStorage.getItem('asraab-lang') || localStorage.getItem('tayyar-lang')
+          var lang = localStorage.getItem('asraab-lang') || localStorage.getItem('majra-lang')
           if (lang === 'ar') {
             root.lang = 'ar'
             root.dir = 'rtl'
@@ -30,10 +30,10 @@
       })()
     </script>
     <meta name="color-scheme" content="dark light" />
-    <meta name="theme-color" content="#0A0B10" id="themeColor" />
+    <meta name="theme-color" content="#0d100e" id="themeColor" />
     <meta
       name="description"
-      content="Asraab is a small, hand-picked catalog of independent Windows software. One app so far, with more on the way: Tayyar, a free and open-source download manager."
+      content="Asraab is a small, hand-picked catalog of independent Windows software. One app so far, with more on the way: Majra, a free and open-source download manager."
     />
     <meta name="author" content="Asraab contributors" />
     <meta name="application-name" content="Asraab" />
@@ -68,7 +68,7 @@
     <meta property="og:title" content="Asraab — Fewer apps. Better ones." />
     <meta
       property="og:description"
-      content="A small catalog of independent Windows software. No account walls, no bundleware, no dark patterns. First up: Tayyar."
+      content="A small catalog of independent Windows software. No account walls, no bundleware, no dark patterns. First up: Majra."
     />
     <meta
       property="og:url"
@@ -82,13 +82,13 @@
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="Asraab wordmark, the line Fewer apps. Better ones., and a Tayyar catalog card."
+      content="Asraab wordmark, the line Fewer apps. Better ones., and a Majra catalog card."
     />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Asraab — Fewer apps. Better ones." />
     <meta
       name="twitter:description"
-      content="A small catalog of independent Windows software. First up: Tayyar, a free and open-source download manager."
+      content="A small catalog of independent Windows software. First up: Majra, a free and open-source download manager."
     />
     <meta
       name="twitter:image"
@@ -111,8 +111,8 @@
         },
         "hasPart": {
           "@type": "SoftwareApplication",
-          "name": "Tayyar",
-          "url": "https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/tayyar/",
+          "name": "Majra",
+          "url": "https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/majra/",
           "applicationCategory": "UtilitiesApplication",
           "operatingSystem": "Windows 10, Windows 11",
           "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
@@ -129,18 +129,15 @@
 
     <svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
       <defs>
-        <linearGradient id="tayyar-gradient" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#8b6cff"></stop>
-          <stop offset="0.55" stop-color="#6d8bff"></stop>
-          <stop offset="1" stop-color="#22d3ee"></stop>
+        <linearGradient id="majra-gradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#e8a35f"></stop>
+          <stop offset="0.55" stop-color="#d08338"></stop>
+          <stop offset="1" stop-color="#c2620f"></stop>
         </linearGradient>
       </defs>
       <symbol id="i-logo" viewBox="0 0 24 24">
-        <g fill="url(#tayyar-gradient)">
-          <rect x="9.9" y="2.4" width="1.8" height="10.1" rx="0.9"></rect>
-          <rect x="12.3" y="2.4" width="1.8" height="10.1" rx="0.9"></rect>
-          <path d="M5.7 11.6h12.6L12 19.6z"></path>
-          <rect x="7.4" y="21" width="9.2" height="1.3" rx="0.65"></rect>
+        <g fill="url(#majra-gradient)">
+          <path d="M12 2.1c1.9 3.4 7.3 7.5 7.3 12.1 0 4.1-3.3 6.9-7.3 6.9s-7.3-2.8-7.3-6.9C4.7 9.6 10.1 5.5 12 2.1Z"></path>
         </g>
       </symbol>
       <symbol id="i-download" viewBox="0 0 24 24">
@@ -300,7 +297,7 @@
             data-i18n-aria-label="lang.switchToArabic"
           >
             <svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg>
-            <span class="lang-label" data-lang-label>العربية</span>
+            <span class="lang-label" data-lang-label>اكعربىة</span>
           </button>
 
           <a
@@ -395,8 +392,8 @@
                   <use href="#i-arrow-right"></use>
                 </svg>
               </a>
-              <a class="btn btn-secondary btn-lg" href="./apps/tayyar/">
-                <span data-i18n="home.meetTayyar">Meet Tayyar</span>
+              <a class="btn btn-secondary btn-lg" href="./apps/majra/">
+                <span data-i18n="home.meetMajra">Meet Majra</span>
                 <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
               </a>
             </div>
@@ -420,9 +417,9 @@
               <svg viewBox="0 0 640 580" fill="none">
                 <defs>
                   <linearGradient id="flock-light" x1="80" y1="500" x2="560" y2="80">
-                    <stop offset="0" stop-color="#8b6cff" stop-opacity="0.55" />
-                    <stop offset="0.56" stop-color="#6d8bff" stop-opacity="0.32" />
-                    <stop offset="1" stop-color="#22d3ee" stop-opacity="0.18" />
+                    <stop offset="0" stop-color="#e8a35f" stop-opacity="0.55" />
+                    <stop offset="0.56" stop-color="#d08338" stop-opacity="0.32" />
+                    <stop offset="1" stop-color="#c2620f" stop-opacity="0.18" />
                   </linearGradient>
                 </defs>
                 <path
@@ -476,7 +473,7 @@
                   ><i></i><span data-i18n="home.mockLive">LIVE</span></span
                 >
                 <span class="catalog-window-controls"
-                  ><span>−</span><span>□</span><span>×</span></span
+                  ><span>–</span><span>□</span><span>×</span></span
                 >
               </div>
 
@@ -489,10 +486,10 @@
                 <div class="catalog-feature">
                   <div class="catalog-feature-head">
                     <span class="catalog-feature-icon">
-                      <img src="./assets/img/tayyar-icon.png" width="46" height="46" alt="" />
+                      <img src="./assets/img/majra-icon.png" width="46" height="46" alt="" />
                     </span>
                     <span class="catalog-feature-id">
-                      <strong>TAYYAR</strong>
+                      <strong>MAJRA</strong>
                       <span data-i18n="home.mockCategory">WINDOWS DOWNLOAD MANAGER</span>
                     </span>
                     <span class="catalog-feature-status"
@@ -500,7 +497,7 @@
                     >
                   </div>
                   <p class="catalog-feature-tagline" data-i18n="home.mockTagline">
-                    Every connection. One download.
+                    Every link lands here.
                   </p>
                   <p class="catalog-feature-copy" data-i18n="home.mockCopy">
                     Splits files across Wi-Fi, Ethernet and USB at the same time.
@@ -534,7 +531,7 @@
 
                   <div class="catalog-feature-foot">
                     <span>WINDOWS 10/11</span>
-                    <span>v1.2.1</span>
+                    <span>v1.2.2</span>
                     <span>MIT</span>
                   </div>
                 </div>
@@ -588,19 +585,19 @@
           </div>
 
           <div class="app-catalog-grid" id="appGrid" data-catalog-grid>
-            <article class="app-card app-card-fallback" aria-labelledby="fallback-tayyar">
+            <article class="app-card app-card-fallback" aria-labelledby="fallback-majra">
               <div class="app-card-glow" aria-hidden="true"></div>
               <div class="app-card-head">
                 <span class="app-card-icon">
-                  <img src="./assets/img/tayyar-icon.png" width="54" height="54" alt="" />
+                  <img src="./assets/img/majra-icon.png" width="54" height="54" alt="" />
                 </span>
                 <span class="app-card-id">
                   <span class="app-card-category">Download manager</span>
-                  <h3 class="app-card-name" id="fallback-tayyar">Tayyar</h3>
+                  <h3 class="app-card-name" id="fallback-majra">Majra</h3>
                 </span>
                 <span class="app-card-status"><i></i>Live</span>
               </div>
-              <p class="app-card-tagline">Every connection. One download.</p>
+              <p class="app-card-tagline">Every link lands here.</p>
               <p class="app-card-desc">
                 Splits a download across Wi-Fi, Ethernet and USB at the same time, with resume,
                 queues, and extract-while-downloading.
@@ -620,9 +617,9 @@
                 </li>
               </ul>
               <div class="app-card-foot">
-                <span class="app-card-version mono">v1.2.1</span>
-                <a class="app-card-link" href="./apps/tayyar/">
-                  <span>Meet Tayyar</span>
+                <span class="app-card-version mono">v1.2.2</span>
+                <a class="app-card-link" href="./apps/majra/">
+                  <span>Meet Majra</span>
                   <svg class="icon arrow-icon" aria-hidden="true">
                     <use href="#i-arrow-right"></use>
                   </svg>
@@ -749,7 +746,7 @@
               <h3 data-i18n="home.standard2Title">No account tax.</h3>
               <p data-i18n="home.standard2Body">
                 No sign-up wall between you and the download. No bundleware, no silent extras, no
-                “recommended” installs. The app does its job and gets out of the way.
+                ‘recommended” installs. The app does its job and gets out of the way.
               </p>
               <span class="standard-rule" aria-hidden="true"></span>
               <span class="standard-foot" data-i18n="home.standard2Foot"
@@ -778,7 +775,7 @@
 
           <figure class="standards-quote reveal">
             <blockquote data-i18n="home.quote">
-              “Small on purpose. Every app has to earn its place.”
+              ‘Small on purpose. Every app has to earn its place.”
             </blockquote>
             <figcaption class="mono" data-i18n="home.quoteBy">
               ASRAAB / EDITORIAL RULE 01
@@ -845,8 +842,8 @@
                 <svg class="icon fill" aria-hidden="true"><use href="#i-github"></use></svg>
                 <span data-i18n="site.githubProfile">Asraab on GitHub</span>
               </a>
-              <a class="btn btn-secondary" href="./apps/tayyar/">
-                <span data-i18n="home.meetTayyar">Meet Tayyar</span>
+              <a class="btn btn-secondary" href="./apps/majra/">
+                <span data-i18n="home.meetMajra">Meet Majra</span>
                 <svg class="icon arrow-icon" aria-hidden="true">
                   <use href="#i-arrow-right"></use>
                 </svg>
@@ -857,7 +854,7 @@
           <div
             class="repo-panel reveal"
             role="img"
-            aria-label="Asraab catalog structure: one repository per app, starting with Tayyar"
+            aria-label="Asraab catalog structure: one repository per app, starting with Majra"
             data-i18n-aria-label="home.repoAria"
           >
             <div class="repo-bar">
@@ -872,7 +869,7 @@
               <p class="repo-out"><span class="repo-key">03</span> Say what it cannot do.</p>
               <p class="repo-prompt repo-gap"><span>~</span> ls apps/</p>
               <p class="repo-out">
-                <span class="repo-dir">tayyar/</span>
+                <span class="repo-dir">majra/</span>
                 <span class="repo-comment"># live · MIT</span>
               </p>
               <p class="repo-out">
@@ -922,7 +919,7 @@
 
           <div class="footer-col">
             <h2 data-i18n="site.footerCatalog">Catalog</h2>
-            <a href="./apps/tayyar/">Tayyar</a>
+            <a href="./apps/majra/">Majra</a>
             <a href="#apps" data-i18n="site.nav.apps">Apps</a>
             <a href="#standards" data-i18n="site.nav.standards">Standards</a>
             <a href="#about" data-i18n="site.nav.about">About</a>
@@ -943,7 +940,7 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span data-i18n="site.tayyarRepo">Tayyar repository</span>
+              <span data-i18n="site.majraRepo">Majra repository</span>
               <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
             </a>
             <a
@@ -968,7 +965,7 @@
             >
             <button class="footer-lang" type="button" data-lang-toggle>
               <svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg>
-              <span data-lang-label>العربية</span>
+              <span data-lang-label>اكعربىة</span>
             </button>
           </div>
         </div>
@@ -978,7 +975,7 @@
             <span data-i18n="site.footerRights">© {year} Asraab contributors.</span>
             <span class="sep" aria-hidden="true">·</span>
             <span data-i18n="site.footerDisclaimer"
-              >Tayyar is not affiliated with Internet Download Manager or Tonec Inc.</span
+              >Majra is not affiliated with Internet Download Manager or Tonec Inc.</span
             >
           </div>
           <div class="footer-bottom-right">
@@ -997,3 +994,4 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </body>
 </html>
+

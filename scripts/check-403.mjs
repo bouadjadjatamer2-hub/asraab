@@ -38,7 +38,7 @@ const server = http.createServer((req, res) => {
 await new Promise((resolve) => server.listen(8971, '127.0.0.1', resolve))
 
 const app = await electron.launch({
-  executablePath: 'C:\\Users\\Lenovo\\Downloads\\tayyar\\dist\\win-unpacked\\tayyar.exe'
+  executablePath: 'C:\\Users\\Lenovo\\Downloads\\majra\\dist\\win-unpacked\\majra.exe'
 })
 const win = await app.firstWindow()
 await win.waitForTimeout(1800)
@@ -49,7 +49,7 @@ await win
 await win.waitForTimeout(500)
 await win.getByPlaceholder(/Paste a link/).fill('http://127.0.0.1:8971/ua-test.bin')
 await win.waitForTimeout(3000)
-await win.screenshot({ path: 'C:\\Users\\Lenovo\\Downloads\\tayyar\\dist\\_ui-403check.png' })
+await win.screenshot({ path: 'C:\\Users\\Lenovo\\Downloads\\majra\\dist\\_ui-403check.png' })
 const errorVisible = await win
   .getByText(/refused the request|denied access/i)
   .isVisible()

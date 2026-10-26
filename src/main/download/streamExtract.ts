@@ -17,6 +17,9 @@ export interface StreamUnpacker {
   readonly destination: Writable
   /** True once it can't take more bytes (it failed or was stopped). */
   readonly hasExited: boolean
+  /** Why it stopped, when it stopped on an error. Lets the download report the real cause
+   * instead of a generic "the tool stopped" message. */
+  readonly failure: Error | null
   /** Closes the input and waits for the last files to land. Throws if unpacking failed. */
   finish(): Promise<void>
   /** Stops now. Partial files stay until `remove`. */
@@ -39,7 +42,7 @@ export function archiveToolPath(format: ArchiveFormat): string {
       ? join(process.resourcesPath, 'app.asar.unpacked', 'resources', 'bin', 'unrar.exe')
       : join(app.getAppPath(), 'resources', 'bin', 'unrar.exe')
     if (!existsSync(bundled)) {
-      throw new Error('The RAR unpacking tool is missing. Reinstall Tayyar and try again.')
+      throw new Error('The RAR unpacking tool is missing. Reinstall Majra and try again.')
     }
     return bundled
   }
@@ -122,6 +125,12 @@ export class ArchiveExtractor implements StreamUnpacker {
     return this.exitCode !== null
   }
 
+  /** The tool's own explanation, when it stopped on an error. A clean exit has none. */
+  get failure(): Error | null {
+    if (this.exitCode === null || this.exitCode === 0) return null
+    return new Error(this.explain(this.exitCode))
+  }
+
   /** Closes the archive stream and waits for the tool to write everything out. Throws with
    * the tool's own message if it stopped on an error. */
   async finish(): Promise<void> {
@@ -176,7 +185,7 @@ export class ZipExtractor implements StreamUnpacker {
     number,
     { resolve: () => void; reject: (error: Error) => void }
   >()
-  private failure: Error | null = null
+  private error: Error | null = null
   private aborted = false
 
   constructor(dir: string) {
@@ -192,7 +201,7 @@ export class ZipExtractor implements StreamUnpacker {
       this.pending.delete(message.id)
       if (message.error) {
         const error = new Error(message.error)
-        this.failure ??= error
+        this.error ??= error
         pending.reject(error)
       } else {
         pending.resolve()
@@ -222,13 +231,17 @@ export class ZipExtractor implements StreamUnpacker {
   }
 
   get hasExited(): boolean {
-    return this.aborted || this.failure !== null
+    return this.aborted || this.error !== null
+  }
+
+  get failure(): Error | null {
+    return this.error
   }
 
   async finish(): Promise<void> {
     if (this.aborted) throw new Error('Unpacking was stopped.')
     await this.send({ type: 'end' })
-    if (this.failure) throw this.failure
+    if (this.error) throw this.error
     await this.close()
   }
 
@@ -252,7 +265,7 @@ export class ZipExtractor implements StreamUnpacker {
 
   private send(message: { type: 'chunk'; buffer: Buffer } | { type: 'end' }): Promise<void> {
     if (this.aborted) return Promise.reject(new Error('Unpacking was stopped.'))
-    if (this.failure) return Promise.reject(this.failure)
+    if (this.error) return Promise.reject(this.error)
     const id = this.nextId++
     return new Promise((resolve, reject) => {
       this.pending.set(id, { resolve, reject })
@@ -282,7 +295,7 @@ export class ZipExtractor implements StreamUnpacker {
   }
 
   private failAll(error: Error): void {
-    this.failure ??= error
+    this.error ??= error
     for (const pending of this.pending.values()) pending.reject(error)
     this.pending.clear()
   }
@@ -302,12 +315,67 @@ const parser = unzipper.Parse({ forceStream: true })
 let failure = null
 let stopped = false
 
+// Windows can't create a name with any of these, or one that ends in a dot or a space. Archive
+// tools on other systems can, so a name is made safe instead of failing the whole extraction.
+const INVALID_NAME = /[<>:"|?*\u0000-\u001f]/g
+const RESERVED_NAME = /^(con|prn|aux|nul|com[1-9]|lpt[1-9]|conin\$|conout\$)(\..*)?$/i
+
+function capName(name) {
+  if (name.length <= 200) return name
+  const dot = name.lastIndexOf('.')
+  const extension = dot > 0 && name.length - dot <= 16 ? name.slice(dot) : ''
+  let cut = name.slice(0, 200 - extension.length)
+  const last = cut.charCodeAt(cut.length - 1)
+  if (last >= 0xd800 && last <= 0xdbff) cut = cut.slice(0, -1)
+  return cut.replace(/[. ]+$/g, '') + extension
+}
+
+function cleanComponent(part) {
+  let name = part.replace(INVALID_NAME, '_').replace(/[. ]+$/g, '')
+  name = capName(name).replace(/[. ]+$/g, '')
+  if (name === '' || /^\.+$/.test(name)) name = '_'
+  if (RESERVED_NAME.test(name)) name = '_' + name
+  return name
+}
+
+// Returns the archive path with every component made valid on Windows, or null for a path that
+// must not be written at all (absolute, or climbing out with ..).
 function safePath(name) {
   const slashed = String(name).replace(/\\/g, '/')
   if (slashed.startsWith('/') || /^[a-zA-Z]:/.test(slashed)) return null
   const parts = slashed.split('/').filter((part) => part !== '' && part !== '.')
   if (parts.length === 0 || parts.some((part) => part === '..')) return null
-  return parts.join('/')
+  return parts.map(cleanComponent).join('/')
+}
+
+// Two archive names can become the same Windows name once cleaned. Keep them apart with a suffix,
+// but let an entry that appears twice under the same name overwrite itself, as archive tools do.
+const assigned = new Map()
+const used = new Map()
+
+function addSuffix(relative, n) {
+  const slash = relative.lastIndexOf('/')
+  const parent = slash >= 0 ? relative.slice(0, slash + 1) : ''
+  const base = slash >= 0 ? relative.slice(slash + 1) : relative
+  const dot = base.lastIndexOf('.')
+  const extension = dot > 0 ? base.slice(dot) : ''
+  const stem = dot > 0 ? base.slice(0, dot) : base
+  return parent + stem + ' (' + n + ')' + extension
+}
+
+function targetPath(name) {
+  const original = String(name).replace(/\\/g, '/')
+  const relative = safePath(original)
+  if (relative === null) return null
+  const key = original.toLowerCase()
+  const known = assigned.get(key)
+  if (known) return known
+  let unique = relative
+  let n = 1
+  while (used.has(unique.toLowerCase())) unique = addSuffix(relative, n++)
+  assigned.set(key, unique)
+  used.set(unique.toLowerCase(), key)
+  return unique
 }
 
 const consumed = (async () => {
@@ -316,7 +384,7 @@ const consumed = (async () => {
       entry.autodrain()
       continue
     }
-    const relative = safePath(entry.path)
+    const relative = targetPath(entry.path)
     if (relative === null) {
       entry.autodrain()
       throw new Error('The archive contains an unsafe path: ' + entry.path)

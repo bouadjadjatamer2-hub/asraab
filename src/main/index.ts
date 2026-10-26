@@ -20,6 +20,7 @@ import {
   setRunInBackground
 } from './startup'
 import { testKnobs } from './testKnobs'
+import { migrateLegacyUserData } from './userDataMigration'
 import { setMainLocale, t } from './i18n'
 import { startUpdater } from './updater'
 import type { DownloadManager } from './download/downloadManager'
@@ -27,12 +28,12 @@ import type { DownloadManager } from './download/downloadManager'
 // In dev mode the app runs as the raw `electron` binary, which otherwise shows "Electron" in
 // the Dock tooltip/menu bar — must be set before the app is ready. Packaged builds already get
 // this from electron-builder's productName, but setting it here keeps dev and packaged in sync.
-app.setName('Tayyar')
+app.setName('Majra')
 
 // Each e2e test runs against its own throwaway userData folder (downloads, manifests, settings).
 if (testKnobs.userDataDir) app.setPath('userData', testKnobs.userDataDir)
 
-// One Tayyar at a time (per userData folder, so parallel e2e runs each have their own): a second
+// One Majra at a time (per userData folder, so parallel e2e runs each have their own): a second
 // launch — a magnet link clicked, a .torrent opened — hands its link to the first and exits.
 if (!app.requestSingleInstanceLock()) app.exit(0)
 
@@ -57,11 +58,11 @@ function offer(candidate: string): void {
   offerLink({ url: link }, app.isReady() ? ensureWindow() : null)
 }
 
-// A tayyar:// link from the browser extension arrives here too, with no link in it.
+// A majra:// link from the browser extension arrives here too, with no link in it.
 app.on('second-instance', (_event, argv) => {
   const link = linkFromArgs(argv)
   if (link) return offer(link)
-  // A login item firing while Tayyar is already open must not pop the window over the desktop.
+  // A login item firing while Majra is already open must not pop the window over the desktop.
   if (argv.includes(BACKGROUND_FLAG)) return
   bringForward(ensureWindow())
 })
@@ -83,7 +84,7 @@ if (launchLink) offer(launchLink)
 function titleBarOverlay(): Electron.TitleBarOverlayOptions {
   const dark = nativeTheme.shouldUseDarkColors
   return {
-    color: dark ? '#202325' : '#fafafa',
+    color: dark ? '#131814' : '#fffcf5',
     symbolColor: dark ? '#eae7e2' : '#1d1d1f',
     height: 44
   }
@@ -98,10 +99,10 @@ function createWindow(): void {
     minHeight: 620,
     show: false,
     autoHideMenuBar: true,
-    title: 'Tayyar',
+    title: 'Majra',
     // Matches the renderer's dark-mode background so a live window resize
     // (which briefly exposes the raw window background) doesn't flash white.
-    backgroundColor: nativeTheme.shouldUseDarkColors ? '#1c1c1e' : '#ffffff',
+    backgroundColor: nativeTheme.shouldUseDarkColors ? '#0d100e' : '#f4f1e9',
     ...(process.platform !== 'darwin' ? { icon } : {}),
     // One title bar on every OS: the renderer's own strip (see TitleBar.tsx), with the OS's
     // window controls over it — macOS's traffic lights, or the minimize/maximize/close that
@@ -162,20 +163,28 @@ function createWindow(): void {
 function createTray(): Tray {
   if (tray) return tray
   tray = new Tray(nativeImage.createFromPath(icon).resize({ width: 16, height: 16 }))
-  tray.setToolTip('Tayyar')
+  tray.setToolTip('Majra')
   tray.on('click', () => bringForward(ensureWindow()))
   tray.setContextMenu(
     Menu.buildFromTemplate([
-      { label: t('Open Tayyar'), click: () => bringForward(ensureWindow()) },
+      { label: t('Open Majra'), click: () => bringForward(ensureWindow()) },
       { type: 'separator' },
-      { label: t('Quit Tayyar'), click: () => app.quit() }
+      { label: t('Quit Majra'), click: () => app.quit() }
     ])
   )
   return tray
 }
 
 app.whenReady().then(async () => {
-  electronApp.setAppUserModelId('app.tayyar.desktop')
+  electronApp.setAppUserModelId('app.majra.desktop')
+
+  // Renaming the product changed the default profile folder; carry the old one over first so
+  // settings, history and unfinished downloads survive the upgrade.
+  const migratedProfile = await migrateLegacyUserData().catch((error) => {
+    console.error('[majra] failed to migrate the old profile', error)
+    return null
+  })
+  if (migratedProfile) console.log(`[majra] migrated profile from ${migratedProfile}`)
 
   // A failed move keeps the old file, to retry next launch — it must never stop the window opening.
   await migrateLegacyNetworkPreferences().catch((error) =>
@@ -187,11 +196,9 @@ app.whenReady().then(async () => {
   const settings = await loadSettings()
   setMainLocale(settings.locale ?? 'en')
 
-  // The macOS About window (Tayyar › About Tayyar); its copyright comes from electron-builder.yml.
+  // The macOS About window (Majra › About Majra); its copyright comes from electron-builder.yml.
   app.setAboutPanelOptions({
-    credits: t(
-      'Tayyar — download with every connection you have.\nBased on Plexo by Anmol Kapil (MIT).'
-    )
+    credits: t('Majra — download with every connection you have.\nEvery link, one stream.')
   })
 
   // Applied before the window is created so the initial background/icon already match —
@@ -217,12 +224,12 @@ app.whenReady().then(async () => {
     manager: downloadManager,
     offer: (link) => offerLink(link, ensureWindow())
   }).catch((error) => console.error('[plexo] browser bridge failed to start', error))
-  // Unlike magnet:, tayyar:// is Tayyar's own, so registering it takes nothing from another app. A
+  // Unlike magnet:, majra:// is Majra's own, so registering it takes nothing from another app. A
   // development build has no fixed path to register.
-  if (app.isPackaged) app.setAsDefaultProtocolClient('tayyar')
+  if (app.isPackaged) app.setAsDefaultProtocolClient('majra')
 
   nativeTheme.on('updated', () => {
-    mainWindow?.setBackgroundColor(nativeTheme.shouldUseDarkColors ? '#1c1c1e' : '#ffffff')
+    mainWindow?.setBackgroundColor(nativeTheme.shouldUseDarkColors ? '#0d100e' : '#f4f1e9')
     if (process.platform !== 'darwin') mainWindow?.setTitleBarOverlay(titleBarOverlay())
   })
 

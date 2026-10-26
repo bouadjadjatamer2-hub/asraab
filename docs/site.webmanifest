@@ -1,14 +1,14 @@
 {
   "name": "Asraab — Apps that fly together",
   "short_name": "Asraab",
-  "description": "A small, hand-picked catalog of independent Windows software. First up: Tayyar, a free and open-source download manager.",
+  "description": "A small, hand-picked catalog of independent Windows software. First up: Majra, a free and open-source download manager.",
   "lang": "en",
   "dir": "ltr",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0A0B10",
-  "theme_color": "#0A0B10",
+  "background_color": "#0d100e",
+  "theme_color": "#0d100e",
   "categories": ["utilities", "productivity"],
   "icons": [
     {

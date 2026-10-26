@@ -39,13 +39,13 @@ const server = http.createServer((req, res) => {
 })
 await new Promise((resolve) => server.listen(8972, '127.0.0.1', resolve))
 
-const dest = 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\tayyar-chromium-test'
+const dest = 'C:\\Users\\Lenovo\\AppData\\Local\\Temp\\majra-chromium-test'
 rmSync(dest, { recursive: true, force: true })
 mkdirSync(dest, { recursive: true })
 
 const app = await electron.launch({
-  executablePath: 'C:\\Users\\Lenovo\\Downloads\\tayyar\\dist\\win-unpacked\\tayyar.exe',
-  args: ['--user-data-dir=C:\\Users\\Lenovo\\AppData\\Local\\Temp\\tayyar-dl-check']
+  executablePath: 'C:\\Users\\Lenovo\\Downloads\\majra\\dist\\win-unpacked\\majra.exe',
+  args: ['--user-data-dir=C:\\Users\\Lenovo\\AppData\\Local\\Temp\\majra-dl-check']
 })
 const win = await app.firstWindow()
 await win.waitForTimeout(2200)

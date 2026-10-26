@@ -325,7 +325,7 @@ function isCurrentManifest(value: unknown, id: string): value is PersistedDownlo
 
 /**
  * Where a saved download that can't be restored kept its partial data beside its destination:
- * only what is unmistakably Tayyar's, so that a damaged manifest can never point it at a real file.
+ * only what is unmistakably Majra's, so that a damaged manifest can never point it at a real file.
  * - A `<name>.plexo` staging file, or a torrent's `<name>.plexo/` staging folder.
  * - rc.1–rc.9 (manifest version 2) claimed the final name itself as an empty file, until the
  *   download's parts were joined into it: taken while it is still empty and the download
@@ -792,7 +792,7 @@ export class DownloadManager {
       t('Shutting down'),
       t('Every download finished. Windows will shut down in 60 seconds.')
     )
-    spawn('shutdown', ['/s', '/t', '60', '/c', t('Tayyar: every download finished.')], {
+    spawn('shutdown', ['/s', '/t', '60', '/c', t('Majra: every download finished.')], {
       windowsHide: true,
       stdio: 'ignore'
     }).on('error', () => {
@@ -974,7 +974,7 @@ export class DownloadManager {
   /**
    * Clears a saved download that can't be restored, rather than keep it forever: its folder here
    * (manifest, a saved .torrent, an old version's parts/ folder), and its partial data beside the
-   * destination when that is unmistakably Tayyar's (see partialLeftovers).
+   * destination when that is unmistakably Majra's (see partialLeftovers).
    */
   private async discardUnrestorable(id: string, persisted: unknown): Promise<void> {
     for (const path of await partialLeftovers(persisted)) {
@@ -1303,7 +1303,7 @@ export class DownloadManager {
       throw new Error('That link is to a different file: its bytes don’t match what’s downloaded.')
     }
     if (verdict === 'unknown') {
-      throw new Error('Tayyar couldn’t check that link against what’s downloaded. Try again.')
+      throw new Error('Majra couldn’t check that link against what’s downloaded. Try again.')
     }
     if (!replaceable()) throw new Error('The download changed while its new link was checked.')
     runtime.requestPayload.url = probe.finalUrl
@@ -1729,7 +1729,7 @@ export class DownloadManager {
         last = error
       }
     }
-    console.warn('[tayyar] the cancelled download’s files are still locked', last)
+    console.warn('[majra] the cancelled download’s files are still locked', last)
   }
 
   /** Removes a download, cancelling one under way. A finished one's file stays where it is,
@@ -1851,7 +1851,7 @@ export class DownloadManager {
     if (runtime.kind === 'http' && !runtime.requestPayload.streamExtract) {
       await runtime.file
         .reserve(runtime.state.totalBytes)
-        .catch((error) => console.error('[tayyar] failed to reserve the staging file', error))
+        .catch((error) => console.error('[majra] failed to reserve the staging file', error))
     }
     runtime.transfer.reset()
     // Speeds are this run's: nothing carries over from the last one.

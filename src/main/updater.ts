@@ -14,7 +14,7 @@ import { t } from './i18n'
 
 const CHECK_EVERY_MS = 4 * 60 * 60_000
 /** Where an update the app couldn't install itself is downloaded from instead. */
-const DOWNLOAD_PAGE = 'https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/tayyar/'
+const DOWNLOAD_PAGE = 'https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/majra/'
 
 let state: UpdateState = { status: 'idle', autoUpdate: true }
 let getWindow: () => BrowserWindow | null = () => null
@@ -36,7 +36,7 @@ function set(patch: Partial<UpdateState>): void {
 function answer(message: string, detail?: string): void {
   if (!asked) return
   asked = false
-  void dialog.showMessageBox({ title: t('Tayyar'), message, detail })
+  void dialog.showMessageBox({ title: t('Majra'), message, detail })
 }
 
 function check(fromMenu = false): void {
@@ -78,10 +78,10 @@ function menuItems(): MenuItemConstructorOptions[] {
   } else if (status === 'downloading') {
     items.push({ label: t('Downloading {version}…', { version }), enabled: false })
   } else if (status === 'available') {
-    items.push({ label: t('Download Tayyar {version}', { version }), click: download })
+    items.push({ label: t('Download Majra {version}', { version }), click: download })
   } else if (status === 'error') {
     items.push({
-      label: t('Get Tayyar {version} from the Website…', { version }),
+      label: t('Get Majra {version} from the Website…', { version }),
       click: () => void shell.openExternal(DOWNLOAD_PAGE)
     })
   }
@@ -114,17 +114,17 @@ function setAppMenu(): void {
       {
         label: app.name,
         submenu: [
-          { role: 'about', label: t('About Tayyar') },
+          { role: 'about', label: t('About Majra') },
           { type: 'separator' },
           ...menuItems(),
           { type: 'separator' },
           { role: 'services', label: t('Services') },
           { type: 'separator' },
-          { role: 'hide', label: t('Hide Tayyar') },
+          { role: 'hide', label: t('Hide Majra') },
           { role: 'hideOthers', label: t('Hide Others') },
           { role: 'unhide', label: t('Show All') },
           { type: 'separator' },
-          { role: 'quit', label: t('Quit Tayyar') }
+          { role: 'quit', label: t('Quit Majra') }
         ]
       },
       { role: 'fileMenu', label: t('File') },
@@ -152,7 +152,7 @@ export function startUpdater(window: () => BrowserWindow | null, autoUpdate: boo
     set({ status: 'idle', version: undefined })
     answer(
       t('You’re up to date'),
-      t('Tayyar {version} is the newest version.', { version: app.getVersion() })
+      t('Majra {version} is the newest version.', { version: app.getVersion() })
     )
   })
   autoUpdater.on('update-available', ({ version }) => {

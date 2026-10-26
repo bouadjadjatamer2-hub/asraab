@@ -1,6 +1,6 @@
-# Contributing to Tayyar
+# Contributing to Majra
 
-Thanks for helping. Tayyar is a small, Windows-first project; focused changes are easier to review than broad rewrites.
+Thanks for helping. Majra is a small, Windows-first project; focused changes are easier to review than broad rewrites.
 
 ## Setup
 
@@ -31,7 +31,7 @@ Build the browser extension:
 npm run build:extension
 ```
 
-Load `extension/dist/chrome` from `chrome://extensions` (Developer mode → **Load unpacked**). For Firefox, load `extension/dist/firefox/manifest.json` from `about:debugging#/runtime/this-firefox`. Keep Tayyar running while testing download capture.
+Load `extension/dist/chrome` from `chrome://extensions` (Developer mode → **Load unpacked**). For Firefox, load `extension/dist/firefox/manifest.json` from `about:debugging#/runtime/this-firefox`. Keep Majra running while testing download capture.
 
 ## Before opening a PR
 
@@ -68,7 +68,7 @@ The suite is still being stabilized. If a test fails, report the seed and scenar
 
 Open an issue with:
 
-- Windows version and Tayyar version.
+- Windows version and Majra version.
 - The URL (if public) or roughly what it served, plus file size and server type.
 - Which network interfaces were involved.
 - The exact steps, expected result and actual result.

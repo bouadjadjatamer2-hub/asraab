@@ -23,7 +23,7 @@ test('a staging file on NTFS is sparse, so a write far into it zeroes nothing fi
 })
 
 test('reserves the whole staging file without losing a resumed prefix', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'tayyar-reserve-'))
+  const dir = await mkdtemp(join(tmpdir(), 'majra-reserve-'))
   try {
     for (const size of [1024, 8 * 1024 * 1024]) {
       const path = join(dir, `${size}.plexo`)

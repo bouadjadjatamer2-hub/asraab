@@ -4,7 +4,7 @@ import { isAbsolute } from 'node:path'
 import { URL } from 'node:url'
 import type { BrowserContext, ProbeResult } from '../../shared/types'
 import { testKnobs } from '../testKnobs'
-import { requestHeaders } from './browserContext'
+import { refererDecided, rememberReferer, requestHeaders } from './browserContext'
 import { ChromiumConnection } from './chromiumConnection'
 import { parseContentDispositionFilename } from './contentDisposition'
 import { normalizeEtag } from './fileVersion'
@@ -46,11 +46,13 @@ function requestFirstBytes(
   browser: BrowserContext | undefined,
   ranged: boolean,
   range = 'bytes=0-1023',
-  via: 'node' | 'chromium' = 'node'
+  via: 'node' | 'chromium' = 'node',
+  /** Forces the Referer for this one request: a string sends it, `null` sends none. */
+  referer?: string | null
 ): Promise<ProbeResponse> {
   const headers = ranged
-    ? { ...requestHeaders(url, browser), Range: range }
-    : requestHeaders(url, browser)
+    ? { ...requestHeaders(url, browser, referer), Range: range }
+    : requestHeaders(url, browser, referer)
   if (via === 'chromium') {
     const connection = new ChromiumConnection(Math.max(1, deadline - Date.now()))
     return connection
@@ -118,6 +120,24 @@ async function requestFollowingRedirects(
   let ranged = true
   for (let redirect = 0; redirect <= MAX_REDIRECTS; redirect += 1) {
     response = await requestFirstBytes(current, deadline, browser, ranged, 'bytes=0-1023', via)
+    // A 403 with nothing from a browser going out: some hosts only serve a link from their own
+    // site and refuse a bare request, while others answer 403 to any Referer at all (mirrors with
+    // the opposite filter). Ask once more with the site as the Referer, keeping the Range, and
+    // remember which way this origin wants it — the download's streams read the same answer.
+    if (response.statusCode === 403 && !browser?.referer && !refererDecided(current)) {
+      const retried = await requestFirstBytes(
+        current,
+        deadline,
+        browser,
+        ranged,
+        'bytes=0-1023',
+        via,
+        `${current.origin}/`
+      )
+      const accepted = retried.statusCode > 0 && retried.statusCode < 400
+      rememberReferer(current, accepted)
+      if (accepted) response = retried
+    }
     // Some servers refuse any Range request with 403 while serving the same URL in full (#131).
     // Ask once more without one: if that works, the file downloads as one stream from byte zero,
     // which sends no Range either — the same as on a server without range support.
@@ -234,7 +254,7 @@ export async function probeUrl(rawUrl: string, browser?: BrowserContext): Promis
   // usual outcome of pasting the page a download button is on.
   if (/^text\/html\b/i.test(headerValue(response.headers, 'content-type') ?? '')) {
     throw new Error(
-      'This is a web page, not a file. Open it in your browser and let the Tayyar extension send the download.'
+      'This is a web page, not a file. Open it in your browser and let the Majra extension send the download.'
     )
   }
 

@@ -4,19 +4,19 @@ import type { Locale } from './types'
  * key means an untranslated string still reads naturally instead of exposing an identifier. */
 const arabic: Record<string, string> = {
   // Window chrome and native menus
-  'Open Tayyar': 'فتح Tayyar',
-  'Quit Tayyar': 'إنهاء Tayyar',
+  'Open Majra': 'فتح Majra',
+  'Quit Majra': 'إنهاء Majra',
   Cut: 'قص',
   Copy: 'نسخ',
   Paste: 'لصق',
   'Select All': 'تحديد الكل',
   'Choose download folder': 'اختر مجلد التنزيل',
   'Choose .torrent file': 'اختر ملف .torrent',
-  Choose: 'اختيار',
+  Choose: 'اختر',
   'Torrent files': 'ملفات التورنت',
   About: 'حول',
-  'About Tayyar': 'حول Tayyar',
-  'Hide Tayyar': 'إخفاء Tayyar',
+  'About Majra': 'حول Majra',
+  'Hide Majra': 'إخفاء Majra',
   'Hide Others': 'إخفاء الآخرين',
   'Show All': 'إظهار الكل',
   Services: 'الخدمات',
@@ -33,7 +33,7 @@ const arabic: Record<string, string> = {
   'Switch to English': 'التبديل إلى الإنجليزية',
   'Restart to apply {language}': 'أعد التشغيل لتطبيق {language}',
   'Language saved': 'تم حفظ اللغة',
-  'Restart Tayyar to switch to {language}?': 'أعد تشغيل Tayyar للتبديل إلى {language}؟',
+  'Restart Majra to switch to {language}?': 'أعد تشغيل Majra للتبديل إلى {language}؟',
   'The app will restart to apply the new language. Your downloads will keep their progress.':
     'ستُعاد تهيئة التطبيق لتطبيق اللغة الجديدة. ستحتفظ التنزيلات بتقدّمها.',
   'Restart now': 'إعادة التشغيل الآن',
@@ -258,11 +258,11 @@ const arabic: Record<string, string> = {
     'بلغت كل شبكة قيد الاستخدام حد البيانات. ارفع حد إحداها من حدود السرعة والبيانات.',
   'Waiting for a network. Reconnect one or switch one on.':
     'بانتظار شبكة. أعد توصيل إحداها أو شغّلها.',
-  'Tayyar — {label} ({percent}%)': 'Tayyar — {label} ({percent}%)',
-  'Tayyar — {label}': 'Tayyar — {label}',
-  'Tayyar — {percent}%': 'Tayyar — {percent}%',
-  'Tayyar — downloading': 'Tayyar — قيد التنزيل',
-  Tayyar: 'Tayyar',
+  'Majra — {label} ({percent}%)': 'Majra — {label} ({percent}%)',
+  'Majra — {label}': 'Majra — {label}',
+  'Majra — {percent}%': 'Majra — {percent}%',
+  'Majra — downloading': 'Majra — قيد التنزيل',
+  Majra: 'Majra',
   'SLOW MODE {value}': 'الوضع البطيء {value}',
   'LIMIT {value}': 'الحد {value}',
   '(click to toggle)': '(انقر للتبديل)',
@@ -337,11 +337,11 @@ const arabic: Record<string, string> = {
   'Once the queue is empty, Windows shuts down after 60 seconds. Cancel with: shutdown /a':
     'بعد فراغ قائمة الانتظار، يُوقف Windows التشغيل بعد 60 ثانية. للإلغاء: shutdown /a',
   'Startup & background': 'بدء التشغيل والخلفية',
-  'Keep Tayyar ready for links and downloads without leaving a window open.':
-    'أبقِ Tayyar جاهزًا للروابط والتنزيلات دون إبقاء نافذة مفتوحة.',
+  'Keep Majra ready for links and downloads without leaving a window open.':
+    'أبقِ Majra جاهزًا للروابط والتنزيلات دون إبقاء نافذة مفتوحة.',
   'Start at login': 'بدء التشغيل عند تسجيل الدخول',
-  'Open Tayyar automatically when you sign in. On Windows it starts hidden in the tray and appears in Task Manager → Startup.':
-    'افتح Tayyar تلقائيًا عند تسجيل الدخول. على Windows يبدأ مخفيًا في شريط النظام ويظهر في إدارة المهام ← بدء التشغيل.',
+  'Open Majra automatically when you sign in. On Windows it starts hidden in the tray and appears in Task Manager → Startup.':
+    'افتح Majra تلقائيًا عند تسجيل الدخول. على Windows يبدأ مخفيًا في شريط النظام ويظهر في إدارة المهام ← بدء التشغيل.',
   'Keep running in the background': 'الاستمرار في الخلفية',
   'Closing the window leaves downloads and the browser extension running. Use Quit in the tray menu to exit fully.':
     'إغلاق النافذة يُبقي التنزيلات وإضافة المتصفح قيد التشغيل. استخدم «إنهاء» في قائمة شريط النظام للخروج كليًا.',
@@ -351,7 +351,7 @@ const arabic: Record<string, string> = {
     'يعيد هذا ضبط السرعة الإجمالية والوضع البطيء والتنزيلات المتزامنة وجدولة التنزيل وخيارات الطاقة وسلوك بدء التشغيل. تبقى حدود الشبكات دون تغيير.',
   Settings: 'الإعدادات',
   General: 'عام',
-  'used by Tayyar': 'استخدمها Tayyar',
+  'used by Majra': 'استخدمها Majra',
   'Limits the combined download speed on {name}.': 'يحدّ من سرعة التنزيل المجمّعة على {name}.',
   '{name} speed': 'سرعة {name}',
   'Data limit': 'حد البيانات',
@@ -453,10 +453,10 @@ const arabic: Record<string, string> = {
 
   // Fix link, errors and network binding
   'Paste a new link': 'ألصق رابطًا جديدًا',
-  'Paste a new link to the same file: {name} ({size}). Tayyar resumes from where the download stopped.':
-    'ألصق رابطًا جديدًا للملف نفسه: {name} ({size}). يستأنف Tayyar من حيث توقف التنزيل.',
-  'Paste a new link to the same file: {name}. Tayyar resumes from where the download stopped.':
-    'ألصق رابطًا جديدًا للملف نفسه: {name}. يستأنف Tayyar من حيث توقف التنزيل.',
+  'Paste a new link to the same file: {name} ({size}). Majra resumes from where the download stopped.':
+    'ألصق رابطًا جديدًا للملف نفسه: {name} ({size}). يستأنف Majra من حيث توقف التنزيل.',
+  'Paste a new link to the same file: {name}. Majra resumes from where the download stopped.':
+    'ألصق رابطًا جديدًا للملف نفسه: {name}. يستأنف Majra من حيث توقف التنزيل.',
   ' Or download it again in {browser} and choose Resume it.':
     ' أو نزّله مرة أخرى في {browser} واختر «استئنافه».',
   'New link': 'رابط جديد',
@@ -474,29 +474,29 @@ const arabic: Record<string, string> = {
 
   // Updates
   'Checking for updates…': 'جارٍ البحث عن تحديثات…',
-  'Tayyar {version} is available': 'يتوفر Tayyar {version}',
-  'Downloading Tayyar {version}… {percent}%': 'جارٍ تنزيل Tayyar {version}… {percent}%',
-  'Tayyar {version} is ready — restart to update': 'Tayyar {version} جاهز — أعد التشغيل للتحديث',
-  'Couldn’t install Tayyar {version}': 'تعذّر تثبيت Tayyar {version}',
-  'Tayyar updates automatically': 'يتحدّث Tayyar تلقائيًا',
+  'Majra {version} is available': 'يتوفر Majra {version}',
+  'Downloading Majra {version}… {percent}%': 'جارٍ تنزيل Majra {version}… {percent}%',
+  'Majra {version} is ready — restart to update': 'Majra {version} جاهز — أعد التشغيل للتحديث',
+  'Couldn’t install Majra {version}': 'تعذّر تثبيت Majra {version}',
+  'Majra updates automatically': 'يتحدّث Majra تلقائيًا',
   'Automatic updates are off': 'التحديثات التلقائية متوقفة',
   'Restart to update': 'أعد التشغيل للتحديث',
   'Restart to Update to {version}': 'أعد التشغيل للتحديث إلى {version}',
   'Downloading {version}…': 'جارٍ تنزيل {version}…',
-  'Get Tayyar {version} from the Website…': 'احصل على Tayyar {version} من الموقع…',
+  'Get Majra {version} from the Website…': 'احصل على Majra {version} من الموقع…',
   'Checking for Updates…': 'جارٍ البحث عن تحديثات…',
   Update: 'تحديث',
   'Check for Updates…': 'البحث عن تحديثات…',
   'Update Automatically': 'التحديث تلقائيًا',
   'You’re up to date': 'أنت تستخدم أحدث إصدار',
-  'Tayyar {version} is the newest version.': 'Tayyar {version} هو أحدث إصدار.',
+  'Majra {version} is the newest version.': 'Majra {version} هو أحدث إصدار.',
   'Couldn’t check for updates': 'تعذّر البحث عن تحديثات',
   'Check your connection and try again.': 'تحقق من اتصالك وحاول مجددًا.',
-  'Download Tayyar {version}': 'تنزيل Tayyar {version}',
+  'Download Majra {version}': 'تنزيل Majra {version}',
   'Get the update from the website': 'احصل على التحديث من الموقع',
-  'Update downloaded. Restart Tayyar to install it.': 'نُزّل التحديث. أعد تشغيل Tayyar لتثبيته.',
-  'A new version of Tayyar is ready. Restart to update.':
-    'يتوفر إصدار جديد من Tayyar. أعد التشغيل للتحديث.',
+  'Update downloaded. Restart Majra to install it.': 'نُزّل التحديث. أعد تشغيل Majra لتثبيته.',
+  'A new version of Majra is ready. Restart to update.':
+    'يتوفر إصدار جديد من Majra. أعد التشغيل للتحديث.',
 
   // Notifications and main-process messages
   'Download complete': 'اكتمل التنزيل',
@@ -514,7 +514,7 @@ const arabic: Record<string, string> = {
   'Shutting down': 'جارٍ إيقاف التشغيل',
   'Every download finished. Windows will shut down in 60 seconds.':
     'اكتملت كل التنزيلات. سيوقف Windows التشغيل بعد 60 ثانية.',
-  'Tayyar: every download finished.': 'Tayyar: اكتملت كل التنزيلات.',
+  'Majra: every download finished.': 'Majra: اكتملت كل التنزيلات.',
   'That archive can’t be unpacked while downloading.': 'لا يمكن فك ضغط هذا الأرشيف أثناء التنزيل.',
   'This is one part of a multipart archive. It can’t be unpacked while downloading; save every part, then unpack them together.':
     'هذا جزء من أرشيف متعدد الأجزاء. لا يمكن فك ضغطه أثناء التنزيل؛ احفظ كل الأجزاء ثم فك ضغطها معًا.',
@@ -526,34 +526,34 @@ const arabic: Record<string, string> = {
     'لم يبلّغ هذا الخادم بحجم الأرشيف، لذا لا يمكن فك ضغطه أثناء التنزيل.',
   'This server doesn’t support resuming, so the archive can’t be unpacked while downloading.':
     'هذا الخادم لا يدعم الاستئناف، لذا لا يمكن فك ضغط الأرشيف أثناء التنزيل.',
-  'Tayyar is still running': 'لا يزال Tayyar قيد التشغيل',
-  'Tayyar keeps running in the background. Choose Quit in the tray menu to exit.':
-    'يستمر Tayyar في العمل بالخلفية. اختر «إنهاء» من قائمة شريط النظام للخروج.',
-  'Tayyar — download with every connection you have.\nBased on Plexo by Anmol Kapil (MIT).':
-    'Tayyar — نزّل بكل اتصال متاح لديك.\nمبني على Plexo من Anmol Kapil (MIT).',
+  'Majra is still running': 'لا يزال Majra قيد التشغيل',
+  'Majra keeps running in the background. Choose Quit in the tray menu to exit.':
+    'يستمر Majra في العمل بالخلفية. اختر «إنهاء» من قائمة شريط النظام للخروج.',
+  'Majra — download with every connection you have.\nEvery link, one stream.':
+    'Majra — نزّل بكل اتصال متاح لديك.\nكل رابط، مجرى واحد.',
   'That download is no longer waiting.': 'هذا التنزيل لم يعد في الانتظار.',
 
   // Shared error hints
   'There isn’t enough space to save this download. Free up space or choose another folder.':
     'لا توجد مساحة كافية لحفظ هذا التنزيل. أفرغ مساحة أو اختر مجلدًا آخر.',
-  'Tayyar doesn’t have permission to access this file or folder. Check its permissions or choose another folder.':
-    'لا يملك Tayyar إذنًا للوصول إلى هذا الملف أو المجلد. تحقق من الأذونات أو اختر مجلدًا آخر.',
+  'Majra doesn’t have permission to access this file or folder. Check its permissions or choose another folder.':
+    'لا يملك Majra إذنًا للوصول إلى هذا الملف أو المجلد. تحقق من الأذونات أو اختر مجلدًا آخر.',
   'The file or folder is missing. Check the download location and try again.':
     'الملف أو المجلد مفقود. تحقق من موقع التنزيل وحاول مجددًا.',
   'This drive is read-only. Choose another download folder.':
     'هذا القرص للقراءة فقط. اختر مجلد تنزيل آخر.',
-  'Tayyar couldn’t read or write the download. Check the drive and try again.':
-    'تعذّر على Tayyar قراءة التنزيل أو كتابته. تحقق من القرص وحاول مجددًا.',
-  'Tayyar couldn’t read this torrent. Try another magnet link or .torrent file.':
-    'تعذّر على Tayyar قراءة هذا التورنت. جرّب رابط magnet أو ملف .torrent آخر.',
+  'Majra couldn’t read or write the download. Check the drive and try again.':
+    'تعذّر على Majra قراءة التنزيل أو كتابته. تحقق من القرص وحاول مجددًا.',
+  'Majra couldn’t read this torrent. Try another magnet link or .torrent file.':
+    'تعذّر على Majra قراءة هذا التورنت. جرّب رابط magnet أو ملف .torrent آخر.',
   'This link no longer works. Paste a new link to continue.':
     'هذا الرابط لم يعد يعمل. ألصق رابطًا جديدًا للمتابعة.',
-  'Tayyar couldn’t download every part of the file. Try downloading again.':
-    'تعذّر على Tayyar تنزيل كل أجزاء الملف. حاول التنزيل مجددًا.',
-  'The downloaded file has an unexpected size. Tayyar couldn’t save the completed file. Try downloading again.':
-    'حجم الملف المنزّل غير متوقع. تعذّر على Tayyar حفظ الملف المكتمل. حاول التنزيل مجددًا.',
-  'Tayyar couldn’t find the server. Check the link and your connection.':
-    'تعذّر على Tayyar العثور على الخادم. تحقق من الرابط واتصالك.',
+  'Majra couldn’t download every part of the file. Try downloading again.':
+    'تعذّر على Majra تنزيل كل أجزاء الملف. حاول التنزيل مجددًا.',
+  'The downloaded file has an unexpected size. Majra couldn’t save the completed file. Try downloading again.':
+    'حجم الملف المنزّل غير متوقع. تعذّر على Majra حفظ الملف المكتمل. حاول التنزيل مجددًا.',
+  'Majra couldn’t find the server. Check the link and your connection.':
+    'تعذّر على Majra العثور على الخادم. تحقق من الرابط واتصالك.',
   'The server refused the connection. Try again later.': 'رفض الخادم الاتصال. حاول مجددًا لاحقًا.',
   'The connection was interrupted. Try again in a moment.': 'انقطع الاتصال. حاول مجددًا بعد لحظات.',
   'The connection timed out. Check your network and try again.':
@@ -580,8 +580,8 @@ const arabic: Record<string, string> = {
   'Download schedule requires at least one day.': 'تتطلب جدولة التنزيل يومًا واحدًا على الأقل.',
   'Open .torrent file': 'فتح ملف .torrent',
   'Drop a .torrent anywhere in this window.': 'أفلت ملف .torrent في أي مكان من هذه النافذة.',
-  'Paste a link ({shortcut}) or drop a .torrent anywhere in this window. Tayyar spreads it across every network you have.':
-    'ألصق رابطًا ({shortcut}) أو أفلت ملف .torrent في أي مكان من هذه النافذة. يوزّعه Tayyar على كل شبكاتك.',
+  'Paste a link ({shortcut}) or drop a .torrent anywhere in this window. Majra spreads it across every network you have.':
+    'ألصق رابطًا ({shortcut}) أو أفلت ملف .torrent في أي مكان من هذه النافذة. يوزّعه Majra على كل شبكاتك.',
 
   // Completion, charts and the last surfaces brought into the catalog
   'Download complete: {name}': 'اكتمل التنزيل: {name}',
@@ -617,7 +617,7 @@ const arabic: Record<string, string> = {
   '{names} share a subnet ({subnet}), so the computer sends both down one route and they can’t be combined.':
     'تشترك {names} في شبكة فرعية ({subnet})، لذا يرسل الكمبيوتر كليهما عبر مسار واحد ولا يمكن دمجهما.',
   '{label}, in {unit}': '{label}، بوحدة {unit}',
-  '{size} used by Tayyar {period}': '{size} استخدمها Tayyar {period}',
+  '{size} used by Majra {period}': '{size} استخدمها Majra {period}',
   '{used} of {limit} {period}': '{used} من {limit} {period}',
   'Limit downloads to {value}': 'تحديد التنزيلات بـ {value}',
   '{downloads} waiting': '{downloads} في الانتظار',
@@ -661,8 +661,8 @@ const arabic: Record<string, string> = {
   Coral: 'مرجاني',
 
   // Empty state and performance hint
-  'Tayyar needs at least one active network. Join a Wi-Fi network, plug in Ethernet, or connect your phone using USB tethering.':
-    'يحتاج Tayyar إلى شبكة نشطة واحدة على الأقل. اتصل بشبكة Wi-Fi، أو وصّل كبل Ethernet، أو وصّل هاتفك عبر مشاركة USB.',
+  'Majra needs at least one active network. Join a Wi-Fi network, plug in Ethernet, or connect your phone using USB tethering.':
+    'يحتاج Majra إلى شبكة نشطة واحدة على الأقل. اتصل بشبكة Wi-Fi، أو وصّل كبل Ethernet، أو وصّل هاتفك عبر مشاركة USB.',
   'Turbo trades politeness for speed: more streams from the first byte, and smaller blocks so every connection stays busy.':
     'يستبدل الوضع السريع التأنّي بالسرعة: اتصالات أكثر من البايت الأول، وكتل أصغر ليبقى كل اتصال مشغولًا.'
 }

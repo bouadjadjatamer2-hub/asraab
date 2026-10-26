@@ -1,0 +1,215 @@
+﻿<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 1024px;
+        height: 1024px;
+        overflow: hidden;
+        background: transparent;
+      }
+      #stage {
+        position: relative;
+        width: 1024px;
+        height: 1024px;
+      }
+      canvas {
+        position: absolute;
+        filter: drop-shadow(0 22px 34px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 5px rgba(0, 0, 0, 0.35));
+        inset: 0;
+        width: 1024px;
+        height: 1024px;
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "../node_modules/three/build/three.module.js",
+          "three/addons/": "../node_modules/three/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="stage">
+      <svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="tile" x1="120" y1="40" x2="900" y2="1000" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#37493c" />
+            <stop offset="0.34" stop-color="#1f2b23" />
+            <stop offset="0.72" stop-color="#101710" />
+            <stop offset="1" stop-color="#070b08" />
+          </linearGradient>
+          <radialGradient id="tileWarm" cx="0.5" cy="0.06" r="0.74">
+            <stop offset="0" stop-color="#ffc37e" stop-opacity="0.26" />
+            <stop offset="0.48" stop-color="#e8a35f" stop-opacity="0.06" />
+            <stop offset="1" stop-color="#e8a35f" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id="tileCool" cx="0.08" cy="0.94" r="0.58">
+            <stop offset="0" stop-color="#54b39c" stop-opacity="0.2" />
+            <stop offset="1" stop-color="#54b39c" stop-opacity="0" />
+          </radialGradient>
+          <linearGradient id="tileRim" x1="512" y1="40" x2="512" y2="984" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0.32" />
+            <stop offset="0.34" stop-color="#ffffff" stop-opacity="0.07" />
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
+          </linearGradient>
+          <linearGradient id="tileEdge" x1="512" y1="984" x2="512" y2="40" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#000000" stop-opacity="0.55" />
+            <stop offset="0.5" stop-color="#000000" stop-opacity="0.12" />
+            <stop offset="1" stop-color="#000000" stop-opacity="0" />
+          </linearGradient>
+          <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#ffb968" stop-opacity="0.34" />
+            <stop offset="1" stop-color="#ffb968" stop-opacity="0" />
+          </radialGradient>
+          <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="30" />
+          </filter>
+        </defs>
+
+        <rect x="40" y="40" width="944" height="944" rx="214" fill="url(#tile)" />
+        <rect x="40" y="40" width="944" height="944" rx="214" fill="url(#tileWarm)" />
+        <rect x="40" y="40" width="944" height="944" rx="214" fill="url(#tileCool)" />
+        <rect x="43" y="43" width="938" height="938" rx="211" fill="none" stroke="url(#tileRim)" stroke-width="6" />
+        <rect x="43" y="43" width="938" height="938" rx="211" fill="none" stroke="url(#tileEdge)" stroke-width="6" />
+
+        <ellipse cx="512" cy="648" rx="360" ry="330" fill="url(#glow)" />
+        <ellipse cx="540" cy="930" rx="230" ry="30" fill="#000000" opacity="0.55" filter="url(#soft)" />
+      </svg>
+      <canvas id="scene" width="1024" height="1024"></canvas>
+    </div>
+
+    <script type="module">
+      import * as THREE from 'three'
+      import { mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js'
+
+      const canvas = document.getElementById('scene')
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true,
+        preserveDrawingBuffer: true
+      })
+      renderer.setPixelRatio(1)
+      renderer.setSize(1024, 1024, false)
+      renderer.outputColorSpace = THREE.SRGBColorSpace
+      renderer.toneMapping = THREE.NeutralToneMapping
+      renderer.toneMappingExposure = 1.0
+      renderer.setClearColor(0x000000, 0)
+
+      const scene = new THREE.Scene()
+      const camera = new THREE.PerspectiveCamera(26, 1, 0.1, 100)
+      camera.position.set(0, 0.08, 5.55)
+      camera.lookAt(0, 0, 0)
+
+      /** A small studio painted into an equirect texture: one warm key, a cool bounce,
+       * a gold bounce. The drop reflects those three currents instead of a white room. */
+      function studioEnvironment() {
+        const c = document.createElement('canvas')
+        c.width = 1024
+        c.height = 512
+        const g = c.getContext('2d')
+        const sky = g.createLinearGradient(0, 0, 0, 512)
+        sky.addColorStop(0, '#59695c')
+        sky.addColorStop(0.42, '#2a332b')
+        sky.addColorStop(0.7, '#140f0a')
+        sky.addColorStop(1, '#080604')
+        g.fillStyle = sky
+        g.fillRect(0, 0, 1024, 512)
+
+        const blob = (x, y, r, inner, outer) => {
+          const grad = g.createRadialGradient(x, y, 0, x, y, r)
+          grad.addColorStop(0, inner)
+          grad.addColorStop(1, outer)
+          g.fillStyle = grad
+          g.fillRect(x - r, y - r, r * 2, r * 2)
+        }
+        blob(230, 110, 280, 'rgba(255,252,246,1)', 'rgba(255,252,246,0)')
+        blob(700, 210, 260, 'rgba(255,196,120,0.55)', 'rgba(255,196,120,0)')
+        blob(640, 390, 220, 'rgba(73,210,176,0.5)', 'rgba(73,210,176,0)')
+        blob(90, 350, 180, 'rgba(255,214,150,0.3)', 'rgba(255,214,150,0)')
+        blob(300, 158, 30, 'rgba(255,255,255,1)', 'rgba(255,255,255,0)')
+
+        const texture = new THREE.CanvasTexture(c)
+        texture.mapping = THREE.EquirectangularReflectionMapping
+        texture.wrapS = THREE.RepeatWrapping
+        texture.colorSpace = THREE.SRGBColorSpace
+        return texture
+      }
+
+      const pmrem = new THREE.PMREMGenerator(renderer)
+      scene.environment = pmrem.fromEquirectangular(studioEnvironment()).texture
+      scene.environmentIntensity = 1.15
+
+      // A teardrop, revolved from a hand-tuned profile: round bottom, slender tip.
+      const profile = [
+        [0.0, -1.0],
+        [0.28, -0.985],
+        [0.48, -0.94],
+        [0.62, -0.86],
+        [0.72, -0.74],
+        [0.78, -0.58],
+        [0.805, -0.38],
+        [0.795, -0.14],
+        [0.75, 0.08],
+        [0.675, 0.28],
+        [0.575, 0.46],
+        [0.455, 0.62],
+        [0.325, 0.755],
+        [0.20, 0.862],
+        [0.095, 0.945],
+        [0.025, 0.988],
+        [0.0, 1.0]
+      ].map(([x, y]) => new THREE.Vector2(x * 0.88, y * 0.99))
+
+      // LatheGeometry duplicates the seam vertices, so their normals disagree and a lit
+      // crease appears on the glossy surface. Weld them before computing the normals.
+      const geometry = mergeVertices(new THREE.LatheGeometry(profile, 160), 1e-4)
+      geometry.computeVertexNormals()
+
+      const material = new THREE.MeshPhysicalMaterial({
+        color: 0xe39534,
+        roughness: 0.24,
+        metalness: 0,
+        clearcoat: 1,
+        clearcoatRoughness: 0.05,
+        ior: 1.48,
+        reflectivity: 1,
+        envMapIntensity: 1.25,
+        emissive: 0x2a0e00,
+        emissiveIntensity: 0.28
+      })
+
+      const drop = new THREE.Mesh(geometry, material)
+      drop.rotation.y = 0.38
+      drop.rotation.z = -0.03
+      scene.add(drop)
+
+      const key = new THREE.DirectionalLight(0xfff3e2, 2.4)
+      key.position.set(-4, 5, 5)
+      scene.add(key)
+
+      const fill = new THREE.DirectionalLight(0xffe6c8, 0.5)
+      fill.position.set(4.2, 1.4, 3.4)
+      scene.add(fill)
+
+      // A broad warm bounce from below: lifts the shadowed underside without a hot spot.
+      const bounce = new THREE.DirectionalLight(0xffb060, 0.55)
+      bounce.position.set(0, -3, 2.5)
+      scene.add(bounce)
+
+      const ambient = new THREE.AmbientLight(0x3a3026, 0.4)
+      scene.add(ambient)
+
+      renderer.render(scene, camera)
+      requestAnimationFrame(() => {
+        renderer.render(scene, camera)
+        window.__iconReady = true
+      })
+    </script>
+  </body>
+</html>

@@ -36,7 +36,7 @@ let listeningOn: number | null = null
 const handoffs = new Map<string, Offer>()
 let extensionUsed = false
 
-/** Once an extension has connected, closing the window keeps Tayyar in the tray, where the
+/** Once an extension has connected, closing the window keeps Majra in the tray, where the
  * browser can still reach it. */
 export function keepsRunningForBrowser(): boolean {
   return listeningOn !== null && extensionUsed
@@ -105,7 +105,7 @@ async function handle(req: IncomingMessage, res: ServerResponse, port: number): 
   if (req.method === 'GET' && path === '/ping') {
     noteExtension()
     return json(res, 200, cors, {
-      app: 'tayyar',
+      app: 'majra',
       version: app.getVersion(),
       api: BRIDGE_API
     } satisfies BridgePing)

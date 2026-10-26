@@ -50,6 +50,10 @@ test('mixed selection applies actions only to eligible downloads and keeps finis
   await plexo.waitForStatus('paused')
 
   const page = plexo.page
+  // E2E runs with the window hidden, so Chromium can hold an entrance animation at its first
+  // frame indefinitely. Rows enter with a 2px lift; with motion off the measurement compares
+  // layout rather than whether an idle frame happened to tick.
+  await page.emulateMedia({ reducedMotion: 'reduce' })
   // Selecting swaps the header for the shorter toolbar, so measure the row against its group.
   // That still catches a selection reordering or collapsing the rows themselves.
   const rowOffsetInGroup = async (): Promise<number | undefined> => {

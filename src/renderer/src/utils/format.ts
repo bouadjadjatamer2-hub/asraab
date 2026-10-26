@@ -184,7 +184,7 @@ export function formatWhen(time: number, now: number): string {
   return date.toLocaleDateString(intlLocale, { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
-/** What Tayyar can download: a web link, a magnet link, or a .torrent file on this computer. */
+/** What Majra can download: a web link, a magnet link, or a .torrent file on this computer. */
 export function acceptedLink(text: string): string | null {
   const link = text.trim()
   if (/^(https?:\/\/|magnet:\?)/i.test(link)) return link

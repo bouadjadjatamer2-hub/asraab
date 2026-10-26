@@ -1,6 +1,6 @@
 # Roadmap
 
-What Tayyar 1.0 has, and what comes next. Ordered by value for the next release, not by effort.
+What Majra 1.0 has, and what comes next. Ordered by value for the next release, not by effort.
 
 ## 1.0 (this build)
 

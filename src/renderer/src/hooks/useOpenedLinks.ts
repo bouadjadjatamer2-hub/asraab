@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useAppStore } from '../store/useAppStore'
 import { acceptedLink } from '../utils/format'
 
-/** Opens New download with links handed to Tayyar, for the user to look at and start. */
+/** Opens New download with links handed to Majra, for the user to look at and start. */
 export function useOpenedLinks(): void {
   const receiveLinks = useAppStore((store) => store.receiveLinks)
 
