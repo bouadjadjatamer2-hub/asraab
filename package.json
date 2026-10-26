@@ -4,7 +4,7 @@
   "description": "Majra — a download manager that uses every network connection you have.",
   "main": "./out/main/index.js",
   "author": "Majra contributors",
-  "homepage": "https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-",
+  "homepage": "https://github.com/bouadjadjatamer2-hub/Majra-download-manager-",
   "scripts": {
     "format": "prettier --write .",
     "format:check": "prettier --check .",

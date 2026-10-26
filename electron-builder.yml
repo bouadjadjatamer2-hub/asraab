@@ -115,5 +115,5 @@ npmRebuild: false
 publish:
   provider: github
   owner: bouadjadjatamer2-hub
-  repo: tayyar-download-manager-
+  repo: Majra-download-manager-
   releaseType: release

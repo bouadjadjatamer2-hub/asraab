@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/sitemap.xml
+Sitemap: https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/sitemap.xml

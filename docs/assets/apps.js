@@ -28,7 +28,7 @@ window.ASRAAB_APPS = [
     license: 'MIT',
     href: './apps/majra/',
     icon: './assets/img/majra-icon.png',
-    repo: 'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-'
+    repo: 'https://github.com/bouadjadjatamer2-hub/Majra-download-manager-'
   }
 ]
 

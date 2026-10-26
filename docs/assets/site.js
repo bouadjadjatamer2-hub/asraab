@@ -8,19 +8,19 @@
 
   const defaults = {
     version: '1.2.2',
-    releaseUrl: 'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/latest',
+    releaseUrl: 'https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/releases/latest',
     releaseTagUrl:
-      'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/tag/v1.2.2',
+      'https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/releases/tag/v1.2.2',
     installerUrl:
-      'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.2/Majra-1.2.2-Setup.exe',
+      'https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/releases/download/v1.2.2/Majra-1.2.2-Setup.exe',
     extensionUrl:
-      'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/releases/download/v1.2.2/Majra-Browser-Extension.zip',
-    githubUrl: 'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-',
-    issuesUrl: 'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/issues',
+      'https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/releases/download/v1.2.2/Majra-Browser-Extension.zip',
+    githubUrl: 'https://github.com/bouadjadjatamer2-hub/Majra-download-manager-',
+    issuesUrl: 'https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/issues',
     licenseUrl:
-      'https://github.com/bouadjadjatamer2-hub/tayyar-download-manager-/blob/main/LICENSE',
+      'https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/blob/main/LICENSE',
       privacyUrl:
-      'https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/extension/privacy/',
+      'https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/extension/privacy/',
     installerName: 'Majra-1.2.2-Setup.exe',
     installerSize: '125.3 MB',
     sha256: 'DDBB1E8BE18ABBD991FAF2103A079DA1F0632502F054BC5248914A5918180D4F',

@@ -14,7 +14,7 @@ import { t } from './i18n'
 
 const CHECK_EVERY_MS = 4 * 60 * 60_000
 /** Where an update the app couldn't install itself is downloaded from instead. */
-const DOWNLOAD_PAGE = 'https://bouadjadjatamer2-hub.github.io/tayyar-download-manager-/apps/majra/'
+const DOWNLOAD_PAGE = 'https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/apps/majra/'
 
 let state: UpdateState = { status: 'idle', autoUpdate: true }
 let getWindow: () => BrowserWindow | null = () => null

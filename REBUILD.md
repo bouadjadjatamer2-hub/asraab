@@ -30,8 +30,9 @@ SmartScreen will warn on first run.
 npm run build:extension
 ```
 
-The zip is written next to the project as `Majra-Browser-Extension.zip` (Chrome: `chrome://extensions`
-→ Developer mode → Load unpacked → the unzipped folder).
+The zip is written to `dist\Majra-Browser-Extension.zip`. Its root is the Chrome/Edge build
+(`chrome://extensions` → Developer mode → Load unpacked → the unzipped folder), and Firefox's
+build sits in the `firefox` subfolder for `about:debugging` → Load Temporary Add-on.
 
 ## Checks
 
