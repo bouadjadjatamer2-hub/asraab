@@ -27,9 +27,11 @@
     year: 2026
   }
 
-  const config = Object.assign({}, defaults, window.MAJRA_CONFIG || {})
-  const messages = window.ASRAAB_I18N || window.MAJRA_I18N || { ar: {}, en: {} }
   const root = document.documentElement
+  const pageConfig =
+    root.dataset.app === 'droidcrate' ? window.DROIDCRATE_CONFIG : window.MAJRA_CONFIG
+  const config = Object.assign({}, defaults, pageConfig || {})
+  const messages = window.ASRAAB_I18N || window.MAJRA_I18N || { ar: {}, en: {} }
   const motionQuery =
     typeof window.matchMedia === 'function'
       ? window.matchMedia('(prefers-reduced-motion: reduce)')
