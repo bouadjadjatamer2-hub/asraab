@@ -1,0 +1,1135 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="dark" class="no-js" data-page="app">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      ;(function () {
+        var root = document.documentElement
+        root.classList.remove('no-js')
+        root.classList.add('js')
+        try {
+          var theme = localStorage.getItem('asraab-theme')
+          if (theme === 'light' || theme === 'dark') root.dataset.theme = theme
+          var lang = localStorage.getItem('asraab-lang')
+          if (lang === 'ar') {
+            root.lang = 'ar'
+            root.dir = 'rtl'
+          }
+        } catch (error) {
+          /* Storage-disabled browsers keep the defaults. */
+        }
+      })()
+    </script>
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0b100e" />
+    <meta
+      name="description"
+      content="DroidCrate is a free, open-source Windows workbench for Android service: local USB detection, an official-tool library, gated checklists, ADB and Fastboot helpers, lessons, and local history. Works offline."
+    />
+    <meta name="author" content="DroidCrate contributors" />
+    <meta name="robots" content="index,follow" />
+    <title>DroidCrate — A careful Android workbench for Windows · Asraab</title>
+    <link
+      rel="canonical"
+      href="https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/apps/droidcrate/"
+    />
+    <link rel="icon" href="../../favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="../../assets/img/droidcrate-icon.png" />
+    <link rel="apple-touch-icon" href="../../assets/img/droidcrate-icon.png" />
+    <link rel="manifest" href="../../site.webmanifest" />
+    <link
+      rel="preload"
+      href="../../assets/fonts/Manrope-Variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="../../assets/site.css" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Asraab" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="ar_SA" />
+    <meta property="og:title" content="DroidCrate — A careful Android workbench for Windows" />
+    <meta
+      property="og:description"
+      content="Free and open source: identify the USB mode, open only official tools, follow gated checklists, learn the boot chain, and keep a local history. No bypass tools, no bundled firmware."
+    />
+    <meta
+      property="og:url"
+      content="https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/apps/droidcrate/"
+    />
+    <meta
+      property="og:image"
+      content="https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/apps/droidcrate/shot-main.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "DroidCrate",
+        "operatingSystem": "Windows 10, Windows 11",
+        "applicationCategory": "UtilitiesApplication",
+        "softwareVersion": "0.1.0",
+        "description": "A free, open-source Windows workbench for Android service: device detection, official tool links, gated checklists, ADB and Fastboot helpers, lessons, and local history.",
+        "url": "https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/apps/droidcrate/",
+        "downloadUrl": "https://github.com/bouadjadjatamer2-hub/DroidCrate/releases/download/v0.1.0/DroidCrate-0.1.0-Setup.exe",
+        "license": "https://opensource.org/licenses/MIT",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": {
+          "@type": "Organization",
+          "name": "DroidCrate contributors",
+          "url": "https://github.com/bouadjadjatamer2-hub/DroidCrate"
+        },
+        "sameAs": ["https://github.com/bouadjadjatamer2-hub/DroidCrate"]
+      }
+    </script>
+
+    <style>
+      :root {
+        --dc: #7bd8ab;
+        --dc-strong: #b2f2d4;
+        --dc-dim: rgba(123, 216, 171, 0.09);
+        --dc-line: rgba(123, 216, 171, 0.26);
+        --warn: #dfb26c;
+      }
+
+      html[data-theme='light'] {
+        --dc: #127a55;
+        --dc-strong: #0a5c3f;
+        --dc-dim: rgba(18, 122, 85, 0.08);
+        --dc-line: rgba(18, 122, 85, 0.24);
+        --warn: #9a6416;
+      }
+
+      .dc-main {
+        padding: 32px 0 64px;
+      }
+
+      .dc-back {
+        display: inline-flex;
+        gap: 7px;
+        align-items: center;
+        margin-bottom: 24px;
+        color: var(--muted);
+        font-size: 12.5px;
+      }
+
+      .dc-back:hover {
+        color: var(--dc);
+      }
+
+      .dc-hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr);
+        gap: 40px;
+        align-items: center;
+      }
+
+      .dc-eyebrow {
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        color: var(--dc);
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .dc-eyebrow::before {
+        width: 18px;
+        height: 1px;
+        background: var(--dc);
+        content: '';
+      }
+
+      .dc-title {
+        display: flex;
+        gap: 13px;
+        align-items: center;
+        margin: 14px 0 0;
+        font-family: var(--font-ui);
+        font-size: clamp(36px, 5.6vw, 54px);
+        font-weight: 600;
+        letter-spacing: -0.03em;
+        line-height: 1;
+      }
+
+      .dc-title img {
+        width: 52px;
+        height: 52px;
+        border-radius: 12px;
+        box-shadow: 0 12px 30px -14px rgba(0, 0, 0, 0.9);
+      }
+
+      .dc-tagline {
+        margin: 15px 0 0;
+        color: var(--text);
+        font-family: var(--font-ui);
+        font-size: clamp(17px, 2.3vw, 22px);
+        font-weight: 500;
+        letter-spacing: -0.015em;
+        line-height: 1.35;
+      }
+
+      .dc-lede {
+        max-width: 56ch;
+        margin: 13px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.75;
+      }
+
+      .dc-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        padding: 0;
+        margin: 19px 0 0;
+        list-style: none;
+      }
+
+      .dc-badges li {
+        padding: 5px 9px;
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 7px;
+      }
+
+      .dc-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        margin-top: 22px;
+      }
+
+      .dc-cta {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        min-height: 47px;
+        padding: 0 21px;
+        color: #062016;
+        font-family: var(--font-ui);
+        font-size: 14px;
+        font-weight: 700;
+        background: linear-gradient(180deg, var(--dc-strong), var(--dc));
+        border-radius: 12px;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.4),
+          0 12px 26px -16px rgba(123, 216, 171, 0.8);
+        transition:
+          transform 160ms ease,
+          filter 160ms ease;
+      }
+
+      .dc-cta:hover {
+        filter: brightness(1.04);
+        transform: translateY(-1px);
+      }
+
+      .dc-hash {
+        margin: 13px 0 0;
+        color: var(--faint);
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+        line-height: 1.7;
+        word-break: break-all;
+      }
+
+      .dc-hash code {
+        color: var(--muted);
+      }
+
+      .dc-shot {
+        position: relative;
+        padding: 7px;
+        margin: 0;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        box-shadow: 0 40px 80px -50px rgba(0, 0, 0, 1);
+      }
+
+      .dc-shot::after {
+        position: absolute;
+        border: 1px solid var(--dc-line);
+        border-radius: 16px;
+        content: '';
+        inset: -1px;
+        pointer-events: none;
+        mask-image: linear-gradient(160deg, #000 10%, transparent 60%);
+      }
+
+      .dc-shot img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+
+      .dc-shot figcaption {
+        padding: 8px 4px 2px;
+        color: var(--faint);
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+        text-align: center;
+      }
+
+      .dc-section {
+        margin-top: 62px;
+      }
+
+      .dc-section-head {
+        max-width: 64ch;
+      }
+
+      .dc-section-head h2 {
+        margin: 0;
+        font-family: var(--font-ui);
+        font-size: clamp(22px, 2.8vw, 28px);
+        font-weight: 600;
+        letter-spacing: -0.025em;
+      }
+
+      .dc-section-head p {
+        margin: 9px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .dc-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 11px;
+        margin-top: 20px;
+      }
+
+      .dc-card {
+        padding: 17px 18px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+
+      .dc-card h3 {
+        display: flex;
+        gap: 9px;
+        align-items: center;
+        margin: 0;
+        font-size: 13.5px;
+        font-weight: 600;
+      }
+
+      .dc-card h3 svg {
+        flex: 0 0 auto;
+        color: var(--dc);
+      }
+
+      .dc-card p {
+        margin: 7px 0 0;
+        color: var(--muted);
+        font-size: 12.5px;
+        line-height: 1.7;
+      }
+
+      .dc-gallery {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .dc-gallery figure {
+        margin: 0;
+        padding: 6px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+
+      .dc-gallery img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 7px;
+      }
+
+      .dc-gallery figcaption {
+        padding: 7px 3px 1px;
+        color: var(--faint);
+        font-size: 10.5px;
+        text-align: center;
+      }
+
+      .dc-refuse {
+        padding: 20px 22px;
+        margin-top: 20px;
+        background: var(--dc-dim);
+        border: 1px solid var(--dc-line);
+        border-radius: 14px;
+      }
+
+      .dc-refuse h3 {
+        color: var(--warn);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+      }
+
+      .dc-refuse ul {
+        display: grid;
+        gap: 8px;
+        padding-inline-start: 17px;
+        margin: 11px 0 0;
+        color: var(--muted);
+        font-size: 12.5px;
+        line-height: 1.7;
+      }
+
+      .dc-refuse strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .dc-steps {
+        display: grid;
+        gap: 9px;
+        padding: 0;
+        margin: 20px 0 0;
+        list-style: none;
+        counter-reset: dc-step;
+      }
+
+      .dc-steps li {
+        display: flex;
+        gap: 13px;
+        align-items: flex-start;
+        padding: 13px 15px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        counter-increment: dc-step;
+      }
+
+      .dc-steps li::before {
+        display: grid;
+        flex: 0 0 auto;
+        width: 25px;
+        height: 25px;
+        color: var(--dc);
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        background: var(--dc-dim);
+        border: 1px solid var(--dc-line);
+        border-radius: 7px;
+        content: counter(dc-step);
+        place-items: center;
+      }
+
+      .dc-steps strong {
+        display: block;
+        font-size: 12.5px;
+        font-weight: 600;
+      }
+
+      .dc-steps span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.65;
+      }
+
+      .dc-steps code {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--text);
+        word-break: break-all;
+      }
+
+      .dc-faq {
+        display: grid;
+        gap: 8px;
+        margin-top: 20px;
+      }
+
+      .dc-faq details {
+        padding: 0 15px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 11px;
+      }
+
+      .dc-faq summary {
+        padding: 13px 0;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        list-style: none;
+      }
+
+      .dc-faq summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .dc-faq summary::after {
+        float: inline-end;
+        color: var(--dc);
+        content: '+';
+      }
+
+      .dc-faq details[open] summary::after {
+        content: '−';
+      }
+
+      .dc-faq p {
+        padding-bottom: 13px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 12.5px;
+        line-height: 1.75;
+      }
+
+      .dc-footer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 13px 22px;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 24px;
+        margin-top: 58px;
+        color: var(--faint);
+        font-size: 11.5px;
+        border-top: 1px solid var(--line);
+      }
+
+      .dc-footer nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .dc-footer a {
+        color: var(--muted);
+      }
+
+      .dc-footer a:hover {
+        color: var(--dc);
+      }
+
+      html[dir='rtl'] .dc-faq summary::after {
+        float: left;
+      }
+
+      html[dir='rtl'] .dc-eyebrow {
+        letter-spacing: 0;
+      }
+
+      @media (max-width: 900px) {
+        .dc-hero {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+
+        .dc-gallery {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .dc-main {
+          padding-top: 18px;
+        }
+
+        .dc-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .dc-title img {
+          width: 42px;
+          height: 42px;
+        }
+      }
+    </style>
+  </head>
+  <body id="top" class="app-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" id="siteHeader">
+      <div class="wrap nav-wrap">
+        <a class="brand brand-site" href="../../" aria-label="Asraab home">
+          <img
+            class="brand-mark"
+            src="../../assets/img/asraab-mark.svg"
+            width="27"
+            height="27"
+            alt=""
+            aria-hidden="true"
+          />
+          <span class="brand-word">ASRAAB</span>
+        </a>
+
+        <div class="nav-actions">
+          <button class="icon-btn theme-toggle" id="themeToggle" type="button" title="Switch theme">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                d="M12 3v2m0 14v2m9-9h-2M5 12H3m14.95-6.95-1.4 1.4M7.45 16.55l-1.4 1.4m0-11.9 1.4 1.4m9.1 9.1 1.4 1.4M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"
+              />
+            </svg>
+          </button>
+          <button class="lang-btn" id="langToggle" type="button" title="Switch language">
+            <span class="lang-label">العربية</span>
+          </button>
+          <a class="btn btn-quiet btn-sm" href="../../" data-i18n="allApps">All apps</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="dc-main">
+      <div class="wrap">
+        <a class="dc-back" href="../../">
+          <span aria-hidden="true">←</span>
+          <span data-i18n="back">Back to Asraab</span>
+        </a>
+
+        <section class="dc-hero" aria-labelledby="dc-title">
+          <div>
+            <span class="dc-eyebrow" data-i18n="eyebrow">Android service bench · Windows</span>
+            <h1 class="dc-title" id="dc-title">
+              <img src="../../assets/img/droidcrate-icon.png" alt="" aria-hidden="true" />
+              DroidCrate
+            </h1>
+            <p class="dc-tagline" data-i18n="tagline">
+              Know the device. Use official tools. Follow the checklist.
+            </p>
+            <p class="dc-lede" data-i18n="lede">
+              A free, open-source workbench for servicing Android phones you own: reads the USB mode
+              from Windows, links only official vendor pages, gates risky steps behind ownership
+              checklists, and teaches the boot chain with lessons and quizzes. Everything except
+              optional content updates works offline.
+            </p>
+            <ul class="dc-badges">
+              <li>v0.1.0</li>
+              <li data-i18n="badge.size">117.6 MB</li>
+              <li>MIT</li>
+              <li data-i18n="badge.offline">Offline-first</li>
+              <li data-i18n="badge.lang">English + العربية</li>
+            </ul>
+            <div class="dc-actions">
+              <a
+                class="dc-cta"
+                href="https://github.com/bouadjadjatamer2-hub/DroidCrate/releases/download/v0.1.0/DroidCrate-0.1.0-Setup.exe"
+                rel="noopener"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 19h16"
+                  />
+                </svg>
+                <span data-i18n="download">Download for Windows</span>
+              </a>
+              <a
+                class="btn btn-secondary"
+                href="https://github.com/bouadjadjatamer2-hub/DroidCrate"
+                rel="noopener"
+              >
+                <span data-i18n="source">Source code</span>
+              </a>
+            </div>
+            <p class="dc-hash">
+              <span data-i18n="hashLabel">SHA-256</span>
+              <code>8c785fbaffd9f9472082bd87f84c634db077616fd4cbb4f0529008de8529789c</code>
+            </p>
+          </div>
+
+          <figure class="dc-shot">
+            <img
+              src="./shot-main.png"
+              width="1603"
+              height="1028"
+              alt="DroidCrate device screen showing a live USB monitor and the connected-device workflow"
+            />
+            <figcaption data-i18n="shotCaption">
+              Device screen: local USB scan, mode suggestion, official next step
+            </figcaption>
+          </figure>
+        </section>
+
+        <section class="dc-section" aria-labelledby="dc-features">
+          <div class="dc-section-head">
+            <h2 id="dc-features" data-i18n="features.title">What is inside the crate</h2>
+            <p data-i18n="features.lede">
+              Four connected tools instead of a folder of loose utilities and forum links.
+            </p>
+          </div>
+          <div class="dc-grid">
+            <article class="dc-card">
+              <h3>
+                <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
+                  <rect
+                    x="7"
+                    y="2.5"
+                    width="10"
+                    height="19"
+                    rx="2.5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                  />
+                  <path stroke="currentColor" stroke-width="1.7" d="M11 18.5h2" />
+                </svg>
+                <span data-i18n="features.device.title">Read the USB mode</span>
+              </h3>
+              <p data-i18n="features.device.body">
+                Identifies ADB, Fastboot, Download, EDL, and BROM devices from Windows Plug and Play
+                identifiers, matched against an editable rules file, with the official next step.
+              </p>
+            </article>
+            <article class="dc-card">
+              <h3>
+                <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linejoin="round"
+                    d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15.5A2.5 2.5 0 0 1 17.5 21H6.5A2.5 2.5 0 0 1 4 18.5Zm0 0V19M8 7h8M8 11h8"
+                  />
+                </svg>
+                <span data-i18n="features.library.title">Official sources only</span>
+              </h3>
+              <p data-i18n="features.library.body">
+                16 tools with official links. Vendors that do not publish a direct download are
+                marked support-only; no installers, firmware, or cracked builds ship with the app.
+              </p>
+            </article>
+            <article class="dc-card">
+              <h3>
+                <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    d="m4 12 5 5L20 6"
+                  />
+                  <path stroke="currentColor" stroke-width="1.8" d="M4 4h8" />
+                </svg>
+                <span data-i18n="features.checklists.title">Gated checklists</span>
+              </h3>
+              <p data-i18n="features.checklists.body">
+                Five checklists, 46 ordered steps, an ownership gate before any risky flow, and
+                progress stored locally so a repair can be paused and resumed.
+              </p>
+            </article>
+            <article class="dc-card">
+              <h3>
+                <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linejoin="round"
+                    d="M12 4 2.5 8.5 12 13l9.5-4.5Zm-6 6.5v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"
+                  />
+                </svg>
+                <span data-i18n="features.learning.title">Lessons and history</span>
+              </h3>
+              <p data-i18n="features.learning.body">
+                Nine lessons across three levels with explanations, quizzes at a 60% pass mark, and
+                an operation history you can search, filter, and export to TXT or CSV.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="dc-section" aria-labelledby="dc-screens">
+          <div class="dc-section-head">
+            <h2 id="dc-screens" data-i18n="screens.title">Screens</h2>
+            <p data-i18n="screens.lede">
+              Every screen is designed for a keyboard and a 1280-wide window; Arabic switches the
+              whole interface to right-to-left.
+            </p>
+          </div>
+          <div class="dc-gallery">
+            <figure>
+              <img src="./shot-welcome.png" width="1603" height="1028" alt="" loading="lazy" />
+              <figcaption data-i18n="screens.welcome">
+                First run: ownership and safety notice
+              </figcaption>
+            </figure>
+            <figure>
+              <img src="./shot-tools.png" width="1603" height="1028" alt="" loading="lazy" />
+              <figcaption data-i18n="screens.tools">Tool library with official links</figcaption>
+            </figure>
+            <figure>
+              <img src="./shot-update.png" width="1603" height="1028" alt="" loading="lazy" />
+              <figcaption data-i18n="screens.update">Verified content update check</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section class="dc-section" aria-labelledby="dc-limits">
+          <div class="dc-section-head">
+            <h2 id="dc-limits" data-i18n="limits.title">What it refuses to do</h2>
+            <p data-i18n="limits.lede">
+              These are product rules, not missing features. They are enforced in the code, not only
+              in the documentation.
+            </p>
+          </div>
+          <div class="dc-refuse">
+            <h3 data-i18n="limits.heading">Hard limits</h3>
+            <ul>
+              <li data-i18n="limits.one">
+                <strong>No lock or account bypass.</strong> It does not remove screen locks,
+                accounts, FRP, or ownership protection, and it links no tool that does.
+              </li>
+              <li data-i18n="limits.two">
+                <strong>No bundled firmware or vendor installers.</strong> Odin, QFIL, SP Flash
+                Tool, and similar tools open their official support pages; nothing is mirrored.
+              </li>
+              <li data-i18n="limits.three">
+                <strong>No shell, flashing, erase, or unlock commands.</strong> ADB and Fastboot run
+                a fixed allow-list of reads and confirmed reboots only.
+              </li>
+              <li data-i18n="limits.four">
+                <strong>No telemetry.</strong> Progress, history, and settings stay in a local
+                SQLite file. Network access happens only when you press Check for updates.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="dc-section" aria-labelledby="dc-install">
+          <div class="dc-section-head">
+            <h2 id="dc-install" data-i18n="install.title">Install</h2>
+            <p data-i18n="install.lede">
+              The installer is unsigned, so Windows SmartScreen may warn about an unknown publisher.
+              Verify the checksum before running it.
+            </p>
+          </div>
+          <ol class="dc-steps">
+            <li>
+              <div>
+                <strong data-i18n="install.step1.title">Verify the download</strong>
+                <span data-i18n="install.step1.body">
+                  Run <code>Get-FileHash .\DroidCrate-0.1.0-Setup.exe -Algorithm SHA256</code> and
+                  compare the result with the value above.
+                </span>
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong data-i18n="install.step2.title">Run the installer</strong>
+                <span data-i18n="install.step2.body">
+                  Choose a folder, keep the desktop shortcut, and launch DroidCrate. The app installs
+                  per user and does not require an account.
+                </span>
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong data-i18n="install.step3.title">Read the start notice</strong>
+                <span data-i18n="install.step3.body">
+                  Confirm that you own the devices you will connect. Platform Tools can then be
+                  installed from Google's official archive, with SHA-256 checked before extraction.
+                </span>
+              </div>
+            </li>
+          </ol>
+        </section>
+
+        <section class="dc-section" aria-labelledby="dc-faq">
+          <div class="dc-section-head">
+            <h2 id="dc-faq" data-i18n="faq.title">Questions</h2>
+          </div>
+          <div class="dc-faq">
+            <details open>
+              <summary data-i18n="faq.free.q">Is it really free?</summary>
+              <p data-i18n="faq.free.a">
+                Yes. The code and data are MIT licensed. There is no paid tier, no account, and no
+                closed-source component.
+              </p>
+            </details>
+            <details>
+              <summary data-i18n="faq.offline.q">Does it need an internet connection?</summary>
+              <p data-i18n="faq.offline.a">
+                No. Lessons, tools, checklists, and history are bundled and local. It contacts the
+                official repository only when you ask it to check for content updates.
+              </p>
+            </details>
+            <details>
+              <summary data-i18n="faq.unlock.q">Can it unlock a phone?</summary>
+              <p data-i18n="faq.unlock.a">
+                No. DroidCrate does not bypass locks, accounts, FRP, or ownership protection and
+                offers no tool for that purpose.
+              </p>
+            </details>
+            <details>
+              <summary data-i18n="faq.tools.q">Where do the vendor tools come from?</summary>
+              <p data-i18n="faq.tools.a">
+                Only from the vendor's own site. When a vendor publishes no direct download, the app
+                opens the official support page and labels the tool as support-only.
+              </p>
+            </details>
+            <details>
+              <summary data-i18n="faq.data.q">Does it collect data about my phone?</summary>
+              <p data-i18n="faq.data.a">
+                No. USB identifiers are read locally, command output stays in the local history
+                database, and nothing is uploaded.
+              </p>
+            </details>
+          </div>
+        </section>
+
+        <footer class="dc-footer">
+          <span data-i18n="footer.note">DroidCrate 0.1.0 · MIT · Built for devices you own.</span>
+          <nav aria-label="Project links">
+            <a href="https://github.com/bouadjadjatamer2-hub/DroidCrate" rel="noopener">GitHub</a>
+            <a
+              href="https://github.com/bouadjadjatamer2-hub/DroidCrate/blob/main/LICENSE"
+              rel="noopener"
+              data-i18n="footer.license">License</a
+            >
+            <a href="https://github.com/bouadjadjatamer2-hub/DroidCrate/issues" rel="noopener"
+              >Issues</a
+            >
+            <a href="../../">Asraab</a>
+          </nav>
+        </footer>
+      </div>
+    </main>
+
+    <script>
+      ;(function () {
+        var root = document.documentElement
+        var COPY = {
+          en: {
+            allApps: 'All apps',
+            back: 'Back to Asraab',
+            eyebrow: 'Android service bench · Windows',
+            tagline: 'Know the device. Use official tools. Follow the checklist.',
+            lede:
+              'A free, open-source workbench for servicing Android phones you own: reads the USB mode from Windows, links only official vendor pages, gates risky steps behind ownership checklists, and teaches the boot chain with lessons and quizzes. Everything except optional content updates works offline.',
+            'badge.size': '117.6 MB',
+            'badge.offline': 'Offline-first',
+            'badge.lang': 'English + العربية',
+            download: 'Download for Windows',
+            source: 'Source code',
+            hashLabel: 'SHA-256',
+            shotCaption: 'Device screen: local USB scan, mode suggestion, official next step',
+            'features.title': 'What is inside the crate',
+            'features.lede':
+              'Four connected tools instead of a folder of loose utilities and forum links.',
+            'features.device.title': 'Read the USB mode',
+            'features.device.body':
+              'Identifies ADB, Fastboot, Download, EDL, and BROM devices from Windows Plug and Play identifiers, matched against an editable rules file, with the official next step.',
+            'features.library.title': 'Official sources only',
+            'features.library.body':
+              '16 tools with official links. Vendors that do not publish a direct download are marked support-only; no installers, firmware, or cracked builds ship with the app.',
+            'features.checklists.title': 'Gated checklists',
+            'features.checklists.body':
+              'Five checklists, 46 ordered steps, an ownership gate before any risky flow, and progress stored locally so a repair can be paused and resumed.',
+            'features.learning.title': 'Lessons and history',
+            'features.learning.body':
+              'Nine lessons across three levels with explanations, quizzes at a 60% pass mark, and an operation history you can search, filter, and export to TXT or CSV.',
+            'screens.title': 'Screens',
+            'screens.lede':
+              'Every screen is designed for a keyboard and a 1280-wide window; Arabic switches the whole interface to right-to-left.',
+            'screens.welcome': 'First run: ownership and safety notice',
+            'screens.tools': 'Tool library with official links',
+            'screens.update': 'Verified content update check',
+            'limits.title': 'What it refuses to do',
+            'limits.lede':
+              'These are product rules, not missing features. They are enforced in the code, not only in the documentation.',
+            'limits.heading': 'Hard limits',
+            'limits.one':
+              '<strong>No lock or account bypass.</strong> It does not remove screen locks, accounts, FRP, or ownership protection, and it links no tool that does.',
+            'limits.two':
+              '<strong>No bundled firmware or vendor installers.</strong> Odin, QFIL, SP Flash Tool, and similar tools open their official support pages; nothing is mirrored.',
+            'limits.three':
+              '<strong>No shell, flashing, erase, or unlock commands.</strong> ADB and Fastboot run a fixed allow-list of reads and confirmed reboots only.',
+            'limits.four':
+              '<strong>No telemetry.</strong> Progress, history, and settings stay in a local SQLite file. Network access happens only when you press Check for updates.',
+            'install.title': 'Install',
+            'install.lede':
+              'The installer is unsigned, so Windows SmartScreen may warn about an unknown publisher. Verify the checksum before running it.',
+            'install.step1.title': 'Verify the download',
+            'install.step1.body':
+              'Run <code>Get-FileHash .\\DroidCrate-0.1.0-Setup.exe -Algorithm SHA256</code> and compare the result with the value above.',
+            'install.step2.title': 'Run the installer',
+            'install.step2.body':
+              'Choose a folder, keep the desktop shortcut, and launch DroidCrate. The app installs per user and does not require an account.',
+            'install.step3.title': 'Read the start notice',
+            'install.step3.body':
+              "Confirm that you own the devices you will connect. Platform Tools can then be installed from Google's official archive, with SHA-256 checked before extraction.",
+            'faq.title': 'Questions',
+            'faq.free.q': 'Is it really free?',
+            'faq.free.a':
+              'Yes. The code and data are MIT licensed. There is no paid tier, no account, and no closed-source component.',
+            'faq.offline.q': 'Does it need an internet connection?',
+            'faq.offline.a':
+              'No. Lessons, tools, checklists, and history are bundled and local. It contacts the official repository only when you ask it to check for content updates.',
+            'faq.unlock.q': 'Can it unlock a phone?',
+            'faq.unlock.a':
+              'No. DroidCrate does not bypass locks, accounts, FRP, or ownership protection and offers no tool for that purpose.',
+            'faq.tools.q': 'Where do the vendor tools come from?',
+            'faq.tools.a':
+              "Only from the vendor's own site. When a vendor publishes no direct download, the app opens the official support page and labels the tool as support-only.",
+            'faq.data.q': 'Does it collect data about my phone?',
+            'faq.data.a':
+              'No. USB identifiers are read locally, command output stays in the local history database, and nothing is uploaded.',
+            'footer.note': 'DroidCrate 0.1.0 · MIT · Built for devices you own.',
+            'footer.license': 'License'
+          },
+          ar: {
+            allApps: 'كل التطبيقات',
+            back: 'العودة إلى أسراب',
+            eyebrow: 'ورشة صيانة أندرويد · ويندوز',
+            tagline: 'اعرف الجهاز. استعمل الأدوات الرسمية. اتبع قائمة التحقق.',
+            lede:
+              'ورشة عمل مجانية ومفتوحة المصدر لصيانة هواتف أندرويد التي تملكها: تقرأ وضع USB من ويندوز، وتربط الصفحات الرسمية فقط، وتضع بوابة ملكية قبل كل عملية خطيرة، وتشرح سلسلة الإقلاع بدروس واختبارات. كل شيء يعمل دون إنترنت باستثناء تحديث المحتوى الاختياري.',
+            'badge.size': '117.6 ميغابايت',
+            'badge.offline': 'يعمل دون إنترنت',
+            'badge.lang': 'English + العربية',
+            download: 'تنزيل لويندوز',
+            source: 'الشيفرة المصدرية',
+            hashLabel: 'بصمة SHA-256',
+            shotCaption: 'شاشة الجهاز: فحص USB محلي، اقتراح الوضع، والخطوة الرسمية التالية',
+            'features.title': 'ما داخل الصندوق',
+            'features.lede': 'أربع أدوات مترابطة بدل مجلد من الأدوات المتناثرة وروابط المنتديات.',
+            'features.device.title': 'اقرأ وضع USB',
+            'features.device.body':
+              'يتعرّف على أجهزة ADB وFastboot وDownload وEDL وBROM من معرّفات ويندوز، ويطابقها مع ملف قواعد قابل للتعديل، ويعرض الخطوة الرسمية التالية.',
+            'features.library.title': 'مصادر رسمية فقط',
+            'features.library.body':
+              '16 أداة بروابط رسمية. الشركات التي لا تنشر تنزيلاً مباشراً تُعرض كصفحة دعم فقط؛ لا تُضمَّن مثبّتات أو فيرموير أو نسخ مكركة.',
+            'features.checklists.title': 'قوائم تحقق ببوابة',
+            'features.checklists.body':
+              'خمس قوائم و46 خطوة مرتّبة، وبوابة ملكية قبل أي مسار خطير، وتقدم محفوظ محلياً يمكن إيقافه واستئنافه.',
+            'features.learning.title': 'دروس وسجل',
+            'features.learning.body':
+              'تسعة دروس بثلاثة مستويات مع شرح، واختبارات بدرجة نجاح 60%، وسجل عمليات قابل للبحث والفلترة والتصدير إلى TXT أو CSV.',
+            'screens.title': 'الشاشات',
+            'screens.lede':
+              'كل شاشة مصممة للوحة المفاتيح ونافذة بعرض 1280؛ والعربية تحوّل الواجهة كاملة إلى اليمين إلى اليسار.',
+            'screens.welcome': 'أول تشغيل: تنبيه الملكية والسلامة',
+            'screens.tools': 'مكتبة الأدوات مع الروابط الرسمية',
+            'screens.update': 'فحص تحديث المحتوى مع التحقق',
+            'limits.title': 'ما يرفض فعله',
+            'limits.lede':
+              'هذه قواعد منتج وليست ميزات ناقصة. مفروضة في الشيفرة، وليس في التوثيق فقط.',
+            'limits.heading': 'حدود صارمة',
+            'limits.one':
+              '<strong>لا تجاوز قفل أو حساب.</strong> لا يزيل قفل الشاشة أو الحسابات أو FRP أو حماية الملكية، ولا يربط أي أداة تفعل ذلك.',
+            'limits.two':
+              '<strong>لا فيرموير ولا مثبّتات شركات مضمّنة.</strong> Odin وQFIL وSP Flash Tool وما شابه تفتح صفحاتها الرسمية؛ لا شيء يُنسَخ.',
+            'limits.three':
+              '<strong>لا أوامر shell أو فلاش أو محو أو فتح.</strong> ADB وFastboot ينفّذان قائمة سماح ثابتة من القراءات وإعادات التشغيل المؤكدة فقط.',
+            'limits.four':
+              '<strong>لا قياس عن بُعد.</strong> التقدم والسجل والإعدادات في ملف SQLite محلي. الاتصال بالشبكة يحدث فقط عند ضغط «فحص التحديثات».',
+            'install.title': 'التثبيت',
+            'install.lede':
+              'المثبّت غير موقّع، لذا قد يعرض SmartScreen تحذير «ناشر غير معروف». تحقق من البصمة قبل التشغيل.',
+            'install.step1.title': 'تحقق من التنزيل',
+            'install.step1.body':
+              'نفّذ <code>Get-FileHash .\\DroidCrate-0.1.0-Setup.exe -Algorithm SHA256</code> وقارن الناتج بالقيمة أعلاه.',
+            'install.step2.title': 'شغّل المثبّت',
+            'install.step2.body':
+              'اختر مجلداً، وأبقِ اختصار سطح المكتب، ثم شغّل DroidCrate. التثبيت لكل مستخدم ولا يحتاج حساباً.',
+            'install.step3.title': 'اقرأ تنبيه البداية',
+            'install.step3.body':
+              'أكّد أنك تملك الأجهزة التي ستوصلها. بعدها يمكن تثبيت Platform Tools من أرشيف Google الرسمي مع التحقق من SHA-256 قبل فك الضغط.',
+            'faq.title': 'أسئلة',
+            'faq.free.q': 'هل هو مجاني فعلاً؟',
+            'faq.free.a':
+              'نعم. الشيفرة والبيانات تحت ترخيص MIT. لا طبقة مدفوعة ولا حساب ولا مكوّن مغلق المصدر.',
+            'faq.offline.q': 'هل يحتاج اتصالاً بالإنترنت؟',
+            'faq.offline.a':
+              'لا. الدروس والأدوات وقوائم التحقق والسجل مضمّنة ومحلية. يتصل بالمستودع الرسمي فقط عندما تطلب فحص تحديثات المحتوى.',
+            'faq.unlock.q': 'هل يمكنه فتح هاتف؟',
+            'faq.unlock.a':
+              'لا. DroidCrate لا يتجاوز الأقفال أو الحسابات أو FRP أو حماية الملكية، ولا يقدّم أداة لذلك.',
+            'faq.tools.q': 'من أين تأتي أدوات الشركات؟',
+            'faq.tools.a':
+              'من موقع الشركة نفسها فقط. وعندما لا تنشر الشركة تنزيلاً مباشراً، يفتح التطبيق صفحة الدعم الرسمية ويصنّف الأداة كدعم فقط.',
+            'faq.data.q': 'هل يجمع بيانات عن هاتفي؟',
+            'faq.data.a':
+              'لا. معرّفات USB تُقرأ محلياً، ومخرجات الأوامر تبقى في قاعدة السجل المحلية، ولا يُرفع أي شيء.',
+            'footer.note': 'DroidCrate 0.1.0 · MIT · صُنع للأجهزة التي تملكها.',
+            'footer.license': 'الترخيص'
+          }
+        }
+
+        var lang = root.lang === 'ar' ? 'ar' : 'en'
+        var langLabel = document.querySelector('#langToggle .lang-label')
+        var i18nNodes = Array.prototype.slice.call(document.querySelectorAll('[data-i18n]'))
+
+        function applyLanguage(next) {
+          lang = next === 'ar' ? 'ar' : 'en'
+          root.lang = lang
+          root.dir = lang === 'ar' ? 'rtl' : 'ltr'
+          var table = COPY[lang]
+          i18nNodes.forEach(function (node) {
+            var value = table[node.getAttribute('data-i18n')]
+            if (typeof value === 'string') node.innerHTML = value
+          })
+          if (langLabel) langLabel.textContent = lang === 'ar' ? 'English' : 'العربية'
+          document.title =
+            lang === 'ar'
+              ? 'DroidCrate — ورشة أندرويد حذرة لويندوز · أسراب'
+              : 'DroidCrate — A careful Android workbench for Windows · Asraab'
+          try {
+            localStorage.setItem('asraab-lang', lang)
+          } catch (error) {
+            /* Ignore storage failures. */
+          }
+        }
+
+        if (lang === 'ar') applyLanguage('ar')
+
+        document.getElementById('langToggle').addEventListener('click', function () {
+          applyLanguage(lang === 'ar' ? 'en' : 'ar')
+        })
+
+        document.getElementById('themeToggle').addEventListener('click', function () {
+          var next = root.dataset.theme === 'light' ? 'dark' : 'light'
+          root.dataset.theme = next
+          try {
+            localStorage.setItem('asraab-theme', next)
+          } catch (error) {
+            /* Ignore storage failures. */
+          }
+        })
+
+        var header = document.getElementById('siteHeader')
+        var onScroll = function () {
+          header.classList.toggle('is-scrolled', window.scrollY > 8)
+        }
+        window.addEventListener('scroll', onScroll, { passive: true })
+        onScroll()
+      })()
+    </script>
+  </body>
+</html>
