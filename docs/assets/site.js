@@ -8,19 +8,19 @@
 
   const defaults = {
     version: '1.2.3',
-    releaseUrl: 'https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/releases/latest',
+    releaseUrl: 'https://github.com/bouadjadjatamer2-hub/asraab/releases/latest',
     releaseTagUrl:
-      'https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/releases/tag/v1.2.3',
+      'https://github.com/bouadjadjatamer2-hub/asraab/releases/tag/v1.2.3',
     installerUrl:
-      'https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/releases/download/v1.2.3/Majra-1.2.3-Setup.exe',
+      'https://github.com/bouadjadjatamer2-hub/asraab/releases/download/v1.2.3/Majra-1.2.3-Setup.exe',
     extensionUrl:
-      'https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/releases/download/v1.2.3/Majra-Browser-Extension.zip',
-    githubUrl: 'https://github.com/bouadjadjatamer2-hub/Majra-download-manager-',
-    issuesUrl: 'https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/issues',
+      'https://github.com/bouadjadjatamer2-hub/asraab/releases/download/v1.2.3/Majra-Browser-Extension.zip',
+    githubUrl: 'https://github.com/bouadjadjatamer2-hub/asraab',
+    issuesUrl: 'https://github.com/bouadjadjatamer2-hub/asraab/issues',
     licenseUrl:
-      'https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/blob/main/LICENSE',
+      'https://github.com/bouadjadjatamer2-hub/asraab/blob/main/LICENSE',
       privacyUrl:
-      'https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/extension/privacy/',
+      'https://bouadjadjatamer2-hub.github.io/asraab/extension/privacy/',
     installerName: 'Majra-1.2.3-Setup.exe',
     installerSize: '127.8 MB',
     sha256: 'E009724DD5601171F45874A69539C1464BC051B112472C11B87CCB40F5871B5E',

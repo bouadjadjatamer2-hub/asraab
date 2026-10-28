@@ -10,25 +10,25 @@
 </p>
 
 <p align="center">
-  <a href="https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/"><img src="docs/assets/img/asraab-mark.svg" width="14" alt="" /> Part of <strong>Asraab</strong></a> — a small, hand-picked catalog of independent Windows apps.
+  <a href="https://bouadjadjatamer2-hub.github.io/asraab/"><img src="docs/assets/img/asraab-mark.svg" width="14" alt="" /> Part of <strong>Asraab</strong></a> — a small, hand-picked catalog of independent Windows apps.
 </p>
 
 <p align="center">
-  <a href="https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/releases/download/v1.2.3/Majra-1.2.3-Setup.exe"><img src="https://img.shields.io/badge/Download_for_Windows-v1.2.3-B45309?style=for-the-badge&amp;logo=windows&amp;logoColor=white" alt="Download Majra 1.2.3 for Windows" /></a>
-  <a href="https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/"><img src="https://img.shields.io/badge/Asraab-website-1F7D5C?style=for-the-badge" alt="Open the Asraab website" /></a>
+  <a href="https://github.com/bouadjadjatamer2-hub/asraab/releases/download/v1.2.3/Majra-1.2.3-Setup.exe"><img src="https://img.shields.io/badge/Download_for_Windows-v1.2.3-B45309?style=for-the-badge&amp;logo=windows&amp;logoColor=white" alt="Download Majra 1.2.3 for Windows" /></a>
+  <a href="https://bouadjadjatamer2-hub.github.io/asraab/"><img src="https://img.shields.io/badge/Asraab-website-1F7D5C?style=for-the-badge" alt="Open the Asraab website" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-4CC38A?style=for-the-badge" alt="MIT License" /></a>
 </p>
 
 <p align="center">
-  <a href="https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/">Asraab</a> ·
-  <a href="https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/apps/majra/">Majra page</a> ·
-  <a href="https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/releases/download/v1.2.3/Majra-1.2.3-Setup.exe">Download</a> ·
-  <a href="https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/releases/download/v1.2.3/Majra-Browser-Extension.zip">Browser extension</a> ·
-  <a href="https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/releases/tag/v1.2.3">Release notes</a> ·
-  <a href="https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/issues">Issues</a>
+  <a href="https://bouadjadjatamer2-hub.github.io/asraab/">Asraab</a> ·
+  <a href="https://bouadjadjatamer2-hub.github.io/asraab/apps/majra/">Majra page</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/asraab/releases/download/v1.2.3/Majra-1.2.3-Setup.exe">Download</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/asraab/releases/download/v1.2.3/Majra-Browser-Extension.zip">Browser extension</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/asraab/releases/tag/v1.2.3">Release notes</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/asraab/issues">Issues</a>
 </p>
 
-<a href="https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/"><img src="docs/og.png" alt="Majra — one download over every connection" width="100%" /></a>
+<a href="https://bouadjadjatamer2-hub.github.io/asraab/"><img src="docs/og.png" alt="Majra — one download over every connection" width="100%" /></a>
 
 Majra splits files into blocks and binds each stream to a network interface, so a download can use Wi-Fi, Ethernet and USB tethering at the same time. It also resumes interrupted transfers, schedules downloads, extracts archives while they arrive, captures links from the browser, handles torrents, and can scan finished files with Windows Defender.
 
@@ -45,17 +45,17 @@ Asraab is a curated, owner-maintained catalog. There is no public submission for
 
 ### The website
 
-The [Asraab catalog](https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/) is bilingual and theme-aware. The [Majra page](https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/apps/majra/) keeps the installer, extension ZIP and checksum together, and sends both downloads straight to your browser — no release-page detour.
+The [Asraab catalog](https://bouadjadjatamer2-hub.github.io/asraab/) is bilingual and theme-aware. The [Majra page](https://bouadjadjatamer2-hub.github.io/asraab/apps/majra/) keeps the installer, extension ZIP and checksum together, and sends both downloads straight to your browser — no release-page detour.
 
-[![Asraab catalog — dark desktop view](docs/screenshots/website-desktop.png)](https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/)
+[![Asraab catalog — dark desktop view](docs/screenshots/website-desktop.png)](https://bouadjadjatamer2-hub.github.io/asraab/)
 
 <table>
   <tr>
     <td width="50%" valign="top">
-      <a href="https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/apps/majra/"><img src="docs/screenshots/website-arabic.png" alt="Majra page in Arabic with the light theme" /></a>
+      <a href="https://bouadjadjatamer2-hub.github.io/asraab/apps/majra/"><img src="docs/screenshots/website-arabic.png" alt="Majra page in Arabic with the light theme" /></a>
     </td>
     <td width="50%" valign="top">
-      <a href="https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/apps/majra/#download"><img src="docs/screenshots/website-download.png" alt="Majra download page with the installer, release details and SHA-256 checksum" /></a>
+      <a href="https://bouadjadjatamer2-hub.github.io/asraab/apps/majra/#download"><img src="docs/screenshots/website-download.png" alt="Majra download page with the installer, release details and SHA-256 checksum" /></a>
     </td>
   </tr>
   <tr>
@@ -65,7 +65,7 @@ The [Asraab catalog](https://bouadjadjatamer2-hub.github.io/Majra-download-manag
 </table>
 
 <p align="center">
-  <a href="https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/"><img src="docs/screenshots/website-mobile.png" width="300" alt="Asraab catalog on a phone" /></a><br />
+  <a href="https://bouadjadjatamer2-hub.github.io/asraab/"><img src="docs/screenshots/website-mobile.png" width="300" alt="Asraab catalog on a phone" /></a><br />
   <sub>Mobile</sub>
 </p>
 
@@ -122,7 +122,7 @@ When an archive is being extracted, completed blocks are fed to the extractor as
 
 **Windows 10 / 11 · 64-bit · v1.2.3 · 127.8 MB**
 
-[**Download Majra-1.2.3-Setup.exe**](https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/releases/download/v1.2.3/Majra-1.2.3-Setup.exe) · [Release notes](https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/releases/tag/v1.2.3) · [All releases](https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/releases)
+[**Download Majra-1.2.3-Setup.exe**](https://github.com/bouadjadjatamer2-hub/asraab/releases/download/v1.2.3/Majra-1.2.3-Setup.exe) · [Release notes](https://github.com/bouadjadjatamer2-hub/asraab/releases/tag/v1.2.3) · [All releases](https://github.com/bouadjadjatamer2-hub/asraab/releases)
 
 |                      |                                     |
 | -------------------- | ----------------------------------- |
@@ -160,7 +160,7 @@ E009724DD5601171F45874A69539C1464BC051B112472C11B87CCB40F5871B5E
 
 ## Browser extension (optional)
 
-[**Download Majra-Browser-Extension.zip**](https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/releases/download/v1.2.3/Majra-Browser-Extension.zip) · [Privacy policy](https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/extension/privacy/)
+[**Download Majra-Browser-Extension.zip**](https://github.com/bouadjadjatamer2-hub/asraab/releases/download/v1.2.3/Majra-Browser-Extension.zip) · [Privacy policy](https://bouadjadjatamer2-hub.github.io/asraab/extension/privacy/)
 
 The Chromium extension hands downloads to Majra with the browser's cookies, so signed-in files work. It supports Chrome, Edge, Brave and Opera.
 
@@ -176,7 +176,7 @@ The Chromium extension hands downloads to Majra with the browser's cookies, so s
 
 ## Privacy
 
-There is no account, no advertising and no analytics. Majra talks only to the URLs you give it, and the extension talks only to the app on your computer. Download history and settings stay on your PC. The [extension privacy policy](https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/extension/privacy/) has the details.
+There is no account, no advertising and no analytics. Majra talks only to the URLs you give it, and the extension talks only to the app on your computer. Download history and settings stay on your PC. The [extension privacy policy](https://bouadjadjatamer2-hub.github.io/asraab/extension/privacy/) has the details.
 
 ---
 
@@ -185,8 +185,8 @@ There is no account, no advertising and no analytics. Majra talks only to the UR
 **Requirements:** Node.js 22+ and npm 9+. Build the Windows installer on Windows.
 
 ```powershell
-git clone https://github.com/bouadjadjatamer2-hub/Majra-download-manager-.git
-cd Majra-download-manager-
+git clone https://github.com/bouadjadjatamer2-hub/asraab.git
+cd asraab
 npm ci
 npm run dev
 ```
@@ -240,10 +240,10 @@ Bundled tools and their licenses — including UnRAR and `unzipper` — are also
 </p>
 
 <p dir="rtl" align="right">
-  <a href="https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/">موقع أسراب</a> ·
-  <a href="https://bouadjadjatamer2-hub.github.io/Majra-download-manager-/apps/majra/">صفحة مجرى</a> ·
-  <a href="https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/releases/download/v1.2.3/Majra-1.2.3-Setup.exe">تحميل الإصدار 1.2.3</a> ·
-  <a href="https://github.com/bouadjadjatamer2-hub/Majra-download-manager-/releases/download/v1.2.3/Majra-Browser-Extension.zip">إضافة المتصفح</a>
+  <a href="https://bouadjadjatamer2-hub.github.io/asraab/">موقع أسراب</a> ·
+  <a href="https://bouadjadjatamer2-hub.github.io/asraab/apps/majra/">صفحة مجرى</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/asraab/releases/download/v1.2.3/Majra-1.2.3-Setup.exe">تحميل الإصدار 1.2.3</a> ·
+  <a href="https://github.com/bouadjadjatamer2-hub/asraab/releases/download/v1.2.3/Majra-Browser-Extension.zip">إضافة المتصفح</a>
 </p>
 
 <p dir="rtl" align="right">مجرى هو أول تطبيق في كتالوج أسراب، والمزيد في الطريق. الموقع متوفر بالعربية والإنجليزية.</p>
